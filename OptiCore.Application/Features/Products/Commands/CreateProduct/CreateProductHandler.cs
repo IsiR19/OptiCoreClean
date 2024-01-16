@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Exceptions;
 using OptiCore.Domain.Inventory;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,13 @@ namespace OptiCore.Application.Features.Products.Commands.CreateProduct
         }
         public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
+            var validator = new CreateProductCommandValidator(_productRepository);
+            var validationResult =  validator.Validate(request);
+
+            if (validationResult.Errors.Any())
+                throw new BadRequestException("Invalid product", validationResult); 
+         
+
             var data = _mapper.Map<Product>(request);
 
             await _productRepository.CreateAsync(data);
