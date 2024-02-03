@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Opticore.Persistance.Configurations;
 using OptiCore.Domain.Accounts;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.Customers;
@@ -40,6 +41,7 @@ namespace Opticore.Persistance.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OptiCoreDbContext).Assembly);
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
