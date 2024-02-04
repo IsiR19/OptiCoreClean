@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Opticore.Persistance.DatabaseContext;
+using Opticore.Persistence.DatabaseContext;
 
-namespace Opticore.Persistance
+namespace Opticore.Persistence
 {
-    public static class PersistanceServiceRegistration
+    public static class PersistenceServiceRegistration
     {
-        public static IServiceCollection AddPersistanceServices(this IServiceCollection services,
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddDbContext<OptiCoreDbContext>(options =>

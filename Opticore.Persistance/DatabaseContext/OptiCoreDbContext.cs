@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Opticore.Persistance.Configurations;
+using Opticore.Persistence.Configurations;
 using OptiCore.Domain.Accounts;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.Customers;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Opticore.Persistance.DatabaseContext
+namespace Opticore.Persistence.DatabaseContext
 {
     public class OptiCoreDbContext : DbContext
     {
