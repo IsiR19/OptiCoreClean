@@ -1,4 +1,6 @@
-﻿using OptiCore.Application.Abstractions.Messaging;
+﻿using Microsoft.EntityFrameworkCore;
+using Opticore.Persistence.DatabaseContext;
+using OptiCore.Application.Abstractions.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +11,44 @@ namespace Opticore.Persistence.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        public Task<T> CreateAsync(T entity)
+        protected readonly OptiCoreDbContext _context;
+        public GenericRepository(OptiCoreDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task CreateAsync(T entity)
+        {
+           await _context.AddAsync(entity);
+           await _context.SaveChangesAsync();
         }
 
-        public Task<T> DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public Task<T> GetByCodeAsync(string code)
+        public async Task<T> GetByCodeAsync(string code)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FindAsync(code);
         }
 
-        public Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await (_context.Set<T>().FindAsync(id));
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+
+            _context.Update(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();   
         }
     }
 }
