@@ -1,18 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Opticore.Persistence.Configurations;
 using OptiCore.Domain.Accounts;
+using OptiCore.Domain.Agents;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.Customers;
 using OptiCore.Domain.Inventory;
+using OptiCore.Domain.Leads;
 using OptiCore.Domain.Orders;
 using OptiCore.Domain.Payments;
 using OptiCore.Domain.Suppliers;
 using OptiCore.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Opticore.Persistence.DatabaseContext
 {
@@ -20,13 +17,12 @@ namespace Opticore.Persistence.DatabaseContext
     {
         public OptiCoreDbContext(DbContextOptions<OptiCoreDbContext> options) : base(options)
         {
-               
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<FinancialStatement> FinancialStatements { get; set; }
-        public DbSet<Ledger> Ledgers { get; set;}
+        public DbSet<Ledger> Ledgers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<InventoryItem> InventoryItems { get; set; }
@@ -34,9 +30,10 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Role> Roles { get; set; }  
+        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Lead> Leads { get; set; }
+        public DbSet<Agent> Agents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,10 +46,10 @@ namespace Opticore.Persistence.DatabaseContext
         {
             foreach (var entry in base.ChangeTracker.Entries<AuditEntity>()
                 .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
-            { 
-            entry.Entity.UpdatedOn = DateTime.Now;
+            {
+                entry.Entity.UpdatedOn = DateTime.Now;
 
-                if(entry.State == EntityState.Added)
+                if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedOn = DateTime.Now;
                 }

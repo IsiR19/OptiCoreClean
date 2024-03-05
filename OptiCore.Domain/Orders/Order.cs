@@ -1,15 +1,10 @@
-﻿using OptiCore.Domain.Customers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OptiCore.Domain.Core;
+using OptiCore.Domain.Customers;
 
 namespace OptiCore.Domain.Orders
 {
-    public class Order
+    public class Order : AuditEntity
     {
-        public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
         // Add any other properties specific to an order

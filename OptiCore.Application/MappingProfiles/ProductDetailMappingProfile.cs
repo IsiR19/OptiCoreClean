@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using OptiCore.Application.Features.Products.Queries.GetProduct;
 using OptiCore.Domain.Inventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.MappingProfiles
 {
@@ -13,7 +8,7 @@ namespace OptiCore.Application.MappingProfiles
     {
         public ProductDetailMappingProfile()
         {
-            CreateMap<ProductDetailDTO,Product>().ReverseMap();
+            CreateMap<ProductDetailDTO, Product>().ReverseMap();
         }
     }
 }

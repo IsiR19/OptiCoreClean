@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Opticore.Persistance.Repositories;
 using Opticore.Persistence.DatabaseContext;
 using Opticore.Persistence.Repositories;
 using OptiCore.Application.Abstractions.Messaging;
@@ -18,6 +19,9 @@ namespace Opticore.Persistence
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IAgentRepository, AgentRepository>();
+            services.AddScoped<ILeadRepository, LeadRepository>();
             return services;
         }
     }

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OptiCore.Application.Exceptions
+﻿namespace OptiCore.Application.Exceptions
 {
-    public class NotFoundException : Exception 
+    public class NotFoundException : Exception
     {
-        public NotFoundException(string name,object key) : base($"{name} ({key}) was not found")
-    {
-
-    }
-
+        public NotFoundException(string name, object key) : base($"{name} ({key}) was not found")
+        {
+        }
     }
 }

@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OptiCore.Domain.Core;
 
-namespace OptiCore.Application.Abstractions.Messaging 
+namespace OptiCore.Application.Abstractions.Messaging
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : BaseEntity
     {
         Task<IReadOnlyList<TEntity>> GetAllAsync();
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
-        Task<TEntity> GetByIdAsync(int id);
-        Task<TEntity> GetByCodeAsync(string code);
-        Task CreateAsync(TEntity entity);
 
+        Task UpdateAsync(TEntity entity);
+
+        Task DeleteAsync(TEntity entity);
+
+        Task<TEntity> GetByIdAsync(int id);
+
+        Task<TEntity> GetByCodeAsync(string code);
+
+        Task CreateAsync(TEntity entity);
     }
 }

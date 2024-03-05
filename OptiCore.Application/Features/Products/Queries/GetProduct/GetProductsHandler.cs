@@ -2,24 +2,18 @@
 using MediatR;
 using OptiCore.Application.Abstractions.Messaging;
 using OptiCore.Application.Exceptions;
-using OptiCore.Application.Features.Products.Queries.GetAllProducts;
-using OptiCore.Domain.Inventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Products.Queries.GetProduct
 {
-    public class GetProductsHandler : IRequestHandler<GetProductDetailQuery,ProductDetailDTO>
+    public class GetProductsHandler : IRequestHandler<GetProductDetailQuery, ProductDetailDTO>
     {
         private IProductRepository _productRepository;
         private IMapper _mapper;
-        public GetProductsHandler(IProductRepository productRepository,IMapper mapper)
+
+        public GetProductsHandler(IProductRepository productRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _productRepository = productRepository;   
+            _productRepository = productRepository;
         }
 
         public async Task<ProductDetailDTO> Handle(GetProductDetailQuery request, CancellationToken cancellationToken)

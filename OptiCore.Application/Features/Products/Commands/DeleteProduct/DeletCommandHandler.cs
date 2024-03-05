@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using OptiCore.Application.Abstractions.Messaging;
 using OptiCore.Application.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Products.Commands.DeleteProduct
 {
@@ -26,7 +21,7 @@ namespace OptiCore.Application.Features.Products.Commands.DeleteProduct
             if (product == null)
                 throw new NotFoundException(nameof(product), request.Id);
             //Remove Record from Database
-           await _productRepository.DeleteAsync(product);
+            await _productRepository.DeleteAsync(product);
 
             return Unit.Value;
         }

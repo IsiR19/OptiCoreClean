@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Abstractions.Messaging
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository :IRepository<Product>
     {
         Task<bool> IsProductUnique(string name);
     }

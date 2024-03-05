@@ -18,4 +18,16 @@
     <ProjectReference Include="..\OptiCore.Domain\OptiCore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Agents\Commands\CreateAgent\" />
+    <Folder Include="Features\Agents\Commands\DeleteAgent\" />
+    <Folder Include="Features\Agents\Commands\UpdateAgent\" />
+    <Folder Include="Features\Agents\Queries\GetAgent\" />
+    <Folder Include="Features\Agents\Queries\GetAllAgents\" />
+    <Folder Include="Features\Leads\Commands\DeleteLead\" />
+    <Folder Include="Features\Leads\Commands\UpdateLead\" />
+    <Folder Include="Features\Leads\Queries\GetLeads\" />
+    <Folder Include="Features\Leads\Queries\GetAllLeads\" />
+  </ItemGroup>
+
 </Project>

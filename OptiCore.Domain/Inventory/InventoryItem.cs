@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OptiCore.Domain.Core;
 
 namespace OptiCore.Domain.Inventory
 {
-    public class InventoryItem
+    public class InventoryItem : AuditEntity
     {
-        public int InventoryItemId { get; set; }
         public int Quantity { get; set; }
         // Add any other properties specific to an inventory item
 
