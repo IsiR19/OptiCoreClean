@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Domain.Contact_Details;
 using OptiCore.Domain.ContactInfromation;
 using OptiCore.Domain.Leads;
 using OptiCore.Domain.Opportunities;
@@ -36,7 +37,7 @@ namespace OptiCore.Application.Features.Leads.Commands.CreateLead
                 Source = await _leadRepository.GetSourceAsync(request.SourceID),
                 AssignedUser = await _leadRepository.GetUserAsync(request.AssignedUserID),
                 // Initialize the collections or resolve them as necessary
-                ContactInformation = new List<ContactInformation>(),
+                ContactInformation = new List<ContactDetails>(),
                 Activities = new List<Activity>(),
                 Opportunities = new List<Opportunity>(),
                 Tasks = new List<Task>()

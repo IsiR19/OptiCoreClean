@@ -5,11 +5,10 @@ namespace OptiCore.Domain.HeadOffices
 {
     public class HeadOffice : AuditEntity
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int PhoneNumber { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? RegistrationNumber { get; set; }
+        public List<Address>? AddressList { get; set; }
 
-        // Navigation property to related CPs
-        public virtual ICollection<Cp> CPs { get; set; }
+        public virtual ICollection<Cp>? CPList { get; set; }
     }
 }
