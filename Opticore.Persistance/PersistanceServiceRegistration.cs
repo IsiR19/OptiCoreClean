@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Opticore.Persistance.Repositories;
 using Opticore.Persistence.DatabaseContext;
 using Opticore.Persistence.Repositories;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 
 namespace Opticore.Persistence
 {

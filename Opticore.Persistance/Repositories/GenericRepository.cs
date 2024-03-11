@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Opticore.Persistence.DatabaseContext;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Domain.Core;
 
 namespace Opticore.Persistence.Repositories

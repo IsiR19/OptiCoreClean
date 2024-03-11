@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OptiCore.Application.Abstractions.Messaging
+namespace OptiCore.Application.Abstractions.Contracts.Email
 {
     public interface IEmailSender
     {

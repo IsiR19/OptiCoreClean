@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 
 namespace OptiCore.Application.Features.Products.Commands.CreateProduct
 {

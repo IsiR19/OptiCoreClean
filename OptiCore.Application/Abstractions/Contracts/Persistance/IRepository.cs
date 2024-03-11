@@ -1,6 +1,6 @@
 ﻿using OptiCore.Domain.Core;
 
-namespace OptiCore.Application.Abstractions.Messaging
+namespace OptiCore.Application.Abstractions.Contracts.Persistance
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {

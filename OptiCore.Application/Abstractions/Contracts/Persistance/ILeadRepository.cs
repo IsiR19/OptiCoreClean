@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OptiCore.Application.Abstractions.Messaging
+namespace OptiCore.Application.Abstractions.Contracts.Persistance
 {
-    public interface ILeadRepository : IRepository<Lead> 
+    public interface ILeadRepository : IRepository<Lead>
     {
-       
+
         // Retrieves the LeadStatus entity by its ID
         Task<LeadStatus> GetStatusAsync(int statusId);
 

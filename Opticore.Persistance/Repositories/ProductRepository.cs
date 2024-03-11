@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Opticore.Persistence.DatabaseContext;
 using Opticore.Persistence.Repositories;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Domain.Inventory;
 using System;
 using System.Collections.Generic;

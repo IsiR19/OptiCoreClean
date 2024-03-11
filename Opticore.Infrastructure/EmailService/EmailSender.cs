@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Email;
 using OptiCore.Application.Models.Email;
 using System;
 using System.Collections.Generic;

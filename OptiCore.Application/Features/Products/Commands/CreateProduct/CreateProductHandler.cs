@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
 using OptiCore.Domain.Inventory;
 using System;
