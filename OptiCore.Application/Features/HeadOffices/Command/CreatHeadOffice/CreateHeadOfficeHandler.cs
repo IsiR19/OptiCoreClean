@@ -20,7 +20,7 @@ namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
         public async Task<int> Handle(CreateHeadOfficeCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateHeadOfficeCommandValidator(_headOfficeRepository);
-            var validationResult = validator.Validate(request);
+            var validationResult = await validator.ValidateAsync(request);
 
             if (validationResult.Errors.Any())
                 throw new BadRequestException("Invalid Head Office", validationResult);
