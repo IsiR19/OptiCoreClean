@@ -1,10 +1,14 @@
 ﻿using OptiCore.Domain.Contact_Details;
-using OptiCore.Domain.Core;
 using OptiCore.Domain.CP;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace OptiCore.Domain.HeadOffices
+namespace OptiCore.Application.Features.HeadOffices.Queries.GetAllHeadOffices
 {
-    public class HeadOffice : AuditEntity
+    public class HeadOfficeDTO
     {
         public string Name { get; set; } = string.Empty;
         public string? RegistrationNumber { get; set; }

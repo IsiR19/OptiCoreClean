@@ -8,12 +8,12 @@ namespace Opticore.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasData(
-                new Product
-                {
-                    Id = 1,
-                    Name = "Switch",
-                });
+            //builder.HasData(
+            //    new Product
+            //    {
+            //        Id = 2,
+            //        Name = "Blind Motor",
+            //    });
         }
     }
 }

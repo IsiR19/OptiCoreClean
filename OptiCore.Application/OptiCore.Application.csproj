@@ -24,8 +24,6 @@
     <Folder Include="Features\Agents\Commands\UpdateAgent\" />
     <Folder Include="Features\Agents\Queries\GetAgent\" />
     <Folder Include="Features\Agents\Queries\GetAllAgents\" />
-    <Folder Include="Features\HeadOffice\Queries\GetHeadOffice\" />
-    <Folder Include="Features\HeadOffice\Queries\GetAllHeadOffices\" />
     <Folder Include="Features\Leads\Commands\DeleteLead\" />
     <Folder Include="Features\Leads\Commands\UpdateLead\" />
     <Folder Include="Features\Leads\Queries\GetLeads\" />

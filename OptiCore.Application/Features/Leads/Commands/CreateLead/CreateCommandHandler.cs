@@ -1,14 +1,7 @@
 ﻿using MediatR;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
-using OptiCore.Domain.Contact_Details;
 using OptiCore.Domain.Leads;
 using OptiCore.Domain.Opportunities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Leads.Commands.CreateLead
 {
@@ -37,9 +30,7 @@ namespace OptiCore.Application.Features.Leads.Commands.CreateLead
                 AssignedUser = await _leadRepository.GetUserAsync(request.AssignedUserID),
                 // Initialize the collections or resolve them as necessary
                 //ContactInformation = new List<ContactDetails>(),
-                Activities = new List<Activity>(),
-                Opportunities = new List<Opportunity>(),
-                Tasks = new List<Task>()
+                Opportunities = new List<Opportunity>()
             };
 
             // Validation logic could also go here

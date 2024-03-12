@@ -1,6 +1,8 @@
-﻿namespace OptiCore.Domain.Accounts
+﻿using OptiCore.Domain.Core;
+
+namespace OptiCore.Domain.Accounts
 {
-    public class Account
+    public class Account : AuditEntity
     {
         public int AccountNumber { get; set; }
         public string AccountName { get; set; } = string.Empty;

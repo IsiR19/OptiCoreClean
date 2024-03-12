@@ -1,4 +1,5 @@
-﻿using OptiCore.Domain.Inventory;
+﻿using OptiCore.Domain.Contact_Details;
+using OptiCore.Domain.Inventory;
 
 namespace OptiCore.Domain.Suppliers
 {
@@ -6,7 +7,7 @@ namespace OptiCore.Domain.Suppliers
     {
         public int SupplierId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
+        public List<ContactDetails> contact_Details { get; set; }
         // Add any other properties specific to a supplier
 
         public List<Product> Products { get; set; } = new List<Product>();

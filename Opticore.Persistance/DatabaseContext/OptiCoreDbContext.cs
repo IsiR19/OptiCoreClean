@@ -4,6 +4,7 @@ using OptiCore.Domain.Accounts;
 using OptiCore.Domain.Agents;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.Customers;
+using OptiCore.Domain.HeadOffices;
 using OptiCore.Domain.Inventory;
 using OptiCore.Domain.Leads;
 using OptiCore.Domain.Orders;
@@ -34,6 +35,7 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<User> Users { get; set; }
         public DbSet<Lead> Leads { get; set; }
         public DbSet<Agent> Agents { get; set; }
+        public DbSet<HeadOffice> HeadOffices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
