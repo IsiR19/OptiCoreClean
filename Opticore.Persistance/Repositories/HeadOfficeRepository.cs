@@ -18,7 +18,7 @@ namespace Opticore.Persistance.Repositories
         }
         public async Task<bool> IsHeadOfficeUnique(string registrationNumber)
         {
-            return await _context.HeadOffices.AnyAsync(p => p.RegistrationNumber == registrationNumber);
+            return await _context.HeadOffices.AnyAsync(p => p.RegistrationNumber == registrationNumber) == false;
         }
     }
 }

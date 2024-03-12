@@ -20,6 +20,10 @@ namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
             RuleFor(h => h.RegistrationNumber)
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required");
+
+            RuleFor(p => p)
+                .MustAsync(HeadOfficeUnique)
+                .WithMessage("Head Office already exists");
         }
         private Task<bool> HeadOfficeUnique(CreateHeadOfficeCommand command, CancellationToken token)
         {

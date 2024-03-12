@@ -40,7 +40,7 @@ namespace OptiCore.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Post(UpdateHeadOfficeCommand headOffice)
+        public async Task<ActionResult> Put(UpdateHeadOfficeCommand headOffice)
         {
             await _mediator.Send(headOffice);
             return NoContent();
