@@ -23,6 +23,7 @@ namespace Opticore.Persistence
             services.AddScoped<IAgentRepository, AgentRepository>();
             services.AddScoped<ILeadRepository, LeadRepository>();
             services.AddScoped<IHeadOfficeRepository, HeadOfficeRepository>();
+            services.AddScoped<ICpRepository, CpRepository>();
             return services;
         }
     }
