@@ -1,4 +1,5 @@
 ﻿using OptiCore.Domain.Agents;
+using OptiCore.Domain.CP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Abstractions.Contracts.Persistance
 {
-    public interface IAgentRepository : IRepository<Agent>
+    public interface ICpRepository : IRepository<Cp>
     {
-        Task<bool> IsAgentUnique(string name);
-        Task<IReadOnlyList<Agent>> GetAgentsByCPId(int cpId);
+        Task<bool> IsCPUnique(string name);
+        Task<IReadOnlyList<Cp>> GetCpByHeadOfficeId(int HeadOfficeId);
     }
 }

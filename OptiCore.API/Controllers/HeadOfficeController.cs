@@ -1,12 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice;
 using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
 using OptiCore.Application.Features.HeadOffices.Command.UpdateHeadOffice;
 using OptiCore.Application.Features.HeadOffices.Queries.GetAllHeadOffices;
 using OptiCore.Application.Features.HeadOffices.Queries.GetHeadOffice;
-using OptiCore.Application.Features.Products.Queries.GetAllProducts;
 
 namespace OptiCore.API.Controllers
 {

@@ -22,5 +22,10 @@ namespace Opticore.Persistance.Repositories
         {
             return await _context.Agents.AnyAsync(a => a.AgentName == name);  
         }
+
+        public async Task<IReadOnlyList<Agent>> GetAgentsByCPId(int cpId)
+        {
+            return await _context.Agents.Where(a => a.CPId == cpId).ToListAsync();
+        }
     }
 }
