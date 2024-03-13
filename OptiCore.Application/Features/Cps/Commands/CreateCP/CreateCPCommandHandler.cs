@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Cps.Commands.CreateCP
 {
-    public class CreateCPCommandHandler : IRequestHandler<UpdateCPCommand, int>
+    public class CreateCPCommandHandler : IRequestHandler<CreateCPCommand, int>
     {
         private readonly ICpRepository _cpRepository;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace OptiCore.Application.Features.Cps.Commands.CreateCP
             _cpRepository = cpRepository;
             _mapper = mapper;
         }
-        public async Task<int> Handle(UpdateCPCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateCPCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateCPCommandValidator(_cpRepository);
             var validationResult = await validator.ValidateAsync(request);

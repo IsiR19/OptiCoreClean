@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Cps.Commands.CreateCP
 {
-    public class CreateCPCommandValidator : AbstractValidator<UpdateCPCommand>
+    public class CreateCPCommandValidator : AbstractValidator<CreateCPCommand>
     {
         private readonly ICpRepository _cpRepository;
         public CreateCPCommandValidator(ICpRepository cpRepository)
@@ -25,12 +25,12 @@ namespace OptiCore.Application.Features.Cps.Commands.CreateCP
                 .MustAsync(CPUnique)
                 .WithMessage("Head Office already exists");
         }
-        private Task<bool> CPUnique(UpdateCPCommand command, CancellationToken token)
+        private Task<bool> CPUnique(CreateCPCommand command, CancellationToken token)
         {
             return _cpRepository.IsCPUnique(command.Name);
         }
     }
 
 
-    }
-}
+ }
+
