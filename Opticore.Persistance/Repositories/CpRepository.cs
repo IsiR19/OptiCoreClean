@@ -2,13 +2,7 @@
 using Opticore.Persistence.DatabaseContext;
 using Opticore.Persistence.Repositories;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
-using OptiCore.Domain.Agents;
 using OptiCore.Domain.CP;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Opticore.Persistance.Repositories
 {
