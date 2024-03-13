@@ -28,7 +28,7 @@ namespace OptiCore.Application.Features.Cps.Commands.CreateCP
             var validationResult = await validator.ValidateAsync(request);
 
             if (validationResult.Errors.Any())
-                throw new BadRequestException("Invalid Head Office", validationResult);
+                throw new BadRequestException("Invalid data supplied for CP", validationResult);
 
             var data = _mapper.Map<Cp>(request);
 
