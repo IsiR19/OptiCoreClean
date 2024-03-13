@@ -24,7 +24,6 @@
     <Folder Include="Features\Agents\Queries\GetAgentsByHeadOffice\" />
     <Folder Include="Features\Cps\Queries\GetAllCP\" />
     <Folder Include="Features\Cps\Queries\GetAllCPByHeadOfficeId\" />
-    <Folder Include="Features\Cps\Queries\GetCPById\" />
     <Folder Include="Features\Leads\Commands\DeleteLead\" />
     <Folder Include="Features\Leads\Commands\UpdateLead\" />
     <Folder Include="Features\Leads\Queries\GetLeads\" />

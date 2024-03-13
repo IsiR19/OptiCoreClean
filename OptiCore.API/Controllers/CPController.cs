@@ -1,83 +1,60 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OptiCore.Application.Features.Cps.Queries.GetCPById;
+using OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice;
+using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
+using OptiCore.Application.Features.HeadOffices.Command.UpdateHeadOffice;
+using OptiCore.Application.Features.HeadOffices.Queries.GetAllHeadOffices;
+using OptiCore.Application.Features.HeadOffices.Queries.GetHeadOffice;
 
 namespace OptiCore.API.Controllers
 {
-    public class CPController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CPController : ControllerBase
     {
-        // GET: CPController
-        public ActionResult Index()
+        private readonly IMediator _mediator;
+        public CPController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
         }
 
-        // GET: CPController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<ActionResult<CPDTO>> Get(int id)
         {
-            return View();
+            var headOffice = await _mediator.Send(new GetCPQuery(id));
+            return headOffice;
         }
 
-        // GET: CPController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CPController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult> Post(CreateHeadOfficeCommand headOffice)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var response = await _mediator.Send(headOffice);
+            return CreatedAtAction(nameof(Get), new { id = response });
         }
 
-        // GET: CPController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Put(UpdateHeadOfficeCommand headOffice)
         {
-            return View();
+            await _mediator.Send(headOffice);
+            return NoContent();
         }
 
-        // POST: CPController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CPController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CPController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var command = new DeleteHeadOfficeCommand { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }
