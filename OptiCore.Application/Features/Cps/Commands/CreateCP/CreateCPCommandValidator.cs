@@ -12,7 +12,7 @@ namespace OptiCore.Application.Features.Cps.Commands.CreateCP
     public class CreateCPCommandValidator : AbstractValidator<CreateCPCommand>
     {
         private readonly ICpRepository _cpRepository;
-        private readonly IHeadOfficeRepository _headOfficeRepository;
+        private readonly ICpRepository _headOfficeRepository;
         public CreateCPCommandValidator(ICpRepository cpRepository)
         {
             _cpRepository = cpRepository;

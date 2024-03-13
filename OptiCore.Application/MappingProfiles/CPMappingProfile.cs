@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OptiCore.Application.Features.Cps.Commands.CreateCP;
+using OptiCore.Application.Features.Cps.Queries.GetCPById;
 using OptiCore.Domain.CP;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace OptiCore.Application.MappingProfiles
         {
             CreateMap<CreateCPCommand,Cp>().ReverseMap();
             CreateMap<UpdateCPCommand,Cp>().ReverseMap();
+            CreateMap<CPDTO,Cp>().ReverseMap();
         }
     }
 }

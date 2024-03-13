@@ -25,8 +25,8 @@ namespace OptiCore.API.Controllers
         [HttpGet]
         public async Task<ActionResult<CPDTO>> Get(int id)
         {
-            var headOffice = await _mediator.Send(new GetCPQuery(id));
-            return headOffice;
+            var cp = await _mediator.Send(new GetCPQuery(id));
+            return cp;
         }
 
         [HttpPost]

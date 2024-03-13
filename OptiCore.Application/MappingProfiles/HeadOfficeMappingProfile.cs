@@ -18,6 +18,7 @@ namespace OptiCore.Application.MappingProfiles
         {
             CreateMap<CreateHeadOfficeCommand,HeadOffice>().ReverseMap();
             CreateMap<UpdateHeadOfficeCommand, HeadOffice>().ReverseMap();
+            CreateMap<HeadOfficeDTO,HeadOffice>().ReverseMap();
         }
     }
 }
