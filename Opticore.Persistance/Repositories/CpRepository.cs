@@ -14,12 +14,12 @@ namespace Opticore.Persistance.Repositories
         }
         public async Task<IReadOnlyList<Cp>> GetCpByHeadOfficeId(int HeadOfficeId)
         {
-            return await _context.Cps.Where(c => c.HeadOfficeId == HeadOfficeId).ToListAsync(); 
+            return await _context.Cp.Where(c => c.HeadOfficeId == HeadOfficeId).ToListAsync(); 
         }
 
         public async Task<bool> IsCPUnique(string name)
         {
-            return await _context.Cps.AnyAsync(c => c.Name == name);
+            return await _context.Cp.AnyAsync(c => c.Name == name);
         }
     }
 }

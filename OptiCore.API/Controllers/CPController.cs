@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OptiCore.Application.Features.Cps.Commands.CreateCP;
+using OptiCore.Application.Features.Cps.Commands.DeleteCP;
 using OptiCore.Application.Features.Cps.Queries.GetCPById;
 using OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice;
 using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
@@ -30,9 +32,9 @@ namespace OptiCore.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> Post(CreateHeadOfficeCommand headOffice)
+        public async Task<ActionResult> Post(CreateCPCommand cp)
         {
-            var response = await _mediator.Send(headOffice);
+            var response = await _mediator.Send(cp);
             return CreatedAtAction(nameof(Get), new { id = response });
         }
 
@@ -40,9 +42,9 @@ namespace OptiCore.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put(UpdateHeadOfficeCommand headOffice)
+        public async Task<ActionResult> Put(UpdateCPCommand cp)
         {
-            await _mediator.Send(headOffice);
+            await _mediator.Send(cp);
             return NoContent();
         }
 
@@ -52,7 +54,7 @@ namespace OptiCore.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
-            var command = new DeleteHeadOfficeCommand { Id = id };
+            var command = new DeleteCPCommand { Id = id };
             await _mediator.Send(command);
             return NoContent();
         }

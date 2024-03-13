@@ -37,7 +37,7 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<Lead> Leads { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<HeadOffice> HeadOffices { get; set; }
-        public DbSet<Cp> Cps { get; set; }
+        public DbSet<Cp> Cp { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
