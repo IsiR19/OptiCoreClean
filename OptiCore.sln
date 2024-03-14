@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorUI", "BlazorUI\Blazor
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Opticore.ReactUI", "ReactJSUI\Opticore.ReactUI.esproj", "{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opticore.Identity", "Opticore.Identity\Opticore.Identity.csproj", "{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{09B1AE32-21C4-4CBC-8256-820819AF3B42} = {AC8DCA33-0F94-4B30-919D-F4C66298301C}
 		{57FB62B0-C8C3-4E5F-9C95-B2D2530247E4} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF} = {CE22146F-042F-4702-901D-A04CA7AB8013}
+		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97} = {8BEB87FC-C51A-4728-925C-1B9FD872EA6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFFFE8A2-53EF-4F86-924F-102F0A8DEDB3}
