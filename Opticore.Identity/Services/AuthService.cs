@@ -86,9 +86,28 @@ namespace Opticore.Identity.Services
             return jwtSecurityToken;
         }
 
-        public Task<RegistrationResponse> Register(RegistrationRequest request)
+        public async Task<RegistrationResponse> Register(RegistrationRequest request)
         {
-            throw new NotImplementedException();
+            var user = new ApplicationUser
+            {
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                UserName = request.Username,
+                EmailConfirmed = true,
+            };
+
+            var result = await _userManager.CreateAsync(user,request.Password);
+
+            if(result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Employee");
+                return new RegistrationResponse() {UserId = user.Id};
+            }
+            else
+            {
+                throw new BadRequestException($"{result.Errors}");
+            }
         }
     }
 }
