@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using OptiCore.Application.Abstractions.Messaging;
+using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Domain.Inventory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Products.Commands.UpdateProduct
 {
@@ -15,7 +10,7 @@ namespace OptiCore.Application.Features.Products.Commands.UpdateProduct
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public UpdateProductHandler(IMapper mapper,IProductRepository productRepository)
+        public UpdateProductHandler(IMapper mapper, IProductRepository productRepository)
         {
             _mapper = mapper;
             _productRepository = productRepository;

@@ -9,11 +9,27 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OptiCore.Domain\OptiCore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Agents\Queries\GetAgentById\" />
+    <Folder Include="Features\Agents\Queries\GetAllAgents\" />
+    <Folder Include="Features\Agents\Queries\GetAgentsByHeadOffice\" />
+    <Folder Include="Features\Cps\Queries\GetAllCP\" />
+    <Folder Include="Features\Cps\Queries\GetAllCPByHeadOfficeId\" />
+    <Folder Include="Features\Leads\Commands\DeleteLead\" />
+    <Folder Include="Features\Leads\Commands\UpdateLead\" />
+    <Folder Include="Features\Leads\Queries\GetLeads\" />
+    <Folder Include="Features\Leads\Queries\GetAllLeads\" />
+    <Folder Include="Features\HeadOffies\" />
+    <Folder Include="Features\Addresses\" />
   </ItemGroup>
 
 </Project>

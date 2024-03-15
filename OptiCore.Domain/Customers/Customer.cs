@@ -1,10 +1,5 @@
 ﻿using OptiCore.Domain.Orders;
 using OptiCore.Domain.Payments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Domain.Customers
 {

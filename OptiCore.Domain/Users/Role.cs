@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OptiCore.Domain.Users
+﻿namespace OptiCore.Domain.Users
 {
     public class Role
     {
