@@ -6,9 +6,10 @@ namespace OptiCore.Domain.Users
 {
     public class User : BaseEntity
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
-        public UserType Role { get; set; }
+        public UserType Type { get; set; }
 
         // Navigation properties for EF Core
         public ICollection<UserHierarchy> ChildHierarchies { get; set; }

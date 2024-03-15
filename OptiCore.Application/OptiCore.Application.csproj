@@ -37,6 +37,7 @@
     <Folder Include="Features\Leads\Commands\UpdateLead\" />
     <Folder Include="Features\Leads\Queries\GetLeads\" />
     <Folder Include="Features\Leads\Queries\GetAllLeads\" />
+    <Folder Include="Features\Users\Commands\" />
   </ItemGroup>
 
 </Project>
