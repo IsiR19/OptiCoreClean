@@ -1,0 +1,22 @@
+title User login (Failure)
+
+actor "User" as u
+participant "App/UI" as app
+participant "Service" as svc
+participant "Auth server" as auth
+database "Database" as db
+entity "Redis" as r
+
+u->app:Logs in
+app->svc:Login request
+activate svc
+svc->auth:Mediate
+activate auth
+auth->db:Validate user
+db-->auth: Validation Failed
+auth-->svc:Mediation response 401
+deactivate auth
+svc-->app: Response 401
+deactivate svc
+
+

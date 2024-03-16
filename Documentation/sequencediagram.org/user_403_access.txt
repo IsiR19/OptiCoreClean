@@ -1,0 +1,25 @@
+title User performing action (access failure)
+
+actor "User" as u
+participant "App/UI" as app
+participant "Service" as svc
+participant "Auth server" as auth
+entity "Redis" as r
+
+u->app: Actions
+app->svc:Action request
+activate svc
+svc->auth:Requested entitlement
+activate auth
+auth->r:Retrieve session information
+r-->auth: Session Information
+auth->r: Retrieve entitlements/roles
+r-->auth: Entitlements/roles
+auth->auth:Validate requested entitlement
+auth-->>auth:Validation failure
+auth-->svc:Mediation response 403
+deactivate auth
+svc-->app: Response 403
+deactivate svc
+
+

@@ -1,0 +1,28 @@
+title User login (Success)
+
+actor "User" as u
+participant "App/UI" as app
+participant "Service" as svc
+participant "Auth server" as auth
+database "Database" as db
+entity "Redis" as r
+
+u->app:Logs in
+app->svc:Login request
+activate svc
+svc->auth:Mediate
+activate auth
+auth->db:Validate user
+db-->auth: Validated
+auth->auth:Generate session Id (with expirey)
+auth->r:Store (sessionId, userId, IP address, expirey)
+auth->db: Retrieve entitlements/roles
+db-->auth: Entitlements/roles
+auth->r: Store (entitlements/roles, userId)
+auth-->svc:Mediation response 200 OK
+deactivate auth
+svc->svc:Sets sessionId cookie for response
+svc-->app: Response 200 Ok
+deactivate svc
+
+
