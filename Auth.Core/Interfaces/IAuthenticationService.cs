@@ -10,6 +10,6 @@ namespace Auth.Core.Interfaces
 {
     public interface IAuthenticationService
     {
-        public  Task<LoginResponse> LoginWithGoogle(LoginRequest loginRequest);
+        public  Task<LoginResponse> CreateUserSession(LoginRequest loginRequest);
     }
 }

@@ -28,7 +28,7 @@ namespace Auth.DomainLogic.Services
 
         #region Public Methods
 
-        public async Task<LoginResponse> LoginWithGoogle(LoginRequest loginRequest)
+        public async Task<LoginResponse> CreateUserSession(LoginRequest loginRequest)
         {
             var validationResult = await _googleService.ValidateIdTokenAsync(loginRequest.GoogleIdToken);
             if (!validationResult.Validated)
