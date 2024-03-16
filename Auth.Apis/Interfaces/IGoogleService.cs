@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth;
+﻿using Auth.DomainLogic.Models;
+using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Auth.DomainLogic.Interfaces
 {
     public interface IGoogleService
     {
-        Task<GoogleJsonWebSignature.Payload> ValidateIdTokenAsync(string idToken);
+        Task<GoogleValidationResult> ValidateIdTokenAsync(string idToken);
     }
 }
