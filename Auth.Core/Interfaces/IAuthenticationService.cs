@@ -10,6 +10,8 @@ namespace Auth.Core.Interfaces
 {
     public interface IAuthenticationService
     {
-        public  Task<LoginResponse> CreateUserSession(LoginRequest loginRequest);
+        public Task<SessionResponse> CreateUserSessionAsync(LoginRequest loginRequest);
+        public SessionResponse GetUserSession(SessionRequest sessionRequest);
+        public void EndUserSession(SessionRequest sessionRequest);
     }
 }

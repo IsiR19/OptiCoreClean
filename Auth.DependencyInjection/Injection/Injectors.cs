@@ -28,7 +28,7 @@ namespace Auth.DependencyInjection.Injection
         #region Private Methods
 
         private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
-        {
+        {  
             services.AddScoped<IGoogleService, GoogleService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             return services;
@@ -37,6 +37,7 @@ namespace Auth.DependencyInjection.Injection
         private static IServiceCollection AddCaching(this IServiceCollection services, DependencyInjectionConfiguration config)
         {
             services.AddSingleton(config.AuthConfiguration.Cache);
+            services.AddSingleton<IAuthCacheService, AuthCacheService>();
             switch (config.AuthConfiguration.Cache.Provider)
             {
                 case CacheProviders.Memory:

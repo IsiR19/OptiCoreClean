@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Auth.Core.Models.Responses
 {
-    public class LoginResponse
+    public class SessionResponse
     {
         #region Public Properties
 
         /// <summary>
         /// The <seealso cref="DateTime"/> of the session Id's expiration
         /// </summary>
-        public DateTime Expirey { get; init; }
+        public DateTime Expiry { get; init; }
 
         /// <summary>
-        /// The session Id for the currently logged in user
+        /// The session GUID for the currently logged in user
         /// </summary>
-        public string SessionId { get; init; }
+        public string SessionGuid { get; init; }
 
         /// <summary>
         /// The user's UUID
@@ -29,13 +29,20 @@ namespace Auth.Core.Models.Responses
 
         #region Public Constructors
 
-        public LoginResponse()
+        public SessionResponse()
         { }
 
-        public LoginResponse(string sessionId, DateTime expirey, string userUID)
+        public SessionResponse(string sessionGuid, DateTime expiry, string userUID)
         {
-            SessionId = sessionId;
-            Expirey = expirey;
+            SessionGuid = sessionGuid;
+            Expiry = expiry;
+            UserUID = userUID;
+        }
+
+        public SessionResponse(string sessionGuid, long expirationTimeSeconds, string userUID)
+        {
+            SessionGuid = sessionGuid;
+            Expiry = DateTimeOffset.FromUnixTimeSeconds(expirationTimeSeconds).UtcDateTime;
             UserUID = userUID;
         }
 

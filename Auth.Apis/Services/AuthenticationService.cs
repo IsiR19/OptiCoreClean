@@ -1,4 +1,4 @@
-﻿using Auth.Core.Common.Interfaces;
+﻿using Auth.Core.Enums;
 using Auth.Core.Exceptions;
 using Auth.Core.Interfaces;
 using Auth.Core.Models.Requests;
@@ -11,34 +11,59 @@ namespace Auth.DomainLogic.Services
     {
         #region Private Fields
 
-        private readonly ICacheProvider _cacheProvider;
+        private readonly IAuthCacheService _authCacheService;
         private readonly IGoogleService _googleService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(IGoogleService googleService, ICacheProvider cacheProvider)
+        public AuthenticationService(IGoogleService googleService, IAuthCacheService authCacheService)
         {
             _googleService = googleService;
-            _cacheProvider = cacheProvider;
+            _authCacheService = authCacheService;
         }
 
         #endregion Public Constructors
 
         #region Public Methods
 
-        public async Task<LoginResponse> CreateUserSession(LoginRequest loginRequest)
+        public async Task<SessionResponse> CreateUserSessionAsync(LoginRequest loginRequest)
         {
             var validationResult = await _googleService.ValidateIdTokenAsync(loginRequest.GoogleIdToken);
             if (!validationResult.Validated)
             {
                 throw AuthenticationException.Token(validationResult.Exception!.Message);
             }
-            var userUUID = validationResult.Data!.Subject;
-            var sessionId = Guid.NewGuid().ToString();
-            //  TODO: Get expiration
-            throw new NotImplementedException();
+            var userUID = validationResult.Data!.Subject;
+            var sessionGuid = Guid.NewGuid().ToString();
+            var expireAt = validationResult.Data.ExpirationTimeSeconds ?? DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
+
+            _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
+            return new SessionResponse(sessionGuid, expireAt, userUID);
+        }
+
+        public void EndUserSession(SessionRequest sessionRequest)
+        {
+            _authCacheService.BlacklistSession(sessionRequest.SessionGuid);
+        }
+
+        public SessionResponse GetUserSession(SessionRequest sessionRequest)
+        {
+            var sessionInformation = _authCacheService.GetSessionInformation(sessionRequest.SessionGuid);
+            if (sessionInformation == null)
+            {
+                throw new AuthenticationException(AuthenticationExceptionCause.Session, "Invalid session GUID");
+            }
+            if (sessionInformation.ExpireUTC < DateTime.UtcNow)
+            {
+                throw new AuthenticationException(AuthenticationExceptionCause.Session, "Expired or Blacklisted session GUID");
+            }
+            if (sessionInformation.IpAddress != sessionRequest.IpAddress)
+            {
+                throw new AuthenticationException(AuthenticationExceptionCause.Session, "IP Address mismatch");
+            }
+            return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID);
         }
 
         #endregion Public Methods

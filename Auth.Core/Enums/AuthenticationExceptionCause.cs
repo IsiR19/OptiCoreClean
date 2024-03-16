@@ -3,6 +3,7 @@
     public enum AuthenticationExceptionCause
     {
         Token,
-        NotRegistered
+        NotRegistered,
+        Session
     }
 }
