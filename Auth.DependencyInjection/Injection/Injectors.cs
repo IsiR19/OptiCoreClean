@@ -7,16 +7,13 @@ using Auth.DependencyInjection.Models;
 using Auth.DomainLogic.Interfaces;
 using Auth.DomainLogic.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auth.DependencyInjection.Injection
 {
     public static class Injectors
     {
+        #region Public Methods
+
         public static IServiceCollection AddAuthServices(this IServiceCollection services, Action<DependencyInjectionConfigurationBuilder> builder)
         {
             var config = BuildConfiguration(builder);
@@ -26,11 +23,15 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
-        private static DependencyInjectionConfiguration BuildConfiguration(Action<DependencyInjectionConfigurationBuilder> builder)
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
         {
-            var dependencyInjectionConfigurationBuilder = new DependencyInjectionConfigurationBuilder();
-            builder.Invoke(dependencyInjectionConfigurationBuilder);
-            return dependencyInjectionConfigurationBuilder.Build();
+            services.AddScoped<IGoogleService, GoogleService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            return services;
         }
 
         private static IServiceCollection AddCaching(this IServiceCollection services, DependencyInjectionConfiguration config)
@@ -53,11 +54,13 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
-        private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
+        private static DependencyInjectionConfiguration BuildConfiguration(Action<DependencyInjectionConfigurationBuilder> builder)
         {
-            services.AddScoped<IGoogleService, GoogleService>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-            return services;
+            var dependencyInjectionConfigurationBuilder = new DependencyInjectionConfigurationBuilder();
+            builder.Invoke(dependencyInjectionConfigurationBuilder);
+            return dependencyInjectionConfigurationBuilder.Build();
         }
+
+        #endregion Private Methods
     }
 }

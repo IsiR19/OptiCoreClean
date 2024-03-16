@@ -9,7 +9,11 @@ namespace Auth.DependencyInjection.Models
 {
     public class DependencyInjectionConfiguration
     {
+        #region Public Properties
+
         public required bool AddEntitlements { get; set; }
         public required AuthConfiguration AuthConfiguration { get; set; }
+
+        #endregion Public Properties
     }
 }

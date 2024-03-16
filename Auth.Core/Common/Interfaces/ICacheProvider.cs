@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Auth.Core.Common.Interfaces
+﻿namespace Auth.Core.Common.Interfaces
 {
     public interface ICacheProvider
     {

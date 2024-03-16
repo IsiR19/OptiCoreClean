@@ -1,11 +1,6 @@
 ﻿using Auth.Core.Common.Interfaces;
 using Auth.Core.Common.Models;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auth.Core.Common.Services.Providers
 {
