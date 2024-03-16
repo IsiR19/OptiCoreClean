@@ -2,7 +2,6 @@
 using MediatR;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 
-
 namespace OptiCore.Application.Features.Users.Queries.GetAllUsers
 {
     public class GetUsersCommandHandler : IRequestHandler<GetUsersQuery, List<GetUsersDTO>>
@@ -10,7 +9,7 @@ namespace OptiCore.Application.Features.Users.Queries.GetAllUsers
         private readonly IMapper _mapper;
         private readonly IUsersRepository _usersRepository;
 
-        public GetUsersCommandHandler(IUsersRepository usersRepository,IMapper mapper)
+        public GetUsersCommandHandler(IUsersRepository usersRepository, IMapper mapper)
         {
             _mapper = mapper;
             _usersRepository = usersRepository;

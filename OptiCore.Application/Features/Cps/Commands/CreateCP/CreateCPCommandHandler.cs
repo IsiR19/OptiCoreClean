@@ -3,12 +3,6 @@ using MediatR;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
 using OptiCore.Domain.CP;
-using OptiCore.Domain.HeadOffices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Cps.Commands.CreateCP
 {
@@ -17,11 +11,12 @@ namespace OptiCore.Application.Features.Cps.Commands.CreateCP
         private readonly ICpRepository _cpRepository;
         private readonly IMapper _mapper;
 
-        public CreateCPCommandHandler(ICpRepository cpRepository,IMapper mapper)
+        public CreateCPCommandHandler(ICpRepository cpRepository, IMapper mapper)
         {
             _cpRepository = cpRepository;
             _mapper = mapper;
         }
+
         public async Task<int> Handle(CreateCPCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateCPCommandValidator(_cpRepository);

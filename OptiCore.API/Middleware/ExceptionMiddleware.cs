@@ -1,16 +1,14 @@
 ﻿using OptiCore.API.Models;
 using OptiCore.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace OptiCore.API.Middleware
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
+
         public ExceptionMiddleware(RequestDelegate requestDelegate)
         {
             _requestDelegate = requestDelegate;
@@ -47,6 +45,7 @@ namespace OptiCore.API.Middleware
                         Type = problemType
                     };
                     break;
+
                 case NotFoundException notFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     problemType = nameof(NotFoundException);
@@ -58,6 +57,7 @@ namespace OptiCore.API.Middleware
                         Type = problemType
                     };
                     break;
+
                 default:
                     problem = new CustomValidationProblemDetails
                     {

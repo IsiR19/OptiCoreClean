@@ -5,13 +5,9 @@ using Opticore.Identity.Models;
 using OptiCore.Application.Abstractions.Contracts.Identity;
 using OptiCore.Application.Exceptions;
 using OptiCore.Application.Models.Identity;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Opticore.Identity.Services
 {
@@ -29,16 +25,17 @@ namespace Opticore.Identity.Services
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
         }
+
         public async Task<AuthResponse> Login(AuthRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
-                throw new NotFoundException($"User with {request.Email} not found",request.Email);
+                throw new NotFoundException($"User with {request.Email} not found", request.Email);
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password,false);
-            if (!result.Succeeded) 
+            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            if (!result.Succeeded)
             {
                 throw new BadRequestException($"Invalid user credentials for '{request.Email}' not valid");
             }
@@ -61,7 +58,7 @@ namespace Opticore.Identity.Services
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 
-            var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role,q)).ToList();
+            var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
@@ -97,12 +94,12 @@ namespace Opticore.Identity.Services
                 EmailConfirmed = true,
             };
 
-            var result = await _userManager.CreateAsync(user,request.Password);
+            var result = await _userManager.CreateAsync(user, request.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "Employee");
-                return new RegistrationResponse() {UserId = user.Id};
+                return new RegistrationResponse() { UserId = user.Id };
             }
             else
             {

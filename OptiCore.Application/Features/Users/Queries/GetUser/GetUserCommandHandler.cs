@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using OptiCore.Application.Abstractions.Contracts.Identity;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Users.Queries.GetUser
 {
@@ -36,5 +30,3 @@ namespace OptiCore.Application.Features.Users.Queries.GetUser
         }
     }
 }
-
-

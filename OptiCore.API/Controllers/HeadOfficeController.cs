@@ -13,6 +13,7 @@ namespace OptiCore.API.Controllers
     public class HeadOfficeController : ControllerBase
     {
         public IMediator _mediator { get; }
+
         public HeadOfficeController(IMediator mediator)
         {
             _mediator = mediator;

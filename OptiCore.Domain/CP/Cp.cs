@@ -8,7 +8,8 @@ namespace OptiCore.Domain.CP
     public class Cp : AuditEntity
     {
         [ForeignKey("HeadOffices")]
-        public int HeadOfficeId { get; set; } 
+        public int HeadOfficeId { get; set; }
+
         public string Name { get; set; }
         public bool IsActive { get; set; }
 

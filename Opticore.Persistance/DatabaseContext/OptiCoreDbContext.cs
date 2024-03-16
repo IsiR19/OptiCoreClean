@@ -42,7 +42,6 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<Commission> Commissions { get; set; }
         public DbSet<UserHierarchy> UserHierarchy { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OptiCoreDbContext).Assembly);
@@ -64,8 +63,6 @@ namespace Opticore.Persistence.DatabaseContext
             .HasForeignKey(c => c.UserId);
 
             base.OnModelCreating(modelBuilder);
-
-
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

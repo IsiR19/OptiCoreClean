@@ -13,6 +13,7 @@ namespace OptiCore.Domain.Users
 
         // Navigation properties for EF Core
         public ICollection<UserHierarchy> ChildHierarchies { get; set; }
+
         public UserHierarchy ParentHierarchy { get; set; }
         public ICollection<Commission> Commissions { get; set; }
     }

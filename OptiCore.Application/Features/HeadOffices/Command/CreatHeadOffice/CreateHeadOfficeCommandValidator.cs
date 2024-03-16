@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
-using OptiCore.Application.Features.Products.Commands.CreateProduct;
-
 
 namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
 {
-   
     public class CreateHeadOfficeCommandValidator : AbstractValidator<CreateHeadOfficeCommand>
     {
         private readonly IHeadOfficeRepository _headOfficeRepository;
@@ -25,6 +22,7 @@ namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
                 .MustAsync(HeadOfficeUnique)
                 .WithMessage("Head Office already exists");
         }
+
         private Task<bool> HeadOfficeUnique(CreateHeadOfficeCommand command, CancellationToken token)
         {
             return _headOfficeRepository.IsHeadOfficeUnique(command.RegistrationNumber);
