@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.Cps.Commands.CreateCP;
 using OptiCore.Application.Features.Cps.Commands.DeleteCP;
 using OptiCore.Application.Features.Cps.Queries.GetCPById;
+using Auth.Middleware.Attributes;
 
 namespace OptiCore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CPController : ControllerBase
     {
         private readonly IMediator _mediator;

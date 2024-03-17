@@ -1,6 +1,9 @@
 using Opticore.Infrastructure;
 using Opticore.Persistence;
 using OptiCore.Application;
+using Auth.DependencyInjection.Injection;
+using Auth.Core.Models.Configuration;
+using Auth.Core.Common.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+GoogleOAuthConfiguration googleOAuth = new GoogleOAuthConfiguration
+{
+    ClientId = "fake",
+    ClientSecret = "123",
+    LoginPath = "here"
+};
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthServices(builder =>
+{
+    builder
+    .WithGoogleOAuthConfiguration(googleOAuth)
+    .WithCache(CacheConfiguration.Default);
+});
+builder.Services.AddInternalAuthServer();
 
 builder.Services.AddControllers();
 
