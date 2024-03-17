@@ -1,11 +1,11 @@
 title User login (Failure)
 
-actor "User" as u
-participant "App/UI" as app
-participant "Service" as svc
-participant "Auth server" as auth
-database "Database" as db
-entity "Redis" as r
+actor u as User
+participant app as App/UI
+participant svc as Service
+participant auth as Auth server
+participant db as Database
+participant r as Redis
 
 u->app:Logs in
 app->svc:Login request
