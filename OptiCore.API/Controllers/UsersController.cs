@@ -30,7 +30,7 @@ namespace OptiCore.API.Controllers
         }
 
         [HttpGet("related")]
-        public async Task<ActionResult<List<GetUsersDTO>>> GetRelatedUsersAsync(int id)
+        public async Task<ActionResult<List<GetUsersDTO>>> GetUsers(int id)
         {
             var user = await _mediator.Send(new GetUsersQuery(id));
             return user;
@@ -61,7 +61,8 @@ namespace OptiCore.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            await _mediator.Send(id);
+            return NoContent();
         }
     }
 }
