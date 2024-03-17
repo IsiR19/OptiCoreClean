@@ -53,15 +53,15 @@ namespace Auth.DomainLogic.Services
             var sessionInformation = _authCacheService.GetSessionInformation(sessionRequest.SessionGuid);
             if (sessionInformation == null)
             {
-                throw new AuthenticationException(AuthenticationExceptionCause.Session, "Invalid session GUID");
+                throw AuthenticationException.NoSession();
             }
             if (sessionInformation.ExpireUTC < DateTime.UtcNow)
             {
-                throw new AuthenticationException(AuthenticationExceptionCause.Session, "Expired or Blacklisted session GUID");
+                throw  AuthenticationException.Session("Expired or Blacklisted.");
             }
             if (sessionInformation.IpAddress != sessionRequest.IpAddress)
             {
-                throw new AuthenticationException(AuthenticationExceptionCause.Session, "IP Address mismatch");
+                throw AuthenticationException.Session("IP Mismatch.");
             }
             return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID);
         }
