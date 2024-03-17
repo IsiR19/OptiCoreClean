@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.Products.Queries.GetAllProducts;
-using OptiCore.Application.Features.Products.Queries.GetProduct;
 
 namespace OptiCore.API.Controllers
 {
@@ -23,8 +21,5 @@ namespace OptiCore.API.Controllers
             var products = await _mediator.Send(new GetProductsQuery());
             return products;
         }
-        
-
     }
-        
 }

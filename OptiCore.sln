@@ -29,7 +29,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorUI", "BlazorUI\Blazor
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Opticore.ReactUI", "ReactJSUI\Opticore.ReactUI.esproj", "{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opticore.Identity", "Opticore.Identity\Opticore.Identity.csproj", "{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Opticore.Identity", "Opticore.Identity\Opticore.Identity.csproj", "{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "OptiCore.UI", "OptiCore.UI\", "{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_63606"
+		Debug.AspNetCompiler.PhysicalPath = "OptiCore.UI\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_63606\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_63606"
+		Release.AspNetCompiler.PhysicalPath = "OptiCore.UI\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_63606\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "63606"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +91,10 @@ Global
 		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +112,7 @@ Global
 		{57FB62B0-C8C3-4E5F-9C95-B2D2530247E4} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97} = {8BEB87FC-C51A-4728-925C-1B9FD872EA6D}
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFFFE8A2-53EF-4F86-924F-102F0A8DEDB3}

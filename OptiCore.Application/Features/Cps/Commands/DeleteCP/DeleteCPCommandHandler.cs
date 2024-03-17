@@ -1,17 +1,10 @@
 ﻿using MediatR;
-using MediatR.Pipeline;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
-using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Cps.Commands.DeleteCP
 {
-    public class DeleteCPCommandHandler : IRequestHandler<DeleteCPCommand,Unit>
+    public class DeleteCPCommandHandler : IRequestHandler<DeleteCPCommand, Unit>
     {
         private readonly ICpRepository _cpRepository;
 

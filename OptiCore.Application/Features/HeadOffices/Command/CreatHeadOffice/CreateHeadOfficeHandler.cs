@@ -4,7 +4,6 @@ using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
 using OptiCore.Domain.HeadOffices;
 
-
 namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
 {
     public class CreateHeadOfficeHandler : IRequestHandler<CreateHeadOfficeCommand, int>
@@ -12,11 +11,12 @@ namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
         private readonly IHeadOfficeRepository _headOfficeRepository;
         private readonly IMapper _mapper;
 
-        public CreateHeadOfficeHandler(IHeadOfficeRepository headOfficeRepository,IMapper mapper)
+        public CreateHeadOfficeHandler(IHeadOfficeRepository headOfficeRepository, IMapper mapper)
         {
             _headOfficeRepository = headOfficeRepository;
             _mapper = mapper;
         }
+
         public async Task<int> Handle(CreateHeadOfficeCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateHeadOfficeCommandValidator(_headOfficeRepository);

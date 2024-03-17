@@ -1,5 +1,4 @@
 ﻿using OptiCore.Domain.Core;
-using OptiCore.Domain.Suppliers;
 
 namespace OptiCore.Domain.Inventory
 {

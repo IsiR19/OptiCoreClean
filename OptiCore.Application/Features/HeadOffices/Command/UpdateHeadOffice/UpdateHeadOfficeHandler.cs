@@ -3,7 +3,6 @@ using MediatR;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Domain.HeadOffices;
 
-
 namespace OptiCore.Application.Features.HeadOffices.Command.UpdateHeadOffice
 {
     public class UpdateHeadOfficeHandler : IRequestHandler<UpdateHeadOfficeCommand, Unit>

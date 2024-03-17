@@ -1,13 +1,20 @@
-﻿namespace OptiCore.Domain.Users
-{
-    public class User
-    {
-        public int UserId { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        // Add any other properties specific to a user
+﻿using OptiCore.Domain.Commissions;
+using OptiCore.Domain.Core;
+using OptiCore.Domain.Enums;
 
-        public List<Role> Roles { get; set; } = new List<Role>();
+namespace OptiCore.Domain.Users
+{
+    public class User : BaseEntity
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public UserType Type { get; set; }
+
+        // Navigation properties for EF Core
+        public ICollection<UserHierarchy> ChildHierarchies { get; set; }
+
+        public UserHierarchy ParentHierarchy { get; set; }
+        public ICollection<Commission> Commissions { get; set; }
     }
 }

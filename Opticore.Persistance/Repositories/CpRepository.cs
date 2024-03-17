@@ -10,11 +10,11 @@ namespace Opticore.Persistance.Repositories
     {
         public CpRepository(OptiCoreDbContext context) : base(context)
         {
-
         }
+
         public async Task<IReadOnlyList<Cp>> GetCpByHeadOfficeId(int HeadOfficeId)
         {
-            return await _context.Cp.Where(c => c.HeadOfficeId == HeadOfficeId).ToListAsync(); 
+            return await _context.Cp.Where(c => c.HeadOfficeId == HeadOfficeId).ToListAsync();
         }
 
         public async Task<bool> IsCPUnique(string name)

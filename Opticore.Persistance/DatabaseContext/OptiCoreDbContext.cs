@@ -2,6 +2,7 @@
 using Opticore.Persistence.Configurations;
 using OptiCore.Domain.Accounts;
 using OptiCore.Domain.Agents;
+using OptiCore.Domain.Commissions;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.CP;
 using OptiCore.Domain.Customers;
@@ -38,11 +39,29 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<Agent> Agents { get; set; }
         public DbSet<HeadOffice> HeadOffices { get; set; }
         public DbSet<Cp> Cp { get; set; }
+        public DbSet<Commission> Commissions { get; set; }
+        public DbSet<UserHierarchy> UserHierarchy { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OptiCoreDbContext).Assembly);
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.Entity<UserHierarchy>()
+            .HasOne(uh => uh.ParentUser)
+            .WithMany(u => u.ChildHierarchies)
+            .HasForeignKey(uh => uh.ParentUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserHierarchy>()
+            .HasOne(uh => uh.ChildUser)
+            .WithOne(u => u.ParentHierarchy)
+            .HasForeignKey<UserHierarchy>(uh => uh.ChildUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Commission>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Commissions)
+            .HasForeignKey(c => c.UserId);
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -1,14 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.Cps.Commands.CreateCP;
 using OptiCore.Application.Features.Cps.Commands.DeleteCP;
 using OptiCore.Application.Features.Cps.Queries.GetCPById;
-using OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice;
-using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
-using OptiCore.Application.Features.HeadOffices.Command.UpdateHeadOffice;
-using OptiCore.Application.Features.HeadOffices.Queries.GetAllHeadOffices;
-using OptiCore.Application.Features.HeadOffices.Queries.GetHeadOffice;
 
 namespace OptiCore.API.Controllers
 {
@@ -17,6 +11,7 @@ namespace OptiCore.API.Controllers
     public class CPController : ControllerBase
     {
         private readonly IMediator _mediator;
+
         public CPController(IMediator mediator)
         {
             _mediator = mediator;

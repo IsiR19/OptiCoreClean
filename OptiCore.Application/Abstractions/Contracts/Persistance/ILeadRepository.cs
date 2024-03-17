@@ -1,18 +1,11 @@
 ﻿using OptiCore.Domain.Leads;
 using OptiCore.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiCore.Application.Abstractions.Contracts.Persistance
 {
     public interface ILeadRepository : IRepository<Lead>
     {
 
-        // Retrieves the LeadStatus entity by its ID
-        Task<LeadStatus> GetStatusAsync(int statusId);
 
         // Retrieves the LeadSource entity by its ID
         Task<LeadSource> GetSourceAsync(int sourceId);
@@ -23,5 +16,4 @@ namespace OptiCore.Application.Abstractions.Contracts.Persistance
         // The UnitOfWork property or method ensures that the repository can participate in transactions
         IUnitOfWork UnitOfWork { get; }
     }
-
 }
