@@ -23,14 +23,19 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
+        public static IServiceCollection AddInternalAuthServer(this IServiceCollection services)
+        {
+            services.AddScoped<IAuthorizationServerInteractor, InternalAuthorizationServerInteractor>();
+            return services;
+        }
         #endregion Public Methods
 
         #region Private Methods
 
         private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
         {  
-            services.AddScoped<IGoogleService, GoogleService>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IGoogleService, GoogleService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
             return services;
         }
 

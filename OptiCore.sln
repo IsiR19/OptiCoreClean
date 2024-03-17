@@ -33,11 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Opticore.Identity", "Optico
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Core", "Auth.Core\Auth.Core.csproj", "{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Core", "Auth.Core\Auth.Core.csproj", "{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.DomainLogic", "Auth.Apis\Auth.DomainLogic.csproj", "{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.DomainLogic", "Auth.Apis\Auth.DomainLogic.csproj", "{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.DependencyInjection", "Auth.DependencyInjection\Auth.DependencyInjection.csproj", "{439F249B-AA54-4631-9738-1C41ABCCEFC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.DependencyInjection", "Auth.DependencyInjection\Auth.DependencyInjection.csproj", "{439F249B-AA54-4631-9738-1C41ABCCEFC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Middleware", "Auth.Middleware\Auth.Middleware.csproj", "{DB5AA065-CC21-46FC-B46C-9C7475427863}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 		{439F249B-AA54-4631-9738-1C41ABCCEFC6} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
+		{DB5AA065-CC21-46FC-B46C-9C7475427863} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFFFE8A2-53EF-4F86-924F-102F0A8DEDB3}
