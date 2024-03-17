@@ -11,11 +11,18 @@ namespace Auth.Core.Models.Requests
         /// <summary>
         /// The Id token supplied from Google's sign-in
         /// </summary>
-        public required string GoogleIdToken { get; init; }
+        public string GoogleIdToken { get; init; }
 
         /// <summary>
         /// The IP Address that has requested the log in
         /// </summary>
-        public required string IpAddress { get; init; }
+        public string IpAddress { get; init; }
+
+        public LoginRequest() { }
+        public LoginRequest(string googleIdToken, string ipAddress)
+        {
+            GoogleIdToken = googleIdToken;
+            IpAddress = ipAddress;
+        }
     }
 }
