@@ -37,7 +37,7 @@ namespace Auth.DomainLogic.Services
             }
             var userUID = validationResult.Data!.Subject;
             var sessionGuid = Guid.NewGuid().ToString();
-            var expireAt = validationResult.Data.ExpirationTimeSeconds ?? DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
+            var expireAt = validationResult.Data?.ExpirationTimeSeconds ?? DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
             return new SessionResponse(sessionGuid, expireAt, userUID);
