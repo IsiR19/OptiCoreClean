@@ -38,7 +38,7 @@ namespace OptiCore.Application.Features.Users.Commands.UpdateUser
             _logger.LogInformation($"Mapped data result {data}");
              await _usersRepository.UpdateAsync(data);
 
-            var response = _mapper.Map<CreateUserCommand>(data);
+            var response = _mapper.Map<UpdateUserCommand>(data);
 
             _logger.LogInformation($"User {data.FirstName} {data.LastName} saved successfully");
             return response;
