@@ -9,5 +9,6 @@ namespace OptiCore.Domain.Core
 
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; } = String.Empty;
+        public int TenantId { get; set; }
     }
 }

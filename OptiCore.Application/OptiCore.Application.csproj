@@ -31,13 +31,18 @@
     <Folder Include="Features\Agents\Queries\GetAgentById\" />
     <Folder Include="Features\Agents\Queries\GetAllAgents\" />
     <Folder Include="Features\Agents\Queries\GetAgentsByHeadOffice\" />
+    <Folder Include="Features\Companies\Commands\CreateCompany\" />
+    <Folder Include="Features\Companies\Commands\DeleteCompany\" />
+    <Folder Include="Features\Companies\Commands\UpdateCompany\" />
+    <Folder Include="Features\Companies\Queries\GetAllCompanies\" />
+    <Folder Include="Features\Companies\Queries\GetCompany\" />
+    <Folder Include="Features\Companies\Queries\GetRelatedCompanies\" />
     <Folder Include="Features\Cps\Queries\GetAllCP\" />
     <Folder Include="Features\Cps\Queries\GetAllCPByHeadOfficeId\" />
     <Folder Include="Features\Leads\Commands\DeleteLead\" />
     <Folder Include="Features\Leads\Commands\UpdateLead\" />
     <Folder Include="Features\Leads\Queries\GetLeads\" />
     <Folder Include="Features\Leads\Queries\GetAllLeads\" />
-    <Folder Include="Features\Users\Commands\DeleteUser\" />
   </ItemGroup>
 
 </Project>

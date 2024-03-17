@@ -1,14 +1,14 @@
-﻿namespace OptiCore.Domain.Users
+﻿namespace OptiCore.Domain.Companies
 {
-    public class UserHierarchy
+    public class CompanyHierarchy
     {
         public int UserHierarchyId { get; set; }
         public int ParentUserId { get; set; }
         public int ChildUserId { get; set; }
 
         // Navigation properties
-        public User ParentUser { get; set; }
+        public Company ParentCompany { get; set; }
 
-        public User ChildUser { get; set; }
+        public Company ChildCompany { get; set; }
     }
 }

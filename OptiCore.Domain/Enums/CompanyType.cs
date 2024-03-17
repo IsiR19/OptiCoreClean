@@ -1,6 +1,6 @@
 ﻿namespace OptiCore.Domain.Enums
 {
-    public enum UserType
+    public enum CompanyType
     {
         ChannelPartner,
         Agent

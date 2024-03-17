@@ -12,32 +12,5 @@ namespace Opticore.Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<User>> GetRelatedUsersAsync(int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
-            {
-                throw new NotFoundException(nameof(user), userId);
-            }
-
-            var relatedUsers = new List<User>();
-            await GetSubordinatesAsync(user, relatedUsers);
-
-            return relatedUsers;
-        }
-
-        private async Task GetSubordinatesAsync(User user, List<User> relatedUsers)
-        {
-            // Include the user's subordinates in the related users list
-            var subordinates = _context.UserHierarchy
-                .Where(uh => uh.ParentUserId == user.Id)
-                .Select(uh => uh.ChildUser);
-
-            foreach (var subordinate in subordinates)
-            {
-                relatedUsers.Add(subordinate);
-                await GetSubordinatesAsync(subordinate, relatedUsers);
-            }
-        }
     }
 }
