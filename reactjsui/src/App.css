@@ -1,19 +1,34 @@
-﻿#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+﻿/* App.css */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-tr:nth-child(even) {
-    background: #F2F2F2;
+/* Ensure that the offcanvas side navigation doesn't overlap the top navbar */
+.offcanvas-start {
+    top: 56px; /* Adjust this value based on the actual height of your top navbar */
 }
 
-tr:nth-child(odd) {
-    background: #FFF;
+/* Style for the offcanvas body to ensure the background and text color */
+.offcanvas-body {
+    background-color: #343a40; /* Same as bg-dark in Bootstrap */
+    color: #ffffff;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+/* Style for the active navigation link */
+.nav-link.active {
+    background-color: #495057; /* Darker shade for active state */
+}
+
+/* Style adjustments for smaller screens */
+@media (max-width: 991px) {
+    /* Example media query to adjust styles for mobile devices */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1030; /* Ensure the navbar is above other content */
+    }
 }
