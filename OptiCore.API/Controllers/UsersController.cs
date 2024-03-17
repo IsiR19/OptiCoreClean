@@ -29,7 +29,7 @@ namespace OptiCore.API.Controllers
             return user;
         }
 
-        [HttpGet("related")]
+        [HttpGet("Users")]
         public async Task<ActionResult<List<GetUsersDTO>>> GetUsers(int id)
         {
             var user = await _mediator.Send(new GetUsersQuery(id));
