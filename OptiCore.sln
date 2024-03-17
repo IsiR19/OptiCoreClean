@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Opticore.Identity", "Optico
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "OptiCore.UI", "OptiCore.UI\", "{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8.1"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_63606"
 		Debug.AspNetCompiler.PhysicalPath = "OptiCore.UI\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_63606\"
@@ -49,6 +49,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "OptiCore.UI", "OptiCore.UI\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "63606"
+		SlnRelativePath = "OptiCore.UI\"
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}"
@@ -59,7 +60,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.DomainLogic", "Auth.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.DependencyInjection", "Auth.DependencyInjection\Auth.DependencyInjection.csproj", "{439F249B-AA54-4631-9738-1C41ABCCEFC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Middleware", "Auth.Middleware\Auth.Middleware.csproj", "{DB5AA065-CC21-46FC-B46C-9C7475427863}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Middleware", "Auth.Middleware\Auth.Middleware.csproj", "{DB5AA065-CC21-46FC-B46C-9C7475427863}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +106,22 @@ Global
 		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{439F249B-AA54-4631-9738-1C41ABCCEFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5AA065-CC21-46FC-B46C-9C7475427863}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,12 +139,12 @@ Global
 		{57FB62B0-C8C3-4E5F-9C95-B2D2530247E4} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{D3EB10D9-12E3-413B-9B2B-9E4A65E6DDBF} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{1C2E547F-D4A9-4D67-BC2F-89A039BFEC97} = {8BEB87FC-C51A-4728-925C-1B9FD872EA6D}
+		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 		{A771B0DE-8ED9-4F5E-8C27-662D4FB95C37} = {B76ED77D-EF07-4CA2-893D-C3BE2459C980}
 		{966F73F5-4E5C-40BC-BEC7-2DD4F14EB9FB} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 		{09F0D807-EF1A-41AD-A9AA-FAC8F119F57C} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 		{439F249B-AA54-4631-9738-1C41ABCCEFC6} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
 		{DB5AA065-CC21-46FC-B46C-9C7475427863} = {A771B0DE-8ED9-4F5E-8C27-662D4FB95C37}
-		{EF3F0AD6-EAA3-45C5-BF3D-0D90190E690F} = {CE22146F-042F-4702-901D-A04CA7AB8013}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFFFE8A2-53EF-4F86-924F-102F0A8DEDB3}
