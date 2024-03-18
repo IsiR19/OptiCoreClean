@@ -29,6 +29,9 @@ namespace OptiCore.Application.Features.Companies.Commands.CreateCompany
 
         public async Task<CreateCompanyCommand> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
         {
+            //TODO: Include automatic commission structure for hierarchy
+            //Will be editable on the front end but will not exist on initial creation
+
             _logger.LogInformation($"Validating company {request.Name} - {request.RegistrationNumber}");
             var validator = new CreateCompanyValidator(_companyRepository);
             var validationResult = validator.Validate(request);

@@ -17,11 +17,5 @@ namespace OptiCore.Application.Models.Companies
         public List<ContactDetails> ContactDetails { get; set; }
         public CompanyType CompanyType { get; set; }
         public bool IsActive { get; set; }
-
-        // Navigation properties for EF Core
-        public ICollection<CompanyHierarchy> ChildHierarchies { get; set; }
-
-        public CompanyHierarchy ParentHierarchy { get; set; }
-        public ICollection<Commission> Commissions { get; set; }
     }
 }
