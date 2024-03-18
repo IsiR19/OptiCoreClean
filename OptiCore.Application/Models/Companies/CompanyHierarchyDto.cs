@@ -1,8 +1,13 @@
-﻿using OptiCore.Domain.Core;
+﻿using OptiCore.Domain.Companies;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace OptiCore.Domain.Companies
+namespace OptiCore.Application.Models.Companies
 {
-    public class CompanyHierarchy : AuditEntity
+    public class CompanyHierarchyDto
     {
         public int ParentUserId { get; set; }
         public int ChildUserId { get; set; }
