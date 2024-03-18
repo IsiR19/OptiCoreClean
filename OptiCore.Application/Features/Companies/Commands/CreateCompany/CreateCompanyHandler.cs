@@ -29,14 +29,20 @@ namespace OptiCore.Application.Features.Companies.Commands.CreateCompany
 
         public async Task<CreateCompanyCommand> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"Validating company {request.Name} - {request.RegistrationNumber}");
             var validator = new CreateCompanyValidator(_companyRepository);
             var validationResult = validator.Validate(request);
 
             if (validationResult.Errors.Any())
+            {
+                _logger.LogWarning($"Failed to validate company({request.Name}): {validationResult}");
                 throw new BadRequestException("Invalid company", validationResult);
+            }
 
+
+            _logger.LogInformation($"Mapping company({request.Name})");
             var data = _mapper.Map<Company>(request);
-
+            _logger.LogInformation($"Saving company({request.Name})");
             await _companyRepository.CreateAsync(data);
 
             var response = _mapper.Map<CreateCompanyCommand>(data);
