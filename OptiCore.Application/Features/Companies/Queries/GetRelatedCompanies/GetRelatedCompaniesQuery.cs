@@ -10,6 +10,10 @@ namespace OptiCore.Application.Features.Companies.Queries.GetRelatedCompanies
 {
     public class GetRelatedCompaniesQuery : IRequest<List<CompanyDto>>
     {
+        public GetRelatedCompaniesQuery(int companyId)
+        {
+            
+        }
         public int CompanyId { get; set; }
     }
 }
