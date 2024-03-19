@@ -22,11 +22,12 @@ function App() {
           <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar} />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/users" element={
+            <PrivateRoute path="/users" element={<UserForm />} />
+            {/* <Route path="/users" element={
               <div className='ml-5'>
                 <UserForm />
               </div>
-            } />
+            } /> */}
           </Routes>
         </div>
       </AuthProvider>
