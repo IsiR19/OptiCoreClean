@@ -1,0 +1,70 @@
+// Variables (assuming you have these defined somewhere)
+$secondary-color: #6c757d;
+$text-color: #fff;
+$sidebar-z-index: 1000;
+
+$primary-color: #263043; // Adjust the color as needed
+$shadow-color: rgba(0, 0, 0, 0.35);
+$header-padding: 30px;
+$header-height: 60px;
+
+.header {
+    grid-area: header;
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $header-padding;
+    box-shadow: 0 6px 7px -3px $shadow-color;
+    background-color: $primary-color;
+    color: $secondary-color;
+  }
+  
+  .menu-icon {
+    display: none; // This will be controlled by the React component's logic and Bootstrap classes
+  }
+
+// Sidebar styles
+#sidebar {
+  grid-area: sidebar;
+  height: 100%;
+  background-color: $secondary-color;
+  overflow-y: auto;
+  transition: all 0.5s;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  margin-bottom: 30px;
+}
+
+.sidebar-brand {
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav-link {
+  padding: 20px;
+  font-size: 18px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+}
+
+.nav-link > .icon {
+  text-decoration: none;
+  color: $text-color;
+}
+
+.sidebar-responsive {
+  display: inline;
+  position: absolute;
+  z-index: $sidebar-z-index;
+}
+
+

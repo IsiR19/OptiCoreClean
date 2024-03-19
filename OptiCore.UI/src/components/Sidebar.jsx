@@ -1,5 +1,15 @@
 import React from 'react';
-import { BsFillGrid3X3GapFill, BsPhoneVibrate, BsFillArchiveFill, BsHeadset, BsFillPersonLinesFill, BsPeopleFill, BsListCheck, BsPersonBadge, BsFillGearFill } from 'react-icons/bs';
+import { 
+  BsFillGrid3X3GapFill, 
+  BsPhoneVibrate, 
+  BsFillArchiveFill, 
+  BsHeadset, 
+  BsFillPersonLinesFill, 
+  BsPeopleFill, 
+  BsListCheck, 
+  BsPersonBadge, 
+  BsFillGearFill 
+} from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
@@ -8,14 +18,12 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       <div className='d-flex justify-content-between align-items-center p-3 border-bottom border-secondary'>
         <div className='d-flex align-items-center'>
           <BsFillGrid3X3GapFill className='icon_header text-primary' />
-          <span className='ms-2 font-weight-bold'>Godlela</span>
+          <span className='ms-2 fw-bold'>Godlela</span>
         </div>
-        <button className='btn btn-dark d-md-none' onClick={OpenSidebar}>
-          <span className='text-danger'>X</span>
-        </button>
+        <button className='btn-close btn-close-white d-md-none' onClick={OpenSidebar}></button>
       </div>
 
-      <nav className="flex-column">
+      <nav className="nav flex-column">
         <Link className="nav-link text-secondary" to="/">
           <BsFillGrid3X3GapFill className='icon' /> Dashboard
         </Link>

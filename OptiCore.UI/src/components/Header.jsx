@@ -1,6 +1,5 @@
 import React from 'react';
 import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 
 function Header({ OpenSidebar }) {
   return (
@@ -11,16 +10,10 @@ function Header({ OpenSidebar }) {
       <div className='header-left d-none d-md-flex'>
         <BsSearch className='icon' />
       </div>
-      <div className='header-right'>
-        <Link to="/notifications" className="text-secondary me-3">
-          <BsFillBellFill className='icon' />
-        </Link>
-        <Link to="/messages" className="text-secondary me-3">
-          <BsFillEnvelopeFill className='icon' />
-        </Link>
-        <Link to="/profile" className="text-secondary">
-          <BsPersonCircle className='icon' />
-        </Link>
+      <div className='header-right d-flex align-items-center'>
+        <BsFillBellFill className='icon text-secondary me-3'/>
+        <BsFillEnvelopeFill className='icon text-secondary me-3'/>
+        <BsPersonCircle className='icon text-secondary'/>
       </div>
     </header>
   );
