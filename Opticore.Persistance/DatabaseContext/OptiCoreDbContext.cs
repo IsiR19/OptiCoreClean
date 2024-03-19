@@ -24,16 +24,16 @@ namespace Opticore.Persistence.DatabaseContext
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<FinancialStatement> FinancialStatements { get; set; }
-        public DbSet<Ledger> Ledgers { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<InventoryItem> InventoryItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
+        //public DbSet<Account> Accounts { get; set; }
+        //public DbSet<FinancialStatement> FinancialStatements { get; set; }
+        //public DbSet<Ledger> Ledgers { get; set; }
+        //public DbSet<Transaction> Transactions { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+        //public DbSet<InventoryItem> InventoryItems { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<OrderItem> OrderItems { get; set; }
+        //public DbSet<Payment> Payments { get; set; }
+        //public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Lead> Leads { get; set; }

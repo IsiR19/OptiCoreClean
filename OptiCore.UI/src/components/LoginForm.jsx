@@ -1,46 +1,50 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
-import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { useAuth } from '../AuthContext';
 
-function LoginForm() {
-  const navigate = useNavigate();
+const LoginForm = () => {
+  const { login } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = async (googleData) => {
-    try {
-      const response = await axios.post('need to place Auth Service URL here', {
-        token: googleData.tokenId,
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      localStorage.setItem('token', response.data.token);
-      // Redirect to the home page or dashboard
-      navigate('/home');
-    } catch (error) {
-      console.error('Login failed', error);
-    }
-  };
+    await login({ username, password });
 
-  const handleFailure = (error) => {
-    console.error('Google Login Failure', error);
+    setUsername('');
+    setPassword('');
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col md="6">
-          <h2>Login</h2>
-          <GoogleLogin
-            clientId="your-google-client-id"
-            buttonText="Login with Google"
-            onSuccess={handleLogin}
-            onFailure={handleFailure}
-            cookiePolicy={'single_host_origin'}
+    <div className="container">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-        </Col>
-      </Row>
-    </Container>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
+    </div>
   );
-}
+};
 
 export default LoginForm;

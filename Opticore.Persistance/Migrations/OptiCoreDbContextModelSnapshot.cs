@@ -22,134 +22,6 @@ namespace Opticore.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("OptiCore.Domain.Accounts.Account", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Accounts.FinancialStatement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("NetIncome")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalAssets")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalLiabilities")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinancialStatements");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Accounts.Ledger", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ledgers");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Accounts.Transaction", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LedgerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("LedgerId");
-
-                    b.ToTable("Transactions");
-                });
-
             modelBuilder.Entity("OptiCore.Domain.Agents.Agent", b =>
                 {
                     b.Property<int>("Id")
@@ -179,6 +51,9 @@ namespace Opticore.Persistance.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParentAgentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -220,6 +95,9 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -234,6 +112,138 @@ namespace Opticore.Persistance.Migrations
                     b.ToTable("Cp");
                 });
 
+            modelBuilder.Entity("OptiCore.Domain.Commissions.Commission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Commissions");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Companies.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Companies.CompanyHierarchy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChildUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ParentUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChildUserId")
+                        .IsUnique();
+
+                    b.HasIndex("ParentUserId");
+
+                    b.ToTable("CompanyHierarchy");
+                });
+
             modelBuilder.Entity("OptiCore.Domain.Contact_Details.ContactDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -245,6 +255,9 @@ namespace Opticore.Persistance.Migrations
                     b.Property<string>("AlternatePhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -275,7 +288,7 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SupplierId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -285,38 +298,18 @@ namespace Opticore.Persistance.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("HeadOfficeId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ContactDetails");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Customers.Customer", b =>
-                {
-                    b.Property<int>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CustomerId");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.HeadOffices.HeadOffice", b =>
@@ -340,6 +333,9 @@ namespace Opticore.Persistance.Migrations
 
                     b.Property<string>("RegistrationNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
@@ -374,6 +370,9 @@ namespace Opticore.Persistance.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -385,7 +384,7 @@ namespace Opticore.Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InventoryItems");
+                    b.ToTable("InventoryItem");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Inventory.Product", b =>
@@ -410,7 +409,7 @@ namespace Opticore.Persistance.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("SupplierId")
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -421,8 +420,6 @@ namespace Opticore.Persistance.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -442,20 +439,39 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FirstContactDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LostReason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("NextContactDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("PaidPromiseToPay")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PromiseToPayDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("SourceID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -470,8 +486,6 @@ namespace Opticore.Persistance.Migrations
                     b.HasIndex("AssignedUserID");
 
                     b.HasIndex("SourceID");
-
-                    b.HasIndex("StatusID");
 
                     b.ToTable("Leads");
                 });
@@ -499,37 +513,12 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("LeadSource");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Leads.LeadStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LeadStatus");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Opportunities.Opportunity", b =>
@@ -560,6 +549,9 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -572,119 +564,6 @@ namespace Opticore.Persistance.Migrations
                     b.HasIndex("LeadID");
 
                     b.ToTable("Opportunity");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Orders.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Orders.OrderItem", b =>
-                {
-                    b.Property<int>("OrderItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("OrderItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Payments.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Suppliers.Supplier", b =>
-                {
-                    b.Property<int>("SupplierId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SupplierId");
-
-                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Users.Role", b =>
@@ -706,11 +585,21 @@ namespace Opticore.Persistance.Migrations
 
             modelBuilder.Entity("OptiCore.Domain.Users.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -724,42 +613,28 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesRoleId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("RoleUser");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Accounts.Transaction", b =>
-                {
-                    b.HasOne("OptiCore.Domain.Accounts.Ledger", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("LedgerId");
-                });
-
             modelBuilder.Entity("OptiCore.Domain.Agents.Agent", b =>
                 {
-                    b.HasOne("OptiCore.Domain.CP.Cp", "CP")
+                    b.HasOne("OptiCore.Domain.CP.Cp", null)
                         .WithMany("Agents")
                         .HasForeignKey("CPId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CP");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.CP.Cp", b =>
@@ -773,15 +648,49 @@ namespace Opticore.Persistance.Migrations
                     b.Navigation("HeadOffice");
                 });
 
+            modelBuilder.Entity("OptiCore.Domain.Commissions.Commission", b =>
+                {
+                    b.HasOne("OptiCore.Domain.Companies.Company", "Company")
+                        .WithMany("Commissions")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Companies.CompanyHierarchy", b =>
+                {
+                    b.HasOne("OptiCore.Domain.Companies.Company", "ChildCompany")
+                        .WithOne("ParentHierarchy")
+                        .HasForeignKey("OptiCore.Domain.Companies.CompanyHierarchy", "ChildUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OptiCore.Domain.Companies.Company", "ParentCompany")
+                        .WithMany("ChildHierarchies")
+                        .HasForeignKey("ParentUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ChildCompany");
+
+                    b.Navigation("ParentCompany");
+                });
+
             modelBuilder.Entity("OptiCore.Domain.Contact_Details.ContactDetails", b =>
                 {
+                    b.HasOne("OptiCore.Domain.Companies.Company", null)
+                        .WithMany("ContactDetails")
+                        .HasForeignKey("CompanyId");
+
                     b.HasOne("OptiCore.Domain.HeadOffices.HeadOffice", null)
                         .WithMany("AddressList")
                         .HasForeignKey("HeadOfficeId");
 
-                    b.HasOne("OptiCore.Domain.Suppliers.Supplier", null)
-                        .WithMany("contact_Details")
-                        .HasForeignKey("SupplierId");
+                    b.HasOne("OptiCore.Domain.Users.User", null)
+                        .WithMany("ContactDetails")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Inventory.InventoryItem", b =>
@@ -793,13 +702,6 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Inventory.Product", b =>
-                {
-                    b.HasOne("OptiCore.Domain.Suppliers.Supplier", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Leads.Lead", b =>
@@ -816,17 +718,9 @@ namespace Opticore.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OptiCore.Domain.Leads.LeadStatus", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AssignedUser");
 
                     b.Navigation("Source");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Opportunities.Opportunity", b =>
@@ -840,73 +734,19 @@ namespace Opticore.Persistance.Migrations
                     b.Navigation("Lead");
                 });
 
-            modelBuilder.Entity("OptiCore.Domain.Orders.Order", b =>
+            modelBuilder.Entity("OptiCore.Domain.Users.User", b =>
                 {
-                    b.HasOne("OptiCore.Domain.Customers.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Orders.OrderItem", b =>
-                {
-                    b.HasOne("OptiCore.Domain.Orders.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OptiCore.Domain.Inventory.Product", "Product")
+                    b.HasOne("OptiCore.Domain.Companies.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Payments.Payment", b =>
-                {
-                    b.HasOne("OptiCore.Domain.Customers.Customer", "Customer")
-                        .WithMany("Payments")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OptiCore.Domain.Orders.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
                     b.HasOne("OptiCore.Domain.Users.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
 
-                    b.HasOne("OptiCore.Domain.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("OptiCore.Domain.Accounts.Ledger", b =>
-                {
-                    b.Navigation("Transactions");
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.CP.Cp", b =>
@@ -914,11 +754,16 @@ namespace Opticore.Persistance.Migrations
                     b.Navigation("Agents");
                 });
 
-            modelBuilder.Entity("OptiCore.Domain.Customers.Customer", b =>
+            modelBuilder.Entity("OptiCore.Domain.Companies.Company", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("ChildHierarchies");
 
-                    b.Navigation("Payments");
+                    b.Navigation("Commissions");
+
+                    b.Navigation("ContactDetails");
+
+                    b.Navigation("ParentHierarchy")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OptiCore.Domain.HeadOffices.HeadOffice", b =>
@@ -938,16 +783,14 @@ namespace Opticore.Persistance.Migrations
                     b.Navigation("Opportunities");
                 });
 
-            modelBuilder.Entity("OptiCore.Domain.Orders.Order", b =>
+            modelBuilder.Entity("OptiCore.Domain.Users.Role", b =>
                 {
-                    b.Navigation("OrderItems");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("OptiCore.Domain.Suppliers.Supplier", b =>
+            modelBuilder.Entity("OptiCore.Domain.Users.User", b =>
                 {
-                    b.Navigation("Products");
-
-                    b.Navigation("contact_Details");
+                    b.Navigation("ContactDetails");
                 });
 #pragma warning restore 612, 618
         }

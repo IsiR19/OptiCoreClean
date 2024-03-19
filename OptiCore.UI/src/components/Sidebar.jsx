@@ -1,66 +1,51 @@
-import React from 'react'
-import {BsCart3,BsFillHddFill,BsFillArchiveFill,BsFillGrid3X3GapFill,BsPeopleFill
-,BsListCheck,BsPersonBadge ,BsFillGearFill,BsPhoneVibrate,BsHeadset,BsFillPersonLinesFill   } from 'react-icons/bs'
+import React from 'react';
+import { BsFillGrid3X3GapFill, BsPhoneVibrate, BsFillArchiveFill, BsHeadset, BsFillPersonLinesFill, BsPeopleFill, BsListCheck, BsPersonBadge, BsFillGearFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
-function Sidebar({openSidebarToggle,OpenSidebar}) {
+function Sidebar({ openSidebarToggle, OpenSidebar }) {
   return (
-   <aside id="sidebar" className={openSidebarToggle? "sidebar-responsive":""}>
-    <div className='sidebar-title'>
-        <div className='sidebar-brand'>
-            <BsFillHddFill className='icon_header' /> Godlela
+    <aside id="sidebar" className={`bg-dark text-white ${openSidebarToggle ? "d-block" : "d-none d-md-block"}`}>
+      <div className='d-flex justify-content-between align-items-center p-3 border-bottom border-secondary'>
+        <div className='d-flex align-items-center'>
+          <BsFillGrid3X3GapFill className='icon_header text-primary' />
+          <span className='ms-2 font-weight-bold'>Godlela</span>
         </div>
-        <span className='icon close_icon' onClick={OpenSidebar}>X</span>
-    </div>
+        <button className='btn btn-dark d-md-none' onClick={OpenSidebar}>
+          <span className='text-danger'>X</span>
+        </button>
+      </div>
 
-    <ul className='sidebar-list'>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsFillGrid3X3GapFill className='icon' /> Dashboard
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsPhoneVibrate className='icon' /> Leads
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsFillArchiveFill className='icon' /> Products
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsHeadset  className='icon' /> Agents
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsFillPersonLinesFill className='icon' /> Channel Partners
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsPeopleFill className='icon' /> Customers
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsListCheck className='icon' /> Reports
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsPersonBadge  className='icon' /> Users
-            </a>
-        </li>
-        <li className='sidebar-list-item'>
-            <a href="">
-                <BsFillGearFill className='icon' /> Settings
-            </a>
-        </li>
-    </ul>
-   </aside>
-  )
+      <nav className="flex-column">
+        <Link className="nav-link text-secondary" to="/">
+          <BsFillGrid3X3GapFill className='icon' /> Dashboard
+        </Link>
+        <Link className="nav-link text-secondary" to="/leads">
+          <BsPhoneVibrate className='icon' /> Leads
+        </Link>
+        <Link className="nav-link text-secondary" to="/products">
+          <BsFillArchiveFill className='icon' /> Products
+        </Link>
+        <Link className="nav-link text-secondary" to="/agents">
+          <BsHeadset className='icon' /> Agents
+        </Link>
+        <Link className="nav-link text-secondary" to="/partners">
+          <BsFillPersonLinesFill className='icon' /> Channel Partners
+        </Link>
+        <Link className="nav-link text-secondary" to="/customers">
+          <BsPeopleFill className='icon' /> Customers
+        </Link>
+        <Link className="nav-link text-secondary" to="/reports">
+          <BsListCheck className='icon' /> Reports
+        </Link>
+        <Link className="nav-link text-secondary" to="/users">
+          <BsPersonBadge className='icon' /> Users
+        </Link>
+        <Link className="nav-link text-secondary" to="/settings">
+          <BsFillGearFill className='icon' /> Settings
+        </Link>
+      </nav>
+    </aside>
+  );
 }
 
-export default Sidebar
+export default Sidebar;

@@ -1,23 +1,29 @@
-import React from 'react'
-import {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
-from 'react-icons/bs'
+import React from 'react';
+import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
-function Header({OpenSidebar}) {
+function Header({ OpenSidebar }) {
   return (
-    <header className='header'>
-      <div className='menu-icon'>
-        <BsJustify className='icon' onClick={OpenSidebar}/>
+    <header className='d-flex justify-content-between align-items-center px-3 py-2 shadow' style={{ backgroundColor: '#263043', color: '#9e9ea4' }}>
+      <div className='menu-icon d-md-none'>
+        <BsJustify className='icon' onClick={OpenSidebar} style={{ cursor: 'pointer' }} />
       </div>
-      <div className='header-left'>
+      <div className='header-left d-none d-md-flex'>
         <BsSearch className='icon' />
       </div>
       <div className='header-right'>
-        <BsFillBellFill className='icon'/>
-        <BsFillEnvelopeFill className='icon' />
-        <BsPersonCircle className='icon'/>
+        <Link to="/notifications" className="text-secondary me-3">
+          <BsFillBellFill className='icon' />
+        </Link>
+        <Link to="/messages" className="text-secondary me-3">
+          <BsFillEnvelopeFill className='icon' />
+        </Link>
+        <Link to="/profile" className="text-secondary">
+          <BsPersonCircle className='icon' />
+        </Link>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;
