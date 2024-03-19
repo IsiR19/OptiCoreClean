@@ -3,27 +3,6 @@ $secondary-color: #6c757d;
 $text-color: #fff;
 $sidebar-z-index: 1000;
 
-$primary-color: #263043; // Adjust the color as needed
-$shadow-color: rgba(0, 0, 0, 0.35);
-$header-padding: 30px;
-$header-height: 60px;
-
-.header {
-    grid-area: header;
-    height: $header-height;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 $header-padding;
-    box-shadow: 0 6px 7px -3px $shadow-color;
-    background-color: $primary-color;
-    color: $secondary-color;
-  }
-  
-  .menu-icon {
-    display: none; // This will be controlled by the React component's logic and Bootstrap classes
-  }
-
 // Sidebar styles
 #sidebar {
   grid-area: sidebar;
