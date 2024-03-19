@@ -7,6 +7,7 @@ import UserForm from './components/UserForm';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '../src/services/AuthContext'; // Import the AuthProvider component
 import PrivateRoute from '../src/helpers/PrivateRoute'; // Corrected import statement
+import LoginForm from './components/LoginForm';
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -24,7 +25,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/users" element={<PrivateRoute element={<UserForm />} />} />
-            {/* The rest of your routes */}
+            <Route path="/loginform" element={<LoginForm />} />
           </Routes>
         </div>
       </AuthProvider>
