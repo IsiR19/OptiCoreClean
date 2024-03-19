@@ -1,38 +1,35 @@
-import { useState } from 'react'
-import './App.css'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
-import Home from './components/Home'
-import UserForm from './components/UserForm'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { AuthProvider } from '../src/services/AuthContext' // Import the AuthProvider component
+import { useState } from 'react';
+import './App.css';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import UserForm from './components/UserForm';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../src/services/AuthContext'; // Import the AuthProvider component
+import PrivateRoute from '../src/helpers/PrivateRoute'; // Corrected import statement
 
 function App() {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
   const openSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle)
-  }
+    setOpenSidebarToggle(!openSidebarToggle);
+  };
 
   return (
     <Router>
-      <AuthProvider> 
+      <AuthProvider>
         <div className='grid-container'>
           <Header OpenSidebar={openSidebar} />
           <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar} />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <PrivateRoute path="/users" element={<UserForm />} />
-            {/* <Route path="/users" element={
-              <div className='ml-5'>
-                <UserForm />
-              </div>
-            } /> */}
+            <Route path="/users" element={<PrivateRoute element={<UserForm />} />} />
+            {/* The rest of your routes */}
           </Routes>
         </div>
       </AuthProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
