@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar'
 import Home from './components/Home'
 import UserForm from './components/UserForm'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { AuthProvider } from './AuthContext' // Import the AuthProvider component
+import { AuthProvider } from '../src/services/AuthContext' // Import the AuthProvider component
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
