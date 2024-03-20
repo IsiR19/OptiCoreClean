@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { Form, Button,Col } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UserType = {
   ChannelPartner: 'Channel Partner',
@@ -29,68 +28,74 @@ function UserForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit form data to the server or handle it accordingly
     console.log(formData);
   };
 
-return (
-  <Form onSubmit={handleSubmit}>
-    <Form.Row>
-      <Form.Group as={Col} controlId="formGridFirstName">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter first name"
-          name="firstName"
-          value={formData.firstName}
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-row">
+        <div className="form-group col-md-6">
+          <label htmlFor="inputFirstName">First Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputFirstName"
+            placeholder="Enter first name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group col-md-6">
+          <label htmlFor="inputLastName">Last Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputLastName"
+            placeholder="Enter last name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="inputEmail">Email</label>
+        <input
+          type="email"
+          className="form-control"
+          id="inputEmail"
+          placeholder="Enter email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group as={Col} controlId="formGridLastName">
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter last name"
-          name="lastName"
-          value={formData.lastName}
+      <div className="form-group">
+        <label htmlFor="inputType">User Type</label>
+        <select
+          id="inputType"
+          className="form-control"
+          name="type"
+          value={formData.type}
           onChange={handleChange}
-        />
-      </Form.Group>
-    </Form.Row>
+        >
+          {Object.values(UserType).map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    <Form.Group controlId="formGridEmail">
-      <Form.Label>Email</Form.Label>
-      <Form.Control
-        type="email"
-        placeholder="Enter email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-      />
-    </Form.Group>
-
-    <Form.Group controlId="formGridType">
-      <Form.Label>User Type</Form.Label>
-      <Form.Control
-        as="select"
-        name="type"
-        value={formData.type}
-        onChange={handleChange}
-      >
-        {Object.values(UserType).map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </Form.Control>
-    </Form.Group>
-
-    <Button variant="primary" type="submit">
-      Submit
-    </Button>
-  </Form>
-);
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
+  );
 }
 
-export default UserForm
+export default UserForm;

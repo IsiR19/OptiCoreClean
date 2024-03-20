@@ -2,6 +2,7 @@
 using MediatR;
 using Opticore.Infrastructure.Logging;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
+using OptiCore.Application.Features.Users.Commands.CreateUser;
 using OptiCore.Application.Models;
 using OptiCore.Application.Models.Users;
 using OptiCore.Domain.Users;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Users.Commands.UpdateUser
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdateUserCommand>
     {
         private IUsersRepository _usersRepository;
         private IMapper _mapper;
@@ -27,7 +28,7 @@ namespace OptiCore.Application.Features.Users.Commands.UpdateUser
             _usersRepository = usersRepository;
             _logger = applicationLogger;
         }
-        public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateUserCommand> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Sending update request for {request.FirstName} {request.LastName}({request.UserId})");
 
@@ -37,8 +38,10 @@ namespace OptiCore.Application.Features.Users.Commands.UpdateUser
             _logger.LogInformation($"Mapped data result {data}");
              await _usersRepository.UpdateAsync(data);
 
+            var response = _mapper.Map<UpdateUserCommand>(data);
+
             _logger.LogInformation($"User {data.FirstName} {data.LastName} saved successfully");
-            return Unit.Value;
+            return response;
 
         }
     }

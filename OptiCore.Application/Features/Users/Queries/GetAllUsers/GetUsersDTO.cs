@@ -1,13 +1,20 @@
-﻿using OptiCore.Domain.Enums;
+﻿using OptiCore.Domain.Companies;
+using OptiCore.Domain.Contact_Details;
+using OptiCore.Domain.Enums;
 
 namespace OptiCore.Application.Features.Users.Queries.GetAllUsers
 {
     public class GetUsersDTO
     {
         public int UserId { get; set; }
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
-        public UserType Type { get; set; }
-        public decimal TotalCommission { get; set; }
+        public int CompanyId { get; set; }
+
+        public virtual Company Company { get; set; }
+
+        public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using OptiCore.Domain.Commissions;
+using OptiCore.Domain.Companies;
+using OptiCore.Domain.Contact_Details;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.Enums;
 
@@ -9,12 +11,11 @@ namespace OptiCore.Domain.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public UserType Type { get; set; }
+        public int CompanyId { get; set; }
 
-        // Navigation properties for EF Core
-        public ICollection<UserHierarchy> ChildHierarchies { get; set; }
+        public virtual Company Company { get; set; }
 
-        public UserHierarchy ParentHierarchy { get; set; }
-        public ICollection<Commission> Commissions { get; set; }
+        public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
+
     }
 }

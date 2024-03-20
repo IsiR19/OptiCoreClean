@@ -13,11 +13,10 @@ namespace OptiCore.Domain.Leads
         public int SourceID { get; set; }
         public DateTime FirstContactDate { get; set; }
         public DateTime NextContactDate { get; set; }
-        public List<DateTime> FollowUpDate { get; set; }
 
         public DateTime PromiseToPayDate { get; set; }
         public bool PaidPromiseToPay { get; set; }
-        public List<string> Notes { get; set; }
+       // public List<string> Notes { get; set; } = new List<string>();
         public string LostReason { get; set; }
 
         // Navigation properties
