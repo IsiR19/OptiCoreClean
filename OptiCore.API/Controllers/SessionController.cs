@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OptiCore.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/session")]
     [ApiController]
     [Authorize]
     public class SessionController : Controller
