@@ -177,6 +177,19 @@ body {
   height: 300px;
 }
 
+.google-button {
+  content: url('./assets/google_buttons/normal.png');
+  background-repeat: no-repeat;
+}
+.google-button:hover {
+  cursor: pointer;
+  content: url('./assets/google_buttons/focus.png');
+}
+.google-button:active {
+  cursor: pointer;
+  content: url('./assets/google_buttons/pressed.png');
+}
+
 /* End Main  */
 
 

@@ -3,7 +3,7 @@ import { useAuth } from '../services/AuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const LoginForm = () => {
-  const { login } = useAuth()
+  const { login, oauthLogin, logout } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const redirectLocation = useLocation().state ?? '/'
@@ -16,6 +16,8 @@ const LoginForm = () => {
     setUsername('')
     setPassword('')
   }
+
+  const handleGoogleSignIn = () => oauthLogin()
 
   return (
     <div className="container">
@@ -50,7 +52,15 @@ const LoginForm = () => {
         <button type="submit" className="btn btn-primary">
           Login
         </button>
+        <div className="row login-controls">
+        <div className="col-12">
+          <img className="google-button" alt="Google sign in" onClick={handleGoogleSignIn}/>
+        </div>
+      </div>
       </form>
+      <button className="btn btn-primary" onClick={logout}>
+          Logout
+        </button>
     </div>
   )
 }
