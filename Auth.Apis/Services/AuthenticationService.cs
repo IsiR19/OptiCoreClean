@@ -12,15 +12,15 @@ namespace Auth.DomainLogic.Services
         #region Private Fields
 
         private readonly IAuthCacheService _authCacheService;
-        private readonly IGoogleService _googleService;
+        private readonly ITokenValidationService _tokenValidationService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(IGoogleService googleService, IAuthCacheService authCacheService)
+        public AuthenticationService(ITokenValidationService tokenValidationService, IAuthCacheService authCacheService)
         {
-            _googleService = googleService;
+            _tokenValidationService = tokenValidationService;
             _authCacheService = authCacheService;
         }
 
@@ -30,14 +30,14 @@ namespace Auth.DomainLogic.Services
 
         public async Task<SessionResponse> CreateUserSessionAsync(LoginRequest loginRequest)
         {
-            var validationResult = await _googleService.ValidateIdTokenAsync(loginRequest.GoogleIdToken);
+            var validationResult = await _tokenValidationService.ValidateTokenAsync(loginRequest.GoogleIdToken);
             if (!validationResult.Validated)
             {
                 throw AuthenticationException.Token(validationResult.Exception!.Message);
             }
-            var userUID = validationResult.Data!.Subject;
+            var userUID = validationResult.Subject;
             var sessionGuid = Guid.NewGuid().ToString();
-            var expireAt = validationResult.Data?.ExpirationTimeSeconds ?? DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
+            var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds() : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
             return new SessionResponse(sessionGuid, expireAt, userUID);
@@ -57,7 +57,7 @@ namespace Auth.DomainLogic.Services
             }
             if (sessionInformation.ExpireUTC < DateTime.UtcNow)
             {
-                throw  AuthenticationException.Session("Expired or Blacklisted.");
+                throw AuthenticationException.Session("Expired or Blacklisted.");
             }
             if (sessionInformation.IpAddress != sessionRequest.IpAddress)
             {

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Auth.DomainLogic.Interfaces
 {
-    public interface IGoogleService
+    public interface ITokenValidationService
     {
-        Task<GoogleValidationResult> ValidateIdTokenAsync(string idToken);
+        Task<TokenValidationResult> ValidateTokenAsync(string token);
     }
 }

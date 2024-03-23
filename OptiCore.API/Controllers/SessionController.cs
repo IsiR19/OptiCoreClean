@@ -31,9 +31,8 @@ namespace OptiCore.API.Controllers
                 {
                     return BadRequest("Could not start session.");
                 }
-                Response.Cookies.Append(Constants.Cookies.Session, sessionInfo.SessionGuid, new CookieOptions { HttpOnly = true });
-                return Ok("Session started");
-
+                Response.Cookies.Append(Auth.Core.Constants.Cookies.Session, sessionInfo.SessionGuid, new CookieOptions { HttpOnly = true });
+                return Ok();
             }
             catch (Exception e)
             {
@@ -47,7 +46,7 @@ namespace OptiCore.API.Controllers
             try
             {
                 await _authorizationServerInteractor.EndUserSessionAsync();
-                Response.Cookies.Delete(Constants.Cookies.Session);
+                Response.Cookies.Delete(Auth.Core.Constants.Cookies.Session);
                 return Ok();
             }
             catch (Exception e)

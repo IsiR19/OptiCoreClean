@@ -6,8 +6,8 @@ namespace Auth.Core.Models.Configuration
     public class AuthConfiguration : IAuthConfiguration
     {
         public CacheConfiguration Cache { get; set; }
-        public GoogleOAuthConfiguration OAuthConfiguration { get; set; }
-        public AuthConfiguration(CacheConfiguration cacheConfiguration, GoogleOAuthConfiguration oauthConfiguration)
+        public TokenValidationConfiguration OAuthConfiguration { get; set; }
+        public AuthConfiguration(CacheConfiguration cacheConfiguration, TokenValidationConfiguration oauthConfiguration)
         {
             Cache = cacheConfiguration;
             OAuthConfiguration = oauthConfiguration;

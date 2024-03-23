@@ -34,7 +34,7 @@ namespace Auth.DependencyInjection.Injection
 
         private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
         {  
-            services.AddTransient<IGoogleService, GoogleService>();
+            services.AddSingleton<ITokenValidationService, TokenValidationService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             return services;
         }

@@ -11,6 +11,6 @@ namespace Auth.Core.Interfaces.Configuration
     public interface IAuthConfiguration
     {
         public CacheConfiguration Cache { get; set; }
-        public GoogleOAuthConfiguration OAuthConfiguration { get; set; }
+        public TokenValidationConfiguration OAuthConfiguration { get; set; }
     }
 }

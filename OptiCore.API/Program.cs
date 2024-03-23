@@ -11,17 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
-GoogleOAuthConfiguration googleOAuth = new GoogleOAuthConfiguration
-{
-    ClientId = "fake",
-    ClientSecret = "123",
-    LoginPath = "here"
-};
+
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthServices(builder =>
+builder.Services.AddAuthServices(auth =>
 {
-    builder
-    .WithGoogleOAuthConfiguration(googleOAuth)
+    auth
+    .WithTokenValidation(builder.Configuration)
     .WithCache(CacheConfiguration.Default);
 });
 builder.Services.AddInternalAuthServer();
@@ -30,7 +25,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("all", builder => builder.AllowAnyOrigin()
+    options.AddPolicy("all", builder => builder.AllowCredentials()
+    .WithOrigins("http://localhost:5173")
     .AllowAnyHeader()
     .AllowAnyMethod());
 });
@@ -39,6 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("all");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,9 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();
