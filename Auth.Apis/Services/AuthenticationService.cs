@@ -28,15 +28,19 @@ namespace Auth.DomainLogic.Services
 
         #region Public Methods
 
-        public async Task<SessionResponse> CreateUserSessionAsync(LoginRequest loginRequest)
+        public async Task<SessionResponse> CreateOrRestoreUserSessionAsync(LoginRequest loginRequest)
         {
             var validationResult = await _tokenValidationService.ValidateTokenAsync(loginRequest.GoogleIdToken);
             if (!validationResult.Validated)
             {
                 throw AuthenticationException.Token(validationResult.Exception!.Message);
             }
+            string sessionGuid;
             var userUID = validationResult.Subject;
-            var sessionGuid = Guid.NewGuid().ToString();
+            if (!_authCacheService.CheckForUserSession(userUID, out sessionGuid))
+            {
+                sessionGuid = Guid.NewGuid().ToString();
+            }
             var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds() : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);

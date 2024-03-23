@@ -21,9 +21,9 @@ namespace Auth.Core
             public const string SessionGuid = Cookies.Session;
             public const string userUID = "x-uuid";
         }
-        public static class ConfigurationKeys
+        public static partial class ConfigurationKeys
         {
-            public static class AppSettings
+            public static partial class AppSettings
             {
                 public static class Firebase
                 {
@@ -49,7 +49,7 @@ namespace Auth.Core
                     #endregion
                 }
             }
-            public static class Environment
+            public static partial class Environment
             {
                 public static class Firebase
                 {

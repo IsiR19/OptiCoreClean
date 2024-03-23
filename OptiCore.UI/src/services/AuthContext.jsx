@@ -14,12 +14,12 @@ const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-  console.warn('DEBUG window', window.location.origin)
   axios.defaults.withCredentials = true
   const [user, setUser] = useState(null)
   const [error, setError] = useState(null)
   const [isManual, setIsManual] = useState(false)
   const [hasSession, setHasSession] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const sessionEndpoint = `${config.apiBase}session`
   useRunOnce({
     fn: () => {
@@ -35,19 +35,23 @@ export const AuthProvider = ({ children }) => {
     })
     if (!stateUser && !!user) {
       logout()
+      setIsLoading(false);
       return
     }
     if (!stateUser) {
+      setIsLoading(false);
       return
     }
     if (isManual) {
       setIsManual(false)
+      setIsLoading(false);
       return
     }
     startSession(stateUser).then((success) => {
       if (!success) {
-        //logout()
+        //logout() // <---- Uncomment this after auth testing
       }
+      setIsLoading(false);
     })
   }
   const login = (userData) => {
@@ -77,7 +81,6 @@ export const AuthProvider = ({ children }) => {
         return false
       }
       setUser(popupResult.user)
-
       return await startSession(popupResult.user)
     } catch (error) {
       setError(error)
@@ -95,13 +98,6 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-      // const response = await fetch(`${sessionEndpoint}/google/start`, {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Authorization: `Bearer ${idToken}`,
-      //   },
-      // })
       if (response.status !== 200) {
         throw new Error(
           'Something went wrong trying to start your session: ' +
@@ -110,7 +106,7 @@ export const AuthProvider = ({ children }) => {
       }
       setError(null)
       setHasSession(true)
-      console.warn('DEBUG', response)
+      setUser(googleUser)
       return true
     } catch (error) {
       setError(error.message)
@@ -124,7 +120,6 @@ export const AuthProvider = ({ children }) => {
       if (!hasSession) {
         return
       }
-      console.warn('DEBUG endSession')
       const response = await fetch(`${sessionEndpoint}/end`, {
         method: 'DELETE',
       })
@@ -142,7 +137,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, error, login, oauthLogin, logout }}>
+    <AuthContext.Provider value={{ user, error, login, oauthLogin, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   )

@@ -10,7 +10,7 @@ namespace Auth.DomainLogic.Interfaces
 {
     public interface IAuthenticationService
     {
-        public Task<SessionResponse> CreateUserSessionAsync(LoginRequest loginRequest);
+        public Task<SessionResponse> CreateOrRestoreUserSessionAsync(LoginRequest loginRequest);
         public SessionResponse GetUserSession(SessionRequest sessionRequest);
         public void EndUserSession(SessionRequest sessionRequest);
     }

@@ -3,6 +3,7 @@ using Opticore.Persistence;
 using OptiCore.Application;
 using Auth.DependencyInjection.Injection;
 using Auth.Core.Models.Configuration;
+using static OptiCore.API.Constants.Constants;
 using Auth.Core.Common.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +23,13 @@ builder.Services.AddAuthServices(auth =>
 builder.Services.AddInternalAuthServer();
 
 builder.Services.AddControllers();
-
+var corsOrigins = Environment.GetEnvironmentVariable(ConfigurationKeys.Environment.CORSOrigins) ?? 
+    builder.Configuration[ConfigurationKeys.AppSettings.CORSOrigins] ?? "*";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("all", builder => builder.AllowCredentials()
-    .WithOrigins("http://localhost:5173")
+    options.AddPolicy(DefaultCorsPolicy, builder => builder
+    .AllowCredentials()
+    .WithOrigins(corsOrigins.Split(','))
     .AllowAnyHeader()
     .AllowAnyMethod());
 });
@@ -35,7 +38,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseCors("all");
+app.UseCors(DefaultCorsPolicy);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

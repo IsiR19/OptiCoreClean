@@ -42,7 +42,7 @@ namespace Auth.DomainLogic.Services
 
         public async Task<SessionResponse> CreateUserSessionAsync(string googleIdToken)
         {
-            return await _authenticationService.CreateUserSessionAsync(new LoginRequest(googleIdToken, _requestIpAddress));
+            return await _authenticationService.CreateOrRestoreUserSessionAsync(new LoginRequest(googleIdToken, _requestIpAddress));
         }
 
         public async Task EndUserSessionAsync()

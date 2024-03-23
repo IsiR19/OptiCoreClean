@@ -39,6 +39,11 @@ namespace Auth.DomainLogic.Services
             _cacheProvider.Set(sessionGuid, existingSession, 60);
         }
 
+        public bool CheckForUserSession(string userUID, out string existingSessionGuid)
+        {
+            return _cacheProvider.TryGet(userUID, out existingSessionGuid);
+        }
+
         public SessionCacheItem? GetSessionInformation(string sessionGuid)
         {
             if (_cacheProvider.TryGet(sessionGuid, out SessionCacheItem sessionCacheItem))
@@ -53,6 +58,12 @@ namespace Auth.DomainLogic.Services
             var sessionCacheItem = new SessionCacheItem(sessionGuid, userUID, ipAddress, expireAtSeconds);
             var sessionExpireMinutes = (sessionCacheItem.ExpireUTC - DateTime.UtcNow).Minutes + 1;
             _cacheProvider.Set(sessionGuid, sessionCacheItem, sessionExpireMinutes);
+            SetUserCheck(userUID,sessionGuid, sessionExpireMinutes);
+        }
+
+        private void SetUserCheck(string userUID, string sessionGuid, int sessionExpireMinutes)
+        {
+            _cacheProvider.Set(userUID, sessionGuid, sessionExpireMinutes);
         }
 
         #endregion Public Methods

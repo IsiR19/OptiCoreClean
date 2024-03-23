@@ -1,12 +1,15 @@
 import React from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useAuth } from '../services/AuthContext'
+import LoginForm from '../components/LoginForm'
 
 const PrivateRouteOutlet = () => {
-  const { user } = useAuth()
-  const location = useLocation()
-  const original = location.pathname;
-  const outlet = !!user ? <Outlet /> : <Navigate state={original} to={'/login'} replace={true} />
+  const { user, isLoading } = useAuth()
+  const tempLoadingComponent = <h2>Loading...</h2> //TODO: Replace this with actual loader
+  let outlet = tempLoadingComponent
+  if (!isLoading) {
+    outlet = !!user ? <Outlet /> : <LoginForm />
+  }
   return outlet
 }
 
