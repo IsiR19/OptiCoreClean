@@ -14,8 +14,8 @@ const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
-  axios.defaults.withCredentials = false
+  console.warn('DEBUG window', window.location.origin)
+  axios.defaults.withCredentials = true
   const [user, setUser] = useState(null)
   const [error, setError] = useState(null)
   const [isManual, setIsManual] = useState(false)
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     }
     startSession(stateUser).then((success) => {
       if (!success) {
-        logout()
+        //logout()
       }
     })
   }
@@ -102,11 +102,15 @@ export const AuthProvider = ({ children }) => {
       //     Authorization: `Bearer ${idToken}`,
       //   },
       // })
-      if (!response.status !== 200) {
-        throw new Error('Something went wrong trying to start your session')
+      if (response.status !== 200) {
+        throw new Error(
+          'Something went wrong trying to start your session: ' +
+            response.message,
+        )
       }
       setError(null)
       setHasSession(true)
+      console.warn('DEBUG', response)
       return true
     } catch (error) {
       setError(error.message)
