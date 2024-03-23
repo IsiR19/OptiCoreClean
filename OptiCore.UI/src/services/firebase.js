@@ -3,9 +3,10 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword as fireEmailAndPassword,
   onAuthStateChanged as fireOnAuthStateChanged,
-  signOut,
+  signOut as fireSignOut,
 } from 'firebase/auth'
 import { getAnalytics } from 'firebase/analytics'
 import config from '../config'
@@ -19,6 +20,6 @@ export const signInWithEmailAndPassword = (email, password) =>
   fireEmailAndPassword(firebaseAuth, email, password)
 export const onAuthStateChanged = (next) =>
   fireOnAuthStateChanged(firebaseAuth, next)
-export const logout = () => signOut(firebaseAuth)
+export const signOut = () => fireSignOut(firebaseAuth)
 //** Analytics */
 export const analytics = getAnalytics(firebase)
