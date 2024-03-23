@@ -1,6 +1,6 @@
-import React from 'react'
-import { BsBasket2Fill,BsFillInboxesFill,BsTelephoneOutboundFill,BsCloudLightningRainFill    } from 'react-icons/bs'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,PieChart, Pie, Sector, Cell } from 'recharts';
+/* eslint-disable react/prop-types */
+import { BsBasket2Fill,BsFillInboxesFill,BsTelephoneOutboundFill,BsCloudLightningRainFill    } from 'react-icons/bs';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,PieChart, Pie, Cell } from 'recharts';
 function Home() {
     const data = [
         {
@@ -48,6 +48,7 @@ function Home() {
       ];
 
       const CustomizedDot = (props) => {
+        // eslint-disable-next-line no-unused-vars
         const { cx, cy, stroke, payload, value } = props;
       
         if (value > 2500) {
@@ -75,6 +76,7 @@ function Home() {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const RADIAN = Math.PI / 180;
+// eslint-disable-next-line no-unused-vars
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -171,7 +173,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
       </ResponsiveContainer>
         </div>
     </main>
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -1,7 +1,7 @@
-import React from 'react';
 import { BsFillGrid3X3GapFill, BsPhoneVibrate, BsFillArchiveFill, BsHeadset, BsFillPersonLinesFill, BsPeopleFill, BsListCheck, BsPersonBadge, BsFillGearFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
+// eslint-disable-next-line react/prop-types
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   return (
     <aside id="sidebar" className={`bg-dark text-white ${openSidebarToggle ? "d-block" : "d-none d-md-block"}`}>

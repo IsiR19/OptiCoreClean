@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useEffect, useRef } from "react";
 
 const useRunOnce = ({fn, sessionKey} ) => {

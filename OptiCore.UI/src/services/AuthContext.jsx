@@ -1,144 +1,144 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
-import useRunOnce from '../hooks/runOnce'
-import config from '../config'
+import { createContext, useState, useContext } from 'react';
+import useRunOnce from '../hooks/runOnce';
+import config from '../config';
 import {
   googlePopup,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  firebase,
-} from './firebase'
-import axios from 'axios'
-const AuthContext = createContext()
+} from './firebase';
+import axios from 'axios';
+const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext)
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = () => useContext(AuthContext);
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-  axios.defaults.withCredentials = true
-  const [user, setUser] = useState(null)
-  const [error, setError] = useState(null)
-  const [isManual, setIsManual] = useState(false)
-  const [hasSession, setHasSession] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const sessionEndpoint = `${config.apiBase}session`
+  axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+  axios.defaults.withCredentials = true;
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+  const [isManual, setIsManual] = useState(false);
+  const [hasSession, setHasSession] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const sessionEndpoint = `${config.apiBase}session`;
   useRunOnce({
     fn: () => {
-      onAuthStateChanged(handleAuthStateChange)
+      onAuthStateChanged(handleAuthStateChange);
     },
-  })
+  });
 
   const handleAuthStateChange = (stateUser) => {
     console.warn('DEBUG onAuthStateChanged', {
       stateUser,
       isManual,
       sessionUser: user,
-    })
+    });
     if (!stateUser && !!user) {
-      logout()
+      logout();
       setIsLoading(false);
-      return
+      return;
     }
     if (!stateUser) {
       setIsLoading(false);
-      return
+      return;
     }
     if (isManual) {
-      setIsManual(false)
+      setIsManual(false);
       setIsLoading(false);
-      return
+      return;
     }
     startSession(stateUser).then((success) => {
       if (!success) {
         //logout() // <---- Uncomment this after auth testing
       }
       setIsLoading(false);
-    })
-  }
+    });
+  };
   const login = (userData) => {
-    setIsManual(true)
+    setIsManual(true);
     signInWithEmailAndPassword(userData.email, userData.password)
       .then((googleCredentials) => {
         if (googleCredentials.user) {
-          startSession(googleCredentials.user)
+          startSession(googleCredentials.user);
         }
       })
       .catch((e) => {
-        console.error(e)
-      })
-  }
+        console.error(e);
+      });
+  };
 
   const logout = async () => {
-    await signOut()
-    await endSession()
-    setUser(null)
-  }
+    await signOut();
+    await endSession();
+    setUser(null);
+  };
 
   const oauthLogin = async () => {
     try {
-      setIsManual(true)
-      const popupResult = await googlePopup()
+      setIsManual(true);
+      const popupResult = await googlePopup();
       if (!popupResult.user) {
-        return false
+        return false;
       }
-      setUser(popupResult.user)
-      return await startSession(popupResult.user)
+      setUser(popupResult.user);
+      return await startSession(popupResult.user);
     } catch (error) {
-      setError(error)
-      console.error(error)
+      setError(error);
+      console.error(error);
     }
-  }
+  };
 
   const startSession = async (googleUser) => {
     try {
-      const idToken = await googleUser.getIdToken()
-      const accessToken = googleUser.accessToken
+      const accessToken = googleUser.accessToken;
       const response = await axios.get(`${sessionEndpoint}/google/start`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-      })
+      });
       if (response.status !== 200) {
         throw new Error(
           'Something went wrong trying to start your session: ' +
             response.message,
-        )
+        );
       }
-      setError(null)
-      setHasSession(true)
-      setUser(googleUser)
-      return true
+      setError(null);
+      setHasSession(true);
+      setUser(googleUser);
+      return true;
     } catch (error) {
-      setError(error.message)
-      console.error('startSession', error)
-      return false
+      setError(error.message);
+      console.error('startSession', error);
+      return false;
     }
-  }
+  };
 
   const endSession = async () => {
     try {
       if (!hasSession) {
-        return
+        return;
       }
       const response = await fetch(`${sessionEndpoint}/end`, {
         method: 'DELETE',
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Something went wrong trying to end your session')
+        throw new Error('Something went wrong trying to end your session');
       }
-      setUser(null)
-      setError(null)
-      setIsManual(true)
-      setHasSession(false)
+      setUser(null);
+      setError(null);
+      setIsManual(true);
+      setHasSession(false);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   return (
     <AuthContext.Provider value={{ user, error, login, oauthLogin, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

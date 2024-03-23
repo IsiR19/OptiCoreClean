@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
-import { useAuth } from '../services/AuthContext'
-import { useNavigate, useLocation } from 'react-router-dom'
+import  { useState } from 'react';
+import { useAuth } from '../services/AuthContext';
 
 const LoginForm = () => {
-  const { login, oauthLogin, logout } = useAuth()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const redirectLocation = useLocation().state ?? '/'
-  const navigate = useNavigate();
+  const { login, oauthLogin, logout } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    await login({ username, password })
+    await login({ username, password });
 
-    setUsername('')
-    setPassword('')
-  }
+    setUsername('');
+    setPassword('');
+  };
 
-  const handleGoogleSignIn = () => oauthLogin()
+  const handleGoogleSignIn = () => oauthLogin();
 
   return (
     <div className="container">
@@ -53,16 +50,20 @@ const LoginForm = () => {
           Login
         </button>
         <div className="row login-controls">
-        <div className="col-12">
-          <img className="google-button" alt="Google sign in" onClick={handleGoogleSignIn}/>
+          <div className="col-12">
+            <img
+              className="google-button"
+              alt="Google sign in"
+              onClick={handleGoogleSignIn}
+            />
+          </div>
         </div>
-      </div>
       </form>
       <button className="btn btn-primary" onClick={logout}>
-          Logout
-        </button>
+        Logout
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
