@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Auth.DependencyInjection\Auth.DependencyInjection.csproj" />
     <ProjectReference Include="..\Auth.Middleware\Auth.Middleware.csproj" />
     <ProjectReference Include="..\OptiCore.Application\OptiCore.Application.csproj" />
+    <ProjectReference Include="..\Opticore.Identity\Opticore.Identity.csproj" />
     <ProjectReference Include="..\Opticore.Infrastructure\Opticore.Infrastructure.csproj" />
     <ProjectReference Include="..\Opticore.Persistance\Opticore.Persistance.csproj" />
   </ItemGroup>

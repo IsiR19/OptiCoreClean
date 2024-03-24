@@ -1,8 +1,7 @@
 ﻿using OptiCore.Domain.Users;
-
 namespace OptiCore.Application.Abstractions.Contracts.Identity
 {
-    public interface IUserService
+    public interface IUserService: Auth.Core.Interfaces.IUserService
     {
         Task<List<User>> GetUsers();
 

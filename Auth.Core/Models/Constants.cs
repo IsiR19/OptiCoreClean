@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -73,6 +74,17 @@ namespace Auth.Core
                     #endregion
                 }
             }
+        }
+        public static class TokenClaims
+        {
+            public const string Name = "name";
+            public const string Issuer = "iss";
+            public const string Audience = "aud";
+            public const string Subject = "sub";
+            public const string IssuedAt = "iat";
+            public const string ExpiresAt = "exp";
+            public const string Email = "email";
+            public const string EmailVerified = "email_verified";
         }
     }
 }

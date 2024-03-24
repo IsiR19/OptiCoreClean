@@ -13,15 +13,17 @@ namespace Auth.DomainLogic.Services
 
         private readonly IAuthCacheService _authCacheService;
         private readonly ITokenValidationService _tokenValidationService;
+        private readonly IUserService _userService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(ITokenValidationService tokenValidationService, IAuthCacheService authCacheService)
+        public AuthenticationService(ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService)
         {
             _tokenValidationService = tokenValidationService;
             _authCacheService = authCacheService;
+            _userService = userService;
         }
 
         #endregion Public Constructors
@@ -30,18 +32,17 @@ namespace Auth.DomainLogic.Services
 
         public async Task<SessionResponse> CreateOrRestoreUserSessionAsync(LoginRequest loginRequest)
         {
-            var validationResult = await _tokenValidationService.ValidateTokenAsync(loginRequest.GoogleIdToken);
-            if (!validationResult.Validated)
-            {
-                throw AuthenticationException.Token(validationResult.Exception!.Message);
-            }
+            var validationResult = await ValidateTokenAsync(loginRequest.AccessToken);
             string sessionGuid;
             var userUID = validationResult.Subject;
-            if (!_authCacheService.CheckForUserSession(userUID, out sessionGuid))
+            var hasExistingSession = GetOrCreateSessionGuid(userUID, out sessionGuid);
+
+            if (!hasExistingSession)
             {
-                sessionGuid = Guid.NewGuid().ToString();
+                await ValidateUserIsRegisteredAsync(userUID, validationResult.Email);
             }
-            var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds() : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
+            var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds()
+                : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
             return new SessionResponse(sessionGuid, expireAt, userUID);
@@ -71,5 +72,42 @@ namespace Auth.DomainLogic.Services
         }
 
         #endregion Public Methods
+
+        #region Private Methods
+
+        private bool GetOrCreateSessionGuid(string userUID, out string sessionGuid)
+        {
+            if (!_authCacheService.CheckForUserSession(userUID, out sessionGuid))
+            {
+                sessionGuid = Guid.NewGuid().ToString();
+                return false;
+            }
+            return true;
+        }
+
+        private async Task<Models.TokenValidationResult> ValidateTokenAsync(string accessToken)
+        {
+            var validationResult = await _tokenValidationService.ValidateTokenAsync(accessToken);
+            if (!validationResult.Validated)
+            {
+                throw AuthenticationException.Token(validationResult.Exception!.Message);
+            }
+            return validationResult;
+        }
+
+        private async Task ValidateUserIsRegisteredAsync(string userUID, string email)
+        {
+            var user = await _userService.GetUserByUuidUIDAsync(userUID);
+            if (user == null)
+            {
+                throw AuthenticationException.NotRegistered(email);
+            }
+            if (user.Email.ToLower() != email.ToLower())
+            {
+                throw AuthenticationException.Discrepancy(nameof(user.Email));
+            }
+        }
+
+        #endregion Private Methods
     }
 }

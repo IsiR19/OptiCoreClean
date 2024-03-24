@@ -65,6 +65,12 @@ namespace Auth.Core.Exceptions
                 Cause = AuthenticationExceptionCause.Token,
                 _additionInfo = additionalInformation
             };
+        public static AuthenticationException Discrepancy(string property)
+            => new AuthenticationException
+            {
+                Cause = AuthenticationExceptionCause.Discrepancy,
+                _additionInfo = property
+            };
 
         #endregion Public Methods
 
@@ -85,6 +91,8 @@ namespace Auth.Core.Exceptions
                     return $"User {_additionInfo} was not found";
                 case AuthenticationExceptionCause.Session:
                     return $"Session is invalid: {_additionInfo}";
+                    case AuthenticationExceptionCause.Discrepancy:
+                    return $"The {_additionInfo} does not match the {_additionInfo} in the system";
                 default:
                     return "Failed to authenticated";
             }

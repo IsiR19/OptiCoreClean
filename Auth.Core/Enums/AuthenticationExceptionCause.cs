@@ -4,6 +4,7 @@
     {
         Token,
         NotRegistered,
-        Session
+        Session,
+        Discrepancy
     }
 }

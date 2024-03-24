@@ -1,9 +1,11 @@
 ﻿using Auth.Core.Common.Models;
+using Auth.Core.Interfaces;
 using Auth.Core.Models.Configuration;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static Auth.Core.Constants;
@@ -17,6 +19,8 @@ namespace Auth.DependencyInjection.Models
         private bool _addEntitlements { get; set; }
         private CacheConfiguration? _cacheConfiguration { get; set; }
         private TokenValidationConfiguration? _tokenValidationConfiguration { get; set; } = null;
+        private Type? _userServiceType { get; set; }
+        private Func<IServiceProvider, object>? _userServiceImplementationFactory { get; set; }
 
         #endregion Private Properties
 
@@ -38,11 +42,17 @@ namespace Auth.DependencyInjection.Models
             {
                 _cacheConfiguration = CacheConfiguration.Default;
             }
+            if (_userServiceType == null)
+            {
+                throw new InvalidOperationException($"{nameof(WithUserService)} must be called");
+            }
             var authConfig = new AuthConfiguration(_cacheConfiguration, _tokenValidationConfiguration);
             return new DependencyInjectionConfiguration()
             {
                 AddEntitlements = _addEntitlements,
-                AuthConfiguration = authConfig
+                AuthConfiguration = authConfig,
+                UserServiceConfiguration = new UserServiceDependancyInjectionConfiguration { ImplementationType = _userServiceType, ImplementationFactory = _userServiceImplementationFactory },
+
             };
         }
 
@@ -76,7 +86,7 @@ namespace Auth.DependencyInjection.Models
             var audience = Environment.GetEnvironmentVariable(ConfigurationKeys.Environment.Firebase.ProjectId) ?? configuration[ConfigurationKeys.AppSettings.Firebase.ProjectId] ?? "";
             var issuer = Environment.GetEnvironmentVariable(ConfigurationKeys.Environment.Firebase.Issuer) ?? configuration[ConfigurationKeys.AppSettings.Firebase.Issuer] ?? "";
             var jwkUris = Environment.GetEnvironmentVariable(ConfigurationKeys.Environment.Firebase.JwksUris) ?? configuration[ConfigurationKeys.AppSettings.Firebase.JwksUris] ?? "";
-            return WithTokenValidation(new TokenValidationConfiguration(clientId, clientSecret, tokenUri,    audience, issuer, jwkUris.Split(',')));
+            return WithTokenValidation(new TokenValidationConfiguration(clientId, clientSecret, tokenUri, audience, issuer, jwkUris.Split(',')));
         }
 
         public DependencyInjectionConfigurationBuilder WithTokenValidation(TokenValidationConfiguration tokenConfiguration)
@@ -108,6 +118,24 @@ namespace Auth.DependencyInjection.Models
             _tokenValidationConfiguration = tokenConfiguration;
             return this;
         }
+
+        public DependencyInjectionConfigurationBuilder WithUserService<TUserService>() where TUserService : IUserService
+        {
+            _userServiceType = typeof(TUserService);
+            return this;
+        }
+        public DependencyInjectionConfigurationBuilder WithUserService<TUserService>(Func<IServiceProvider, object> implementationFactory) where TUserService : IUserService
+        {
+            _userServiceType = typeof(TUserService);
+            var factoryReturnType = implementationFactory.GetMethodInfo().ReturnType;
+            if (!_userServiceType.IsAssignableFrom(factoryReturnType))
+            {
+                throw new ArgumentException($"{nameof(implementationFactory)} does not return a type that inherits from {_userServiceType.FullName}");
+            }
+            _userServiceImplementationFactory = implementationFactory;
+            return this;
+        }
+
 
         #endregion Public Methods
     }

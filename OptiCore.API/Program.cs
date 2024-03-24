@@ -5,6 +5,7 @@ using Auth.DependencyInjection.Injection;
 using Auth.Core.Models.Configuration;
 using static OptiCore.API.Constants.Constants;
 using Auth.Core.Common.Models;
+using Opticore.Identity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,8 @@ builder.Services.AddAuthServices(auth =>
 {
     auth
     .WithTokenValidation(builder.Configuration)
-    .WithCache(CacheConfiguration.Default);
+    .WithCache(CacheConfiguration.Default)
+    .WithUserService<UserService>();
 });
 builder.Services.AddInternalAuthServer();
 

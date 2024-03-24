@@ -13,7 +13,7 @@ namespace Auth.Core.Interfaces
     /// </summary>
     public interface IAuthorizationServerInteractor
     {
-        Task<SessionResponse> CreateUserSessionAsync(string googleIdToken);
+        Task<SessionResponse> CreateUserSessionAsync(string accessToken);
         Task<SessionResponse> GetUserSessionAsync();
         Task EndUserSessionAsync();
     }

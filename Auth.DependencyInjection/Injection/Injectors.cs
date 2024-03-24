@@ -18,6 +18,7 @@ namespace Auth.DependencyInjection.Injection
         {
             var config = BuildConfiguration(builder);
             services.AddSingleton<IAuthConfiguration>(config.AuthConfiguration);
+            services.AddUserService(config.UserServiceConfiguration);
             services.AddCaching(config);
             services.AddAuthServices(config);
             return services;
@@ -56,6 +57,19 @@ namespace Auth.DependencyInjection.Injection
                 case CacheProviders.File:
                     services.AddSingleton<ICacheProvider, FileCacheProvider>();
                     break;
+            }
+            return services;
+        }
+
+        private static IServiceCollection AddUserService(this IServiceCollection services, UserServiceDependancyInjectionConfiguration config)
+        {
+            if(config.ImplementationFactory != null)
+            {
+                services.AddTransient(typeof(IUserService), config.ImplementationFactory);
+            }
+            else
+            {
+                services.AddTransient(typeof(IUserService), config.ImplementationType);
             }
             return services;
         }

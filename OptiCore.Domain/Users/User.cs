@@ -1,4 +1,5 @@
-﻿using OptiCore.Domain.Commissions;
+﻿using Auth.Core.Interfaces.Models;
+using OptiCore.Domain.Commissions;
 using OptiCore.Domain.Companies;
 using OptiCore.Domain.Contact_Details;
 using OptiCore.Domain.Core;
@@ -6,7 +7,7 @@ using OptiCore.Domain.Enums;
 
 namespace OptiCore.Domain.Users
 {
-    public class User : BaseEntity
+    public class User : BaseEntity, IUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,6 +17,7 @@ namespace OptiCore.Domain.Users
         public virtual Company Company { get; set; }
 
         public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
-
+        public string UUID { get; set; }
+        public string Name { get => $"{FirstName} {LastName}"; set { } }
     }
 }
