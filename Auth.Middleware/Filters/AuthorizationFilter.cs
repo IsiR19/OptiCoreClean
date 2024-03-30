@@ -17,15 +17,13 @@ namespace Auth.Middleware.Filters
 {
     public class AuthorizationFilter : IAsyncAuthorizationFilter
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthorizationServerInteractor _authorizationServerInteractor;
         private readonly string _policy;
         private string? _sessionGuid;
         private bool _noPolicy => _policy == Constants.Policies.None;
 
-        public AuthorizationFilter(IHttpContextAccessor httpContextAccessor, IAuthorizationServerInteractor authorizationServerInteractor, string policy)
+        public AuthorizationFilter(IAuthorizationServerInteractor authorizationServerInteractor, string policy)
         {
-            _httpContextAccessor = httpContextAccessor;
             _authorizationServerInteractor = authorizationServerInteractor;
             _policy = policy;
         }
