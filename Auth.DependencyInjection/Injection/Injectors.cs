@@ -34,7 +34,7 @@ namespace Auth.DependencyInjection.Injection
         #region Private Methods
 
         private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
-        {  
+        {
             services.AddSingleton<ITokenValidationService, TokenValidationService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             return services;
@@ -63,7 +63,7 @@ namespace Auth.DependencyInjection.Injection
 
         private static IServiceCollection AddUserService(this IServiceCollection services, UserServiceDependancyInjectionConfiguration config)
         {
-            if(config.ImplementationFactory != null)
+            if (config.ImplementationFactory != null)
             {
                 services.AddTransient(typeof(IUserService), config.ImplementationFactory);
             }
@@ -71,6 +71,7 @@ namespace Auth.DependencyInjection.Injection
             {
                 services.AddTransient(typeof(IUserService), config.ImplementationType);
             }
+            services.AddScoped<IUserResolver, UserResolver>();
             return services;
         }
 

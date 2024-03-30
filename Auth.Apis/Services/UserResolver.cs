@@ -18,13 +18,41 @@ namespace Auth.DomainLogic.Services
 
         #region Public Properties
 
-        public string Email => _user?.Email ?? Constants.UserResolver.System;
+        public string Email
+        {
+            get
+            {
+                TrySetContext();
+                return _user?.Email ?? Constants.UserResolver.System;
+            }
+        }
 
-        public string Name => _user?.Name ?? Constants.UserResolver.System;
+        public string Name
+        {
+            get
+            {
+                TrySetContext();
+                return _user?.Name ?? Constants.UserResolver.System;
+            }
+        }
 
-        public string Session => _sessionGuid ?? Constants.UserResolver.System;
+        public string Session
+        {
+            get
+            {
+                TrySetContext();
+                return _sessionGuid ?? string.Empty;
+            }
+        }
 
-        public string UUID => _user?.UUID ?? Constants.UserResolver.System;
+        public string UUID
+        {
+            get
+            {
+                TrySetContext();
+                return _user?.UUID ?? Constants.UserResolver.System;
+            }
+        }
 
         #endregion Public Properties
 

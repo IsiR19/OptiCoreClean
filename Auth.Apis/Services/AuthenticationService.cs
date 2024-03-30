@@ -1,9 +1,10 @@
-﻿using Auth.Core.Enums;
+﻿using Auth.Core;
 using Auth.Core.Exceptions;
 using Auth.Core.Interfaces;
 using Auth.Core.Models.Requests;
 using Auth.Core.Models.Responses;
 using Auth.DomainLogic.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Auth.DomainLogic.Services
 {
@@ -14,13 +15,15 @@ namespace Auth.DomainLogic.Services
         private readonly IAuthCacheService _authCacheService;
         private readonly ITokenValidationService _tokenValidationService;
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService)
+        public AuthenticationService(IHttpContextAccessor httpContextAccessor, ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService)
         {
+            _httpContextAccessor = httpContextAccessor;
             _tokenValidationService = tokenValidationService;
             _authCacheService = authCacheService;
             _userService = userService;
@@ -43,6 +46,8 @@ namespace Auth.DomainLogic.Services
             }
             var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds()
                 : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionGuid);
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.userUID, sessionGuid);
 
             _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
             return new SessionResponse(sessionGuid, expireAt, userUID);
@@ -68,6 +73,10 @@ namespace Auth.DomainLogic.Services
             {
                 throw AuthenticationException.Session("IP Mismatch.");
             }
+
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionInformation.SessionGuid);
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.userUID, sessionInformation.UserUID);
+
             return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID);
         }
 
