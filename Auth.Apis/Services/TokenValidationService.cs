@@ -54,7 +54,6 @@ namespace Auth.DomainLogic.Services
                 }
                 if (internalValidationResult.Exception != null)
                 {
-                    // TODO: Figure out a way to ignore signature check
                     return TokenValidationResult.Error(internalValidationResult.Exception);
                 }
                 return TokenValidationResult.Success(internalValidationResult.SecurityToken);

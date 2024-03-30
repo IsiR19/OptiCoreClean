@@ -86,5 +86,9 @@ namespace Auth.Core
             public const string Email = "email";
             public const string EmailVerified = "email_verified";
         }
+        public static class UserResolver
+        {
+            public const string System = "System";
+        }
     }
 }
