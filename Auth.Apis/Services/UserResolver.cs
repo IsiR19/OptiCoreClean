@@ -2,6 +2,7 @@
 using Auth.Core;
 using Auth.Core.Interfaces.Models;
 using Microsoft.AspNetCore.Http;
+using Auth.DomainLogic.Interfaces;
 
 namespace Auth.DomainLogic.Services
 {
@@ -11,8 +12,10 @@ namespace Auth.DomainLogic.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserService _userService;
+        private readonly IAuthCacheService _authCacheService;
         private string? _sessionGuid = "";
         private IUser? _user;
+        private IEnumerable<string>? _entitlements;
 
         #endregion Private Fields
 
@@ -54,14 +57,24 @@ namespace Auth.DomainLogic.Services
             }
         }
 
+        public IEnumerable<string> Entitlements
+        {
+            get
+            {
+                TrySetContext();
+                return _entitlements ?? Enumerable.Empty<string>();
+            }
+        }
+
         #endregion Public Properties
 
         #region Public Constructors
 
-        public UserResolver(IHttpContextAccessor httpContextAccessor, IUserService userService)
+        public UserResolver(IHttpContextAccessor httpContextAccessor, IUserService userService, IAuthCacheService authCacheService)
         {
             _httpContextAccessor = httpContextAccessor;
             _userService = userService;
+            _authCacheService = authCacheService;
             TrySetContext();
         }
 
@@ -84,13 +97,18 @@ namespace Auth.DomainLogic.Services
             {
                 return;
             }
-            if (!_httpContextAccessor.HttpContext.Items.TryGetValue(Constants.HttpContextItems.userUID, out object? _userUid))
+            if (!_httpContextAccessor.HttpContext.Items.TryGetValue(Constants.HttpContextItems.UserUID, out object? _userUid))
             {
                 return;
             }
             try
             {
                 _user = _userService.GetUserByUuidUIDAsync(_userUid.ToString()!).GetAwaiter().GetResult();
+                if (_user == null)
+                {
+                    return;
+                }
+                _entitlements = _authCacheService.GetEntitlements(UUID);
             }
             catch
             {

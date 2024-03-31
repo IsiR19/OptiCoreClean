@@ -12,17 +12,19 @@ namespace Auth.Middleware.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : TypeFilterAttribute
     {
-        public string Policy { get; init; }
+        public string PolicyOrEntitlement { get; init; }
+        public bool IsEntitlement { get; init; }
         public AuthorizeAttribute() : base(typeof(AuthorizationFilter))
         {
-            Policy = "NONE";
-            Arguments = new[] { Policy };
+            PolicyOrEntitlement = "NONE";
+            Arguments = new object[] { PolicyOrEntitlement, IsEntitlement };
         }
 
-        public AuthorizeAttribute(string policy) : base(typeof(AuthorizationFilter))
+        public AuthorizeAttribute(string policy, bool isEntitlement = false) : base(typeof(AuthorizationFilter))
         {
-            Policy = policy;
-            Arguments = new[] { Policy };
+            PolicyOrEntitlement = policy;
+            IsEntitlement = isEntitlement;
+            Arguments = new object[] { PolicyOrEntitlement, isEntitlement };
         }
     }
 }

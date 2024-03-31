@@ -15,5 +15,6 @@ namespace Auth.Core.Interfaces
         string Email { get; }
         string UUID { get; }
         string Session { get; }
+        IEnumerable<string> Entitlements { get; }
     }
 }

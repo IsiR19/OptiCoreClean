@@ -46,11 +46,11 @@ namespace Auth.DomainLogic.Services
             }
             var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds()
                 : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
-            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionGuid);
-            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.userUID, sessionGuid);
 
-            _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
-            return new SessionResponse(sessionGuid, expireAt, userUID);
+            SetHttpContextItems(sessionGuid, userUID);
+            var entitlements = await _userService.GetUserEntitlementsAsync(userUID);
+            CacheSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress, entitlements);
+            return new SessionResponse(sessionGuid, expireAt, userUID, entitlements);
         }
 
         public void EndUserSession(SessionRequest sessionRequest)
@@ -58,7 +58,7 @@ namespace Auth.DomainLogic.Services
             _authCacheService.BlacklistSession(sessionRequest.SessionGuid);
         }
 
-        public SessionResponse GetUserSession(SessionRequest sessionRequest)
+        public async Task<SessionResponse> GetUserSessionAsync(SessionRequest sessionRequest)
         {
             var sessionInformation = _authCacheService.GetSessionInformation(sessionRequest.SessionGuid);
             if (sessionInformation == null)
@@ -73,11 +73,9 @@ namespace Auth.DomainLogic.Services
             {
                 throw AuthenticationException.Session("IP Mismatch.");
             }
-
-            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionInformation.SessionGuid);
-            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.userUID, sessionInformation.UserUID);
-
-            return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID);
+            var entitlements = _authCacheService.GetEntitlements(sessionInformation.UserUID);
+            SetHttpContextItems(sessionInformation.SessionGuid, sessionInformation.UserUID);
+            return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID, entitlements);
         }
 
         #endregion Public Methods
@@ -115,6 +113,18 @@ namespace Auth.DomainLogic.Services
             {
                 throw AuthenticationException.Discrepancy(nameof(user.Email));
             }
+        }
+
+        private void SetHttpContextItems(string sessionGuid, string userUid)
+        {
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionGuid);
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.UserUID, userUid);
+        }
+
+        private void CacheSessionInformation(string userUID, string sessionGuid, long expireAtSeconds, string ipAddress, IEnumerable<string> entitlements)
+        {
+            _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAtSeconds, ipAddress);
+            _authCacheService.SetEntitlements(userUID, entitlements);
         }
 
         #endregion Private Methods

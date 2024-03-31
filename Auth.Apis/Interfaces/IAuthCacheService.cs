@@ -35,5 +35,8 @@ namespace Auth.DomainLogic.Interfaces
         /// </summary>
         /// <param name="sessionGuid"></param>
         public void BlacklistSession(string sessionGuid);
+
+        public void SetEntitlements(string userUID, IEnumerable<string> entitlements);
+        public IEnumerable<string> GetEntitlements(string userUID);
     }
 }

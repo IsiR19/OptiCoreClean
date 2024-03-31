@@ -21,6 +21,7 @@ namespace Auth.DependencyInjection.Models
         private TokenValidationConfiguration? _tokenValidationConfiguration { get; set; } = null;
         private Type? _userServiceType { get; set; }
         private Func<IServiceProvider, object>? _userServiceImplementationFactory { get; set; }
+        private Type? _policyServiceType { get; set; }
 
         #endregion Private Properties
 
@@ -51,8 +52,8 @@ namespace Auth.DependencyInjection.Models
             {
                 AddEntitlements = _addEntitlements,
                 AuthConfiguration = authConfig,
-                UserServiceConfiguration = new UserServiceDependancyInjectionConfiguration { ImplementationType = _userServiceType, ImplementationFactory = _userServiceImplementationFactory },
-
+                UserServiceConfiguration = new UserServiceDependencyInjectionConfiguration { ImplementationType = _userServiceType, ImplementationFactory = _userServiceImplementationFactory },
+                PolicyServiceType = _policyServiceType
             };
         }
 
@@ -133,6 +134,12 @@ namespace Auth.DependencyInjection.Models
                 throw new ArgumentException($"{nameof(implementationFactory)} does not return a type that inherits from {_userServiceType.FullName}");
             }
             _userServiceImplementationFactory = implementationFactory;
+            return this;
+        }
+
+        public DependencyInjectionConfigurationBuilder WithEntitlementPolicies<TPolicyService>() where TPolicyService : IPolicyService
+        {
+            _policyServiceType= typeof(TPolicyService);
             return this;
         }
 

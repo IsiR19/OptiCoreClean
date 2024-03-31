@@ -3,6 +3,7 @@ using Auth.Core.Common.Interfaces;
 using Auth.Core.Common.Services.Providers;
 using Auth.Core.Interfaces;
 using Auth.Core.Interfaces.Configuration;
+using Auth.Core.Services;
 using Auth.DependencyInjection.Models;
 using Auth.DomainLogic.Interfaces;
 using Auth.DomainLogic.Services;
@@ -18,9 +19,10 @@ namespace Auth.DependencyInjection.Injection
         {
             var config = BuildConfiguration(builder);
             services.AddSingleton<IAuthConfiguration>(config.AuthConfiguration);
-            services.AddUserService(config.UserServiceConfiguration);
+            services.AddUserServices(config.UserServiceConfiguration);
             services.AddCaching(config);
             services.AddAuthServices(config);
+            services.AddEntitlementService(config);
             return services;
         }
 
@@ -61,7 +63,18 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
-        private static IServiceCollection AddUserService(this IServiceCollection services, UserServiceDependancyInjectionConfiguration config)
+        private static IServiceCollection AddEntitlementService(this IServiceCollection services, DependencyInjectionConfiguration config)
+        {
+            if(config.PolicyServiceType == null)
+            {
+                services.AddTransient<IPolicyService, DisabledPolicyService>();
+                return services;
+            }
+            services.AddTransient(typeof(IPolicyService), config.PolicyServiceType);
+            return services;
+        }
+
+        private static IServiceCollection AddUserServices(this IServiceCollection services, UserServiceDependencyInjectionConfiguration config)
         {
             if (config.ImplementationFactory != null)
             {

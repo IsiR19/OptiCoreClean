@@ -1,4 +1,5 @@
-﻿using Auth.Core.Interfaces.Models;
+﻿using Auth.Core;
+using Auth.Core.Interfaces.Models;
 using OptiCore.Application.Abstractions.Contracts.Identity;
 using OptiCore.Domain.Users;
 using System;
@@ -18,7 +19,14 @@ namespace Opticore.Identity.Services
 
         public async Task<IUser?> GetUserByUuidUIDAsync(string uuid)
         {
-            return new User() { FirstName = "Matthew", LastName = "Law", Email = "matthew.mcsd@gmail.com" };
+            var dummyUser = new User() { FirstName = "Matthew", LastName = "Law", Email = "matthew.mcsd@gmail.com" };
+            return await Task.FromResult(dummyUser);
+        }
+
+        public async Task<IEnumerable<string>> GetUserEntitlementsAsync(string uuid)
+        {
+            var dummyEntitlements = new string[] { Constants.Entitlements.Admin };
+            return await Task.FromResult(dummyEntitlements);
         }
 
         public Task<List<User>> GetUsers()

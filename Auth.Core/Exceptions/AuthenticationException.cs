@@ -72,6 +72,12 @@ namespace Auth.Core.Exceptions
                 _additionInfo = property
             };
 
+        public static AuthenticationException Entitlements()
+            => new AuthenticationException
+            {
+                Cause = AuthenticationExceptionCause.Entitlements
+            };
+
         #endregion Public Methods
 
         #region Private Methods

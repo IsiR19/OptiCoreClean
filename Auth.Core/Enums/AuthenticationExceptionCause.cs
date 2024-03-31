@@ -5,6 +5,7 @@
         Token,
         NotRegistered,
         Session,
-        Discrepancy
+        Discrepancy,
+        Entitlements
     }
 }
