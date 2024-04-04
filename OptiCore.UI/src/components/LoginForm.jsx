@@ -3,13 +3,13 @@ import { useAuth } from '../services/AuthContext';
 
 const LoginForm = () => {
   const { login, oauthLogin, logout } = useAuth();
+  const {email, setEmail} = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await login({ username, password });
-
     setUsername('');
     setPassword('');
   };
