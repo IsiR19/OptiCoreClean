@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BsFillGrid3X3GapFill, BsPhoneVibrate, BsFillArchiveFill, BsHeadset, BsFillPersonLinesFill, BsPeopleFill, BsListCheck, BsPersonBadge, BsFillGearFill } from 'react-icons/bs';
+import { BsFillGrid3X3GapFill, BsPhoneVibrate, BsFillArchiveFill, BsHeadset, BsFillPersonLinesFill, BsPeopleFill, BsListCheck, BsPersonBadge, BsFillGearFill,BsBuildings} from 'react-icons/bs';
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   // Determine the class to apply based on whether the sidebar is open or closed
@@ -30,6 +30,9 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </Link>
         <Link className="nav-link text-secondary sidebar-list-item" to="/agents">
           <BsHeadset className='icon' /> Agents
+        </Link>
+        <Link className="nav-link text-secondary sidebar-list-item" to="/companies">
+          <BsBuildings className='icon' /> Companies
         </Link>
         <Link className="nav-link text-secondary sidebar-list-item" to="/partners">
           <BsFillPersonLinesFill className='icon' /> Channel Partners
