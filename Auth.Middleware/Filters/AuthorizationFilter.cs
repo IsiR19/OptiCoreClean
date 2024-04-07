@@ -23,7 +23,7 @@ namespace Auth.Middleware.Filters
         private readonly IAuthorizationServerInteractor _authorizationServerInteractor;
         private readonly bool _isEntitlement;
         private readonly string _policyOrEntitlement;
-        private readonly IPolicyService _policyService;
+        private readonly IEntitlementPolicyService _policyService;
         private readonly IUserResolver _userResolver;
         private string? _sessionGuid;
 
@@ -47,7 +47,7 @@ namespace Auth.Middleware.Filters
 
         #region Public Constructors
 
-        public AuthorizationFilter(IAuthorizationServerInteractor authorizationServerInteractor, IUserResolver userResolver, IPolicyService policyService, string policyOrEntitlement, bool isEntitlement)
+        public AuthorizationFilter(IAuthorizationServerInteractor authorizationServerInteractor, IUserResolver userResolver, IEntitlementPolicyService policyService, string policyOrEntitlement, bool isEntitlement)
         {
             _authorizationServerInteractor = authorizationServerInteractor;
             _policyOrEntitlement = policyOrEntitlement;
@@ -112,7 +112,7 @@ namespace Auth.Middleware.Filters
 
         private bool ValidateEntitlements(SessionResponse session, string entitlement, bool throwIfMissing)
         {
-            if (session.Entitlements.Contains(Constants.Entitlements.Admin))
+            if (session.Entitlements.Contains(Constants.Entitlements.SystemAdmin))
             {
                 return true;
             }
@@ -137,7 +137,7 @@ namespace Auth.Middleware.Filters
             }
             foreach (var entitlement in policy.Entitlements)
             {
-                if (ValidateEntitlements(session, entitlement, false))
+                if (ValidateEntitlements(session, entitlement.Code, false))
                 {
                     entitlementPassCount++;
                 }

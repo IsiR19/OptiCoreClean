@@ -9,7 +9,7 @@ namespace Auth.Core.Interfaces
 {
     public interface IUserService
     {
-        Task<IUser?> GetUserByUuidUIDAsync(string uuid);
-        Task<IEnumerable<string>> GetUserEntitlementsAsync(string uuid);
+        Task<IUser?> GetUserByUuidAsync(string uuid);
+        Task<IEnumerable<IEntitlement>> GetUserEntitlementsAsync(string uuid);
     }
 }

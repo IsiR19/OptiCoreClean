@@ -10,7 +10,7 @@ namespace Auth.Core.Interfaces
     /// <summary>
     /// This interface will be used to get Entitlement policies
     /// </summary>
-    public interface IPolicyService
+    public interface IEntitlementPolicyService
     {
         /// <summary>
         /// Gets the policy by Code

@@ -48,7 +48,8 @@ namespace Auth.DomainLogic.Services
                 : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             SetHttpContextItems(sessionGuid, userUID);
-            var entitlements = await _userService.GetUserEntitlementsAsync(userUID);
+            var entitlementDetails = await _userService.GetUserEntitlementsAsync(userUID);
+            var entitlements = entitlementDetails.Select(entitlement => entitlement.Code);
             CacheSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress, entitlements);
             return new SessionResponse(sessionGuid, expireAt, userUID, entitlements);
         }
@@ -104,7 +105,7 @@ namespace Auth.DomainLogic.Services
 
         private async Task ValidateUserIsRegisteredAsync(string userUID, string email)
         {
-            var user = await _userService.GetUserByUuidUIDAsync(userUID);
+            var user = await _userService.GetUserByUuidAsync(userUID);
             if (user == null)
             {
                 throw AuthenticationException.NotRegistered(email);

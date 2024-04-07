@@ -18,20 +18,14 @@ namespace Auth.DependencyInjection.Models
 
         private bool _addEntitlements { get; set; }
         private CacheConfiguration? _cacheConfiguration { get; set; }
+        private Type? _entitlementPolicyServiceType { get; set; }
         private TokenValidationConfiguration? _tokenValidationConfiguration { get; set; } = null;
-        private Type? _userServiceType { get; set; }
         private Func<IServiceProvider, object>? _userServiceImplementationFactory { get; set; }
-        private Type? _policyServiceType { get; set; }
+        private Type? _userServiceType { get; set; }
 
         #endregion Private Properties
 
         #region Public Methods
-
-        public DependencyInjectionConfigurationBuilder AddEntitlements()
-        {
-            _addEntitlements = true;
-            return this;
-        }
 
         public DependencyInjectionConfiguration Build()
         {
@@ -53,10 +47,9 @@ namespace Auth.DependencyInjection.Models
                 AddEntitlements = _addEntitlements,
                 AuthConfiguration = authConfig,
                 UserServiceConfiguration = new UserServiceDependencyInjectionConfiguration { ImplementationType = _userServiceType, ImplementationFactory = _userServiceImplementationFactory },
-                PolicyServiceType = _policyServiceType
+                EntitlementPolicyServiceType = _entitlementPolicyServiceType
             };
         }
-
 
         public DependencyInjectionConfigurationBuilder WithCache(CacheConfiguration cacheConfiguration)
         {
@@ -76,6 +69,19 @@ namespace Auth.DependencyInjection.Models
                 throw new ArgumentNullException($"{nameof(AuthConfiguration)}.{nameof(authConfiguration.OAuthConfiguration)} was not supplied");
             }
             WithTokenValidation(authConfiguration.OAuthConfiguration);
+            return this;
+        }
+
+        public DependencyInjectionConfigurationBuilder WithEntitlements()
+        {
+            _addEntitlements = true;
+            return this;
+        }
+
+        public DependencyInjectionConfigurationBuilder WithEntitlements<TPolicyService>() where TPolicyService : IEntitlementPolicyService
+        {
+            _addEntitlements = true;
+            _entitlementPolicyServiceType = typeof(TPolicyService);
             return this;
         }
 
@@ -125,6 +131,7 @@ namespace Auth.DependencyInjection.Models
             _userServiceType = typeof(TUserService);
             return this;
         }
+
         public DependencyInjectionConfigurationBuilder WithUserService<TUserService>(Func<IServiceProvider, object> implementationFactory) where TUserService : IUserService
         {
             _userServiceType = typeof(TUserService);
@@ -136,13 +143,6 @@ namespace Auth.DependencyInjection.Models
             _userServiceImplementationFactory = implementationFactory;
             return this;
         }
-
-        public DependencyInjectionConfigurationBuilder WithEntitlementPolicies<TPolicyService>() where TPolicyService : IPolicyService
-        {
-            _policyServiceType= typeof(TPolicyService);
-            return this;
-        }
-
 
         #endregion Public Methods
     }

@@ -65,12 +65,12 @@ namespace Auth.DependencyInjection.Injection
 
         private static IServiceCollection AddEntitlementService(this IServiceCollection services, DependencyInjectionConfiguration config)
         {
-            if(config.PolicyServiceType == null)
+            if(config.EntitlementPolicyServiceType == null)
             {
-                services.AddTransient<IPolicyService, DisabledPolicyService>();
+                services.AddTransient<IEntitlementPolicyService, DisabledPolicyService>();
                 return services;
             }
-            services.AddTransient(typeof(IPolicyService), config.PolicyServiceType);
+            services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceType);
             return services;
         }
 

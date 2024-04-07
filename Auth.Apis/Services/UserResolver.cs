@@ -103,7 +103,7 @@ namespace Auth.DomainLogic.Services
             }
             try
             {
-                _user = _userService.GetUserByUuidUIDAsync(_userUid.ToString()!).GetAwaiter().GetResult();
+                _user = _userService.GetUserByUuidAsync(_userUid.ToString()!).GetAwaiter().GetResult();
                 if (_user == null)
                 {
                     return;

@@ -82,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
       setUser(popupResult.user);
+      debugger
       return await startSession(popupResult.user);
     } catch (error) {
       setError(error);

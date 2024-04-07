@@ -10,7 +10,7 @@ namespace Auth.Core.Services
 {
 
     //This will be injected when no policy service is injected
-    public class DisabledPolicyService : IPolicyService
+    public class DisabledPolicyService : IEntitlementPolicyService
     {
         public Task<IPolicy?> GetPolicyByCodeAsync(string code)
         {

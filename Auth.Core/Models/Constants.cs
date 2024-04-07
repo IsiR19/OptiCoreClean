@@ -93,7 +93,7 @@ namespace Auth.Core
         }
         public static class Entitlements
         {
-            public const string Admin = "SYS_ADMIN";
+            public const string SystemAdmin = "SYS_ADMIN";
         }
     }
 }

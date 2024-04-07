@@ -12,6 +12,6 @@ namespace Auth.Core.Interfaces.Models
         string Code { get; set; }   
         string Name { get; set; }
         string Description { get; set; }
-        IEnumerable<string> Entitlements { get; set; }
+        IEnumerable<IEntitlement> Entitlements { get; set; }
     }
 }
