@@ -164,17 +164,17 @@ body {
   }
 
   .google-button {
-    content: url('./assets/google_buttons/normal.png');
+    content: url('../assets/google_buttons/normal.png');
     background-repeat: no-repeat;
 
     &:hover {
       cursor: pointer;
-      content: url('./assets/google_buttons/focus.png');
+      content: url('../assets/google_buttons/focus.png');
     }
 
     &:active {
       cursor: pointer;
-      content: url('./assets/google_buttons/pressed.png');
+      content: url('../assets/google_buttons/pressed.png');
     }
   }
 }
