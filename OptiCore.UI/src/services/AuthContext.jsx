@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
   const login = useCallback(async (userData) => {
     setIsManual(true);
     try {
-      const googleCredentials = await signInWithEmailAndPassword(userData.email, userData.password);
+      const googleCredentials = await signInWithEmailAndPassword(userData.username, userData.password);
       if (googleCredentials.user) {
         await startSession(googleCredentials.user);
       }

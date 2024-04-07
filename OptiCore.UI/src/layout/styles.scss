@@ -1,0 +1,395 @@
+// Variables (optional, but recommended for maintainability)
+$background-color-main: #1d2634;
+$color-main: #9e9ea4;
+$background-color-sidebar: #263043;
+$sidebar-toggle-color: red;
+$font-stack: 'Montserrat', sans-serif;
+
+// Reset styles
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: $background-color-main !important;
+  color: $color-main !important;
+  font-family: $font-stack !important;
+}
+
+// Icon styles
+.icon {
+  vertical-align: middle;
+  line-height: 1px;
+  font-size: 20px;
+  margin-right: 5px;
+
+  &.icon_header {
+    font-size: 26px;
+  }
+}
+
+.close_icon {
+  color: $sidebar-toggle-color;
+  margin-left: 30px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+// Grid container
+.grid-container {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr !important;
+  grid-template-rows: 0.2fr 3fr !important;
+  grid-template-areas:
+    'sidebar header header header'
+    'sidebar main main main' !important;
+  height: 100vh !important;
+}
+
+// Header styles
+.header {
+  grid-area: header;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+
+  .menu-icon {
+    display: none;
+  }
+}
+
+// Sidebar styles
+#sidebar {
+  grid-area: sidebar !important;
+  height: 100% !important;
+  background-color: $background-color-sidebar !important;
+  overflow-y: auto !important;
+  transition: all 0.5s !important;
+
+  .sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px 0 30px;
+    margin-bottom: 30px;
+
+    > span {
+      display: none;
+    }
+  }
+
+  .sidebar-brand {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .sidebar-list {
+    padding: 0;
+    list-style-type: none;
+
+    .sidebar-list-item {
+      padding: 20px;
+      font-size: 18px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+      }
+
+      > a {
+        text-decoration: none;
+        color: $color-main;
+      }
+    }
+  }
+
+  .sidebar-responsive {
+    display: inline !important;
+    position: absolute;
+    z-index: 12 !important;
+  }
+}
+
+// Main container styles
+.main-container {
+  grid-area: main;
+  overflow-y: auto;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.95);
+
+  .main-title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .main-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 15px 0;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 8px 15px;
+    border-radius: 5px;
+
+    &:first-child {
+      background-color: #2962ff;
+    }
+
+    &:nth-child(2) {
+      background-color: #ff6d00;
+    }
+
+    &:nth-child(3) {
+      background-color: #2e7d32;
+    }
+
+    &:nth-child(4) {
+      background-color: #d50000;
+    }
+  }
+
+  .charts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 60px;
+    height: 300px;
+  }
+
+  .google-button {
+    content: url('./assets/google_buttons/normal.png');
+    background-repeat: no-repeat;
+
+    &:hover {
+      cursor: pointer;
+      content: url('./assets/google_buttons/focus.png');
+    }
+
+    &:active {
+      cursor: pointer;
+      content: url('./assets/google_buttons/pressed.png');
+    }
+  }
+}
+
+// Media queries
+@media screen and (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+      'header'
+      'main';
+  }
+
+  #sidebar {
+    display: none;
+  }
+
+  .menu-icon {
+    display: inline;
+  }
+
+  .sidebar-title > span {
+    display: inline;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+// Variables (optional, but recommended for maintainability)
+$background-color-main: #1d2634;
+$color-main: #9e9ea4;
+$background-color-sidebar: #263043;
+$sidebar-toggle-color: red;
+$font-stack: 'Montserrat', sans-serif;
+$breakpoint-tablet: 768px; // Define a breakpoint for tablet sizes
+$breakpoint-desktop: 992px; // Define a breakpoint for desktop sizes
+
+// Reset styles
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: $background-color-main !important;
+  color: $color-main !important;
+  font-family: $font-stack !important;
+}
+
+// Icon styles
+.icon {
+  vertical-align: middle;
+  line-height: 1px;
+  font-size: 20px;
+  margin-right: 5px;
+
+  &.icon_header {
+    font-size: 26px;
+  }
+}
+
+.close_icon {
+  color: $sidebar-toggle-color;
+  margin-left: 30px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+// Grid container
+.grid-container {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr !important;
+  grid-template-rows: 0.2fr 3fr !important;
+  grid-template-areas:
+    'sidebar header header header'
+    'sidebar main main main' !important;
+  height: 100vh !important;
+}
+
+// Header styles
+.header {
+  grid-area: header;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+
+  // Burger menu icon (visible on smaller screens)
+  .menu-icon {
+    display: none; // Hide by default
+    cursor: pointer;
+
+    @media screen and (max-width: $breakpoint-desktop) {
+      display: block; // Show on smaller screens
+    }
+  }
+}
+
+// Sidebar styles
+#sidebar {
+  grid-area: sidebar !important;
+  height: 100% !important;
+  background-color: $background-color-sidebar !important;
+  overflow-y: auto !important;
+  transition: all 0.5s !important;
+
+  // Show sidebar when it's toggled (use a class to control visibility)
+  &.sidebar-visible {
+    display: block !important;
+  }
+
+  .sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px 0 30px;
+    margin-bottom: 30px;
+
+    > span {
+      display: none;
+    }
+  }
+
+  .sidebar-brand {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .sidebar-list {
+    padding: 0;
+    list-style-type: none;
+
+    .sidebar-list-item {
+      padding: 20px;
+      font-size: 18px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+      }
+
+      > a {
+        text-decoration: none;
+        color: $color-main;
+      }
+    }
+  }
+
+  // Hide sidebar by default on smaller screens
+  @media screen and (max-width: $breakpoint-desktop) {
+    display: none; // Hide by default
+  }
+}
+
+// Main container styles
+.main-container {
+  grid-area: main;
+  overflow-y: auto;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.95);
+
+  // ... (rest of your main-container styles)
+}
+
+// Media queries for overall layout
+@media screen and (max-width: $breakpoint-desktop) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+      'header'
+      'main';
+  }
+
+  .menu-icon {
+    display: inline;
+  }
+
+  .sidebar-title > span {
+    display: inline;
+  }
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .main-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .charts {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .header-left {
+    display: none;
+  }
+}
+
+  .charts {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .hedaer-left {
+    display: none;
+  }
+}

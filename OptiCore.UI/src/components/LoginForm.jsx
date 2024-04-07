@@ -58,10 +58,10 @@ const LoginForm = () => {
             />
           </div>
         </div>
-      </form>
-      <button className="btn btn-primary" onClick={logout}>
+        <button className="btn btn-primary" onClick={logout}>
         Logout
       </button>
+      </form> 
     </div>
   );
 };
