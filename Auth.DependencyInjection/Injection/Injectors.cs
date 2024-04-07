@@ -3,6 +3,7 @@ using Auth.Core.Common.Interfaces;
 using Auth.Core.Common.Services.Providers;
 using Auth.Core.Interfaces;
 using Auth.Core.Interfaces.Configuration;
+using Auth.Core.Services;
 using Auth.DependencyInjection.Models;
 using Auth.DomainLogic.Interfaces;
 using Auth.DomainLogic.Services;
@@ -18,9 +19,10 @@ namespace Auth.DependencyInjection.Injection
         {
             var config = BuildConfiguration(builder);
             services.AddSingleton<IAuthConfiguration>(config.AuthConfiguration);
-            services.AddUserService(config.UserServiceConfiguration);
+            services.AddUserServices(config.UserServiceConfiguration);
             services.AddCaching(config);
             services.AddAuthServices(config);
+            services.AddEntitlements(config.EntitlementsDependencyInjectionConfiguration);
             return services;
         }
 
@@ -34,7 +36,7 @@ namespace Auth.DependencyInjection.Injection
         #region Private Methods
 
         private static IServiceCollection AddAuthServices(this IServiceCollection services, DependencyInjectionConfiguration config)
-        {  
+        {
             services.AddSingleton<ITokenValidationService, TokenValidationService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             return services;
@@ -61,9 +63,48 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
-        private static IServiceCollection AddUserService(this IServiceCollection services, UserServiceDependancyInjectionConfiguration config)
+        private static IServiceCollection AddEntitlements(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
         {
-            if(config.ImplementationFactory != null)
+            services.AddUserEntitlementService(config);
+            services.AddEntitlementPolicyService(config);
+            return services;
+        }
+
+        private static IServiceCollection AddEntitlementPolicyService(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
+        {
+            if (config.EntitlementPolicyServiceType == null)
+            {
+                services.AddTransient<IEntitlementPolicyService, DisabledPolicyService>();
+                return services;
+            }
+            if (config.EntitlementPolicyServiceFactory == null)
+            {
+                services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceType);
+                return services;
+            }
+            services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceFactory);
+            return services;
+        }
+
+        private static IServiceCollection AddUserEntitlementService(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
+        {
+            if (config.UserEntitlementsServiceType == null)
+            {
+                services.AddTransient<IUserEntitlementService, DisabledUserEntitlementsService>();
+                return services;
+            }
+            if (config.UserEntitlementsServiceFactory == null)
+            {
+                services.AddTransient(typeof(IUserEntitlementService), config.UserEntitlementsServiceType);
+                return services;
+            }
+            services.AddTransient(typeof(IEntitlementPolicyService), config.UserEntitlementsServiceFactory);
+            return services;
+        }
+
+        private static IServiceCollection AddUserServices(this IServiceCollection services, UserServiceDependencyInjectionConfiguration config)
+        {
+            if (config.ImplementationFactory != null)
             {
                 services.AddTransient(typeof(IUserService), config.ImplementationFactory);
             }
@@ -71,6 +112,7 @@ namespace Auth.DependencyInjection.Injection
             {
                 services.AddTransient(typeof(IUserService), config.ImplementationType);
             }
+            services.AddScoped<IUserResolver, UserResolver>();
             return services;
         }
 

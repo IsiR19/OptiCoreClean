@@ -11,22 +11,13 @@ namespace Auth.DomainLogic.Services
 {
     public class AuthCacheService : IAuthCacheService
     {
-        #region Private Fields
 
         private readonly ICacheProvider _cacheProvider;
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         public AuthCacheService(ICacheProvider cacheProvider)
         {
             _cacheProvider = cacheProvider;
         }
-
-        #endregion Public Constructors
-
-        #region Public Methods
 
         public void BlacklistSession(string sessionGuid)
         {
@@ -44,6 +35,16 @@ namespace Auth.DomainLogic.Services
             return _cacheProvider.TryGet(userUID, out existingSessionGuid);
         }
 
+        public IEnumerable<string> GetEntitlements(string userUID)
+        {
+            string key = $"{userUID}-entitlements";
+            if(!_cacheProvider.TryGet(key, out string entitlementString))
+            {
+                return Enumerable.Empty<string>();
+            }
+            return entitlementString.Split(',');
+        }
+
         public SessionCacheItem? GetSessionInformation(string sessionGuid)
         {
             if (_cacheProvider.TryGet(sessionGuid, out SessionCacheItem sessionCacheItem))
@@ -53,12 +54,18 @@ namespace Auth.DomainLogic.Services
             return null;
         }
 
+        public void SetEntitlements(string userUID, IEnumerable<string> entitlements)
+        {
+            string key = $"{userUID}-entitlements";
+            _cacheProvider.Set(key, string.Join(",", entitlements));
+        }
+
         public void SetSessionInformation(string userUID, string sessionGuid, long expireAtSeconds, string ipAddress)
         {
             var sessionCacheItem = new SessionCacheItem(sessionGuid, userUID, ipAddress, expireAtSeconds);
             var sessionExpireMinutes = (sessionCacheItem.ExpireUTC - DateTime.UtcNow).Minutes + 1;
             _cacheProvider.Set(sessionGuid, sessionCacheItem, sessionExpireMinutes);
-            SetUserCheck(userUID,sessionGuid, sessionExpireMinutes);
+            SetUserCheck(userUID, sessionGuid, sessionExpireMinutes);
         }
 
         private void SetUserCheck(string userUID, string sessionGuid, int sessionExpireMinutes)
@@ -66,6 +73,5 @@ namespace Auth.DomainLogic.Services
             _cacheProvider.Set(userUID, sessionGuid, sessionExpireMinutes);
         }
 
-        #endregion Public Methods
     }
 }

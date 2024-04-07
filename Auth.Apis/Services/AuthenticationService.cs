@@ -1,9 +1,10 @@
-﻿using Auth.Core.Enums;
+﻿using Auth.Core;
 using Auth.Core.Exceptions;
 using Auth.Core.Interfaces;
 using Auth.Core.Models.Requests;
 using Auth.Core.Models.Responses;
 using Auth.DomainLogic.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Auth.DomainLogic.Services
 {
@@ -14,16 +15,20 @@ namespace Auth.DomainLogic.Services
         private readonly IAuthCacheService _authCacheService;
         private readonly ITokenValidationService _tokenValidationService;
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserEntitlementService _userEntitlementService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService)
+        public AuthenticationService(IHttpContextAccessor httpContextAccessor, ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService, IUserEntitlementService userEntitlementService)
         {
+            _httpContextAccessor = httpContextAccessor;
             _tokenValidationService = tokenValidationService;
             _authCacheService = authCacheService;
             _userService = userService;
+            _userEntitlementService = userEntitlementService;
         }
 
         #endregion Public Constructors
@@ -44,8 +49,11 @@ namespace Auth.DomainLogic.Services
             var expireAt = validationResult.Expiration != DateTime.MinValue ? ((DateTimeOffset)validationResult.Expiration).ToUnixTimeSeconds()
                 : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
-            _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress);
-            return new SessionResponse(sessionGuid, expireAt, userUID);
+            SetHttpContextItems(sessionGuid, userUID);
+            var entitlementDetails = await _userEntitlementService.GetAllByUuidAsync(userUID);
+            var entitlements = entitlementDetails.Select(entitlement => entitlement.EntitlementCode);
+            CacheSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress, entitlements);
+            return new SessionResponse(sessionGuid, expireAt, userUID, entitlements);
         }
 
         public void EndUserSession(SessionRequest sessionRequest)
@@ -53,7 +61,7 @@ namespace Auth.DomainLogic.Services
             _authCacheService.BlacklistSession(sessionRequest.SessionGuid);
         }
 
-        public SessionResponse GetUserSession(SessionRequest sessionRequest)
+        public async Task<SessionResponse> GetUserSessionAsync(SessionRequest sessionRequest)
         {
             var sessionInformation = _authCacheService.GetSessionInformation(sessionRequest.SessionGuid);
             if (sessionInformation == null)
@@ -68,7 +76,9 @@ namespace Auth.DomainLogic.Services
             {
                 throw AuthenticationException.Session("IP Mismatch.");
             }
-            return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID);
+            var entitlements = _authCacheService.GetEntitlements(sessionInformation.UserUID);
+            SetHttpContextItems(sessionInformation.SessionGuid, sessionInformation.UserUID);
+            return new SessionResponse(sessionInformation.SessionGuid, sessionInformation.Expiry, sessionInformation.UserUID, entitlements);
         }
 
         #endregion Public Methods
@@ -97,7 +107,7 @@ namespace Auth.DomainLogic.Services
 
         private async Task ValidateUserIsRegisteredAsync(string userUID, string email)
         {
-            var user = await _userService.GetUserByUuidUIDAsync(userUID);
+            var user = await _userService.GetUserByUuidAsync(userUID);
             if (user == null)
             {
                 throw AuthenticationException.NotRegistered(email);
@@ -106,6 +116,18 @@ namespace Auth.DomainLogic.Services
             {
                 throw AuthenticationException.Discrepancy(nameof(user.Email));
             }
+        }
+
+        private void SetHttpContextItems(string sessionGuid, string userUid)
+        {
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.SessionGuid, sessionGuid);
+            _httpContextAccessor.HttpContext.Items.TryAdd(Constants.HttpContextItems.UserUID, userUid);
+        }
+
+        private void CacheSessionInformation(string userUID, string sessionGuid, long expireAtSeconds, string ipAddress, IEnumerable<string> entitlements)
+        {
+            _authCacheService.SetSessionInformation(userUID, sessionGuid, expireAtSeconds, ipAddress);
+            _authCacheService.SetEntitlements(userUID, entitlements);
         }
 
         #endregion Private Methods

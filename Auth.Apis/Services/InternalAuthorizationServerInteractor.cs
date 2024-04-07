@@ -57,8 +57,8 @@ namespace Auth.DomainLogic.Services
 
         public async Task<SessionResponse> GetUserSessionAsync()
         {
-            var result = _authenticationService.GetUserSession(GenerateSessionRequest());
-            return await Task.FromResult(result);
+            var result = await _authenticationService.GetUserSessionAsync(GenerateSessionRequest());
+            return result;
         }
 
         private SessionRequest GenerateSessionRequest()

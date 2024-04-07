@@ -25,6 +25,8 @@ namespace Auth.Core.Models.Responses
         /// </summary>
         public string UserUID { get; init; }
 
+        public IEnumerable<string> Entitlements { get; init; }
+
         #endregion Public Properties
 
         #region Public Constructors
@@ -32,18 +34,20 @@ namespace Auth.Core.Models.Responses
         public SessionResponse()
         { }
 
-        public SessionResponse(string sessionGuid, DateTime expiry, string userUID)
+        public SessionResponse(string sessionGuid, DateTime expiry, string userUID, IEnumerable<string> entitlements)
         {
             SessionGuid = sessionGuid;
             Expiry = expiry;
             UserUID = userUID;
+            Entitlements = entitlements;
         }
 
-        public SessionResponse(string sessionGuid, long expirationTimeSeconds, string userUID)
+        public SessionResponse(string sessionGuid, long expirationTimeSeconds, string userUID, IEnumerable<string> entitlements)
         {
             SessionGuid = sessionGuid;
             Expiry = DateTimeOffset.FromUnixTimeSeconds(expirationTimeSeconds).UtcDateTime;
             UserUID = userUID;
+            Entitlements = entitlements;
         }
 
         #endregion Public Constructors

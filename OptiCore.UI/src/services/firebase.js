@@ -11,7 +11,10 @@ import { getAnalytics } from 'firebase/analytics';
 import config from '../config';
 
 const googleProvider = new GoogleAuthProvider();
-
+googleProvider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+googleProvider.addScope('profile');
+googleProvider.addScope('openid');
+googleProvider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read');
 export const firebase = initializeApp(config.firebase);
 export const firebaseAuth = getAuth(firebase);
 export const googlePopup = () => signInWithPopup(firebaseAuth, googleProvider);

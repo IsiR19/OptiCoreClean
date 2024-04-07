@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Auth.Middleware.Attributes;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice;
 using OptiCore.Application.Features.HeadOffices.Command.DeleteHeadOffice;
@@ -14,7 +15,8 @@ namespace OptiCore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController :ControllerBase
+    [Authorize("Test", true)]
+    public class UsersController : ControllerBase
     {
         public IMediator _mediator { get; }
         public UsersController(IMediator mediator)

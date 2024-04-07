@@ -20,7 +20,8 @@ namespace Auth.Core
         public static class HttpContextItems
         {
             public const string SessionGuid = Cookies.Session;
-            public const string userUID = "x-uuid";
+            public const string UserUID = "x-uuid";
+            public const string Entitlements = "x-entitlements";
         }
         public static partial class ConfigurationKeys
         {
@@ -85,6 +86,14 @@ namespace Auth.Core
             public const string ExpiresAt = "exp";
             public const string Email = "email";
             public const string EmailVerified = "email_verified";
+        }
+        public static class UserResolver
+        {
+            public const string System = "System";
+        }
+        public static class Entitlements
+        {
+            public const string SystemAdmin = "SYS_ADMIN";
         }
     }
 }
