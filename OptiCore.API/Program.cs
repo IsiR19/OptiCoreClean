@@ -20,7 +20,8 @@ builder.Services.AddAuthServices(auth =>
     auth
     .WithTokenValidation(builder.Configuration)
     .WithCache(CacheConfiguration.Default)
-    .WithUserService<UserService>();
+    .WithUserService<UserService>()
+    .WithUserEntitlements<UserEntitlementsService>();
 });
 builder.Services.AddInternalAuthServer();
 

@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
   }, [user, logout, startSession, isManual]);
 
   useRunOnce({
-    fn: handleAuthStateChange,
+    fn:() =>{onAuthStateChanged(handleAuthStateChange);},
   });
 
   const login = useCallback(async (userData) => {
