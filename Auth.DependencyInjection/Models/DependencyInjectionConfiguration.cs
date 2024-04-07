@@ -14,7 +14,7 @@ namespace Auth.DependencyInjection.Models
         public required bool AddEntitlements { get; set; }
         public required AuthConfiguration AuthConfiguration { get; set; }
         public required UserServiceDependencyInjectionConfiguration UserServiceConfiguration {  get; set; }
-        public Type? EntitlementPolicyServiceType { get; set; }    
+        public required EntitlementsDependencyInjectionConfiguration EntitlementsDependencyInjectionConfiguration {  get; set; } 
 
         #endregion Public Properties
     }

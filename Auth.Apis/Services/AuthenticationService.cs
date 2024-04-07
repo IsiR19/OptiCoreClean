@@ -16,17 +16,19 @@ namespace Auth.DomainLogic.Services
         private readonly ITokenValidationService _tokenValidationService;
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserEntitlementService _userEntitlementService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AuthenticationService(IHttpContextAccessor httpContextAccessor, ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService)
+        public AuthenticationService(IHttpContextAccessor httpContextAccessor, ITokenValidationService tokenValidationService, IAuthCacheService authCacheService, IUserService userService, IUserEntitlementService userEntitlementService)
         {
             _httpContextAccessor = httpContextAccessor;
             _tokenValidationService = tokenValidationService;
             _authCacheService = authCacheService;
             _userService = userService;
+            _userEntitlementService = userEntitlementService;
         }
 
         #endregion Public Constructors
@@ -48,8 +50,8 @@ namespace Auth.DomainLogic.Services
                 : DateTimeOffset.Now.AddMinutes(5).ToUnixTimeSeconds();
 
             SetHttpContextItems(sessionGuid, userUID);
-            var entitlementDetails = await _userService.GetUserEntitlementsAsync(userUID);
-            var entitlements = entitlementDetails.Select(entitlement => entitlement.Code);
+            var entitlementDetails = await _userEntitlementService.GetAllByUuidAsync(userUID);
+            var entitlements = entitlementDetails.Select(entitlement => entitlement.EntitlementCode);
             CacheSessionInformation(userUID, sessionGuid, expireAt, loginRequest.IpAddress, entitlements);
             return new SessionResponse(sessionGuid, expireAt, userUID, entitlements);
         }

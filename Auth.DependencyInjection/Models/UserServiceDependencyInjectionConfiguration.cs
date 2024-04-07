@@ -8,7 +8,7 @@ namespace Auth.DependencyInjection.Models
 {
     public class UserServiceDependencyInjectionConfiguration
     {
-        public required Type ImplementationType { get; set; }
+        public Type ImplementationType { get; set; }
         public Func<IServiceProvider, object>? ImplementationFactory { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Auth.DependencyInjection.Injection
             services.AddUserServices(config.UserServiceConfiguration);
             services.AddCaching(config);
             services.AddAuthServices(config);
-            services.AddEntitlementService(config);
+            services.AddEntitlements(config.EntitlementsDependencyInjectionConfiguration);
             return services;
         }
 
@@ -63,14 +63,42 @@ namespace Auth.DependencyInjection.Injection
             return services;
         }
 
-        private static IServiceCollection AddEntitlementService(this IServiceCollection services, DependencyInjectionConfiguration config)
+        private static IServiceCollection AddEntitlements(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
         {
-            if(config.EntitlementPolicyServiceType == null)
+            services.AddUserEntitlementService(config);
+            services.AddEntitlementPolicyService(config);
+            return services;
+        }
+
+        private static IServiceCollection AddEntitlementPolicyService(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
+        {
+            if (config.EntitlementPolicyServiceType == null)
             {
                 services.AddTransient<IEntitlementPolicyService, DisabledPolicyService>();
                 return services;
             }
-            services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceType);
+            if (config.EntitlementPolicyServiceFactory == null)
+            {
+                services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceType);
+                return services;
+            }
+            services.AddTransient(typeof(IEntitlementPolicyService), config.EntitlementPolicyServiceFactory);
+            return services;
+        }
+
+        private static IServiceCollection AddUserEntitlementService(this IServiceCollection services, EntitlementsDependencyInjectionConfiguration config)
+        {
+            if (config.UserEntitlementsServiceType == null)
+            {
+                services.AddTransient<IUserEntitlementService, DisabledUserEntitlementsService>();
+                return services;
+            }
+            if (config.UserEntitlementsServiceFactory == null)
+            {
+                services.AddTransient(typeof(IUserEntitlementService), config.UserEntitlementsServiceType);
+                return services;
+            }
+            services.AddTransient(typeof(IEntitlementPolicyService), config.UserEntitlementsServiceFactory);
             return services;
         }
 

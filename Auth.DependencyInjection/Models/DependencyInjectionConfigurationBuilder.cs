@@ -18,10 +18,14 @@ namespace Auth.DependencyInjection.Models
 
         private bool _addEntitlements { get; set; }
         private CacheConfiguration? _cacheConfiguration { get; set; }
-        private Type? _entitlementPolicyServiceType { get; set; }
         private TokenValidationConfiguration? _tokenValidationConfiguration { get; set; } = null;
-        private Func<IServiceProvider, object>? _userServiceImplementationFactory { get; set; }
-        private Type? _userServiceType { get; set; }
+        private UserServiceDependencyInjectionConfiguration _userServiceDependencyInjection { get; set; }
+        private EntitlementsDependencyInjectionConfiguration _entitlementsDependencyInjection { get; set; }
+        public DependencyInjectionConfigurationBuilder()
+        {
+            _userServiceDependencyInjection = new UserServiceDependencyInjectionConfiguration();
+            _entitlementsDependencyInjection = new EntitlementsDependencyInjectionConfiguration();
+        }
 
         #endregion Private Properties
 
@@ -37,7 +41,7 @@ namespace Auth.DependencyInjection.Models
             {
                 _cacheConfiguration = CacheConfiguration.Default;
             }
-            if (_userServiceType == null)
+            if (_userServiceDependencyInjection.ImplementationType == null)
             {
                 throw new InvalidOperationException($"{nameof(WithUserService)} must be called");
             }
@@ -46,8 +50,8 @@ namespace Auth.DependencyInjection.Models
             {
                 AddEntitlements = _addEntitlements,
                 AuthConfiguration = authConfig,
-                UserServiceConfiguration = new UserServiceDependencyInjectionConfiguration { ImplementationType = _userServiceType, ImplementationFactory = _userServiceImplementationFactory },
-                EntitlementPolicyServiceType = _entitlementPolicyServiceType
+                UserServiceConfiguration = _userServiceDependencyInjection,
+                EntitlementsDependencyInjectionConfiguration = _entitlementsDependencyInjection
             };
         }
 
@@ -72,18 +76,37 @@ namespace Auth.DependencyInjection.Models
             return this;
         }
 
-        public DependencyInjectionConfigurationBuilder WithEntitlements()
+        public DependencyInjectionConfigurationBuilder WithUserEntitlements<TUserEntitlementService>() where TUserEntitlementService : IUserEntitlementService
         {
             _addEntitlements = true;
+            _entitlementsDependencyInjection.UserEntitlementsServiceType = typeof(TUserEntitlementService);
+            return this;
+        }
+        public DependencyInjectionConfigurationBuilder WithUserEntitlements<TUserEntitlementService>(Func<IServiceProvider, object> implementationFactory) where TUserEntitlementService : IUserEntitlementService
+        {
+            _addEntitlements = true;
+            ValidateImplementationFactory<TUserEntitlementService>(implementationFactory);
+            _entitlementsDependencyInjection.EntitlementPolicyServiceType = typeof(TUserEntitlementService);
+            _entitlementsDependencyInjection.UserEntitlementsServiceFactory = implementationFactory;
             return this;
         }
 
-        public DependencyInjectionConfigurationBuilder WithEntitlements<TPolicyService>() where TPolicyService : IEntitlementPolicyService
+        public DependencyInjectionConfigurationBuilder WithEntitlementPolicies<TEntitlementPolicyService>() where TEntitlementPolicyService : IEntitlementPolicyService
         {
             _addEntitlements = true;
-            _entitlementPolicyServiceType = typeof(TPolicyService);
+            _entitlementsDependencyInjection.EntitlementPolicyServiceType = typeof(TEntitlementPolicyService);
             return this;
         }
+
+        public DependencyInjectionConfigurationBuilder WithEntitlementPolicies<TEntitlementPolicyService>(Func<IServiceProvider, object> implementationFactory) where TEntitlementPolicyService : IEntitlementPolicyService
+        {
+            _addEntitlements = true;
+            ValidateImplementationFactory<TEntitlementPolicyService>(implementationFactory);
+            _entitlementsDependencyInjection.EntitlementPolicyServiceType = typeof(TEntitlementPolicyService);
+            _entitlementsDependencyInjection.EntitlementPolicyServiceFactory = implementationFactory;
+            return this;
+        }
+
 
         public DependencyInjectionConfigurationBuilder WithTokenValidation(IConfiguration configuration)
         {
@@ -128,22 +151,35 @@ namespace Auth.DependencyInjection.Models
 
         public DependencyInjectionConfigurationBuilder WithUserService<TUserService>() where TUserService : IUserService
         {
-            _userServiceType = typeof(TUserService);
+            if (_userServiceDependencyInjection == null)
+            {
+                _userServiceDependencyInjection = new UserServiceDependencyInjectionConfiguration();
+            }
+            _userServiceDependencyInjection.ImplementationType = typeof(TUserService);
             return this;
         }
 
         public DependencyInjectionConfigurationBuilder WithUserService<TUserService>(Func<IServiceProvider, object> implementationFactory) where TUserService : IUserService
         {
-            _userServiceType = typeof(TUserService);
-            var factoryReturnType = implementationFactory.GetMethodInfo().ReturnType;
-            if (!_userServiceType.IsAssignableFrom(factoryReturnType))
+            if (_userServiceDependencyInjection == null)
             {
-                throw new ArgumentException($"{nameof(implementationFactory)} does not return a type that inherits from {_userServiceType.FullName}");
+                _userServiceDependencyInjection = new UserServiceDependencyInjectionConfiguration();
             }
-            _userServiceImplementationFactory = implementationFactory;
+            _userServiceDependencyInjection.ImplementationType = typeof(TUserService);
+            ValidateImplementationFactory<TUserService>(implementationFactory);
+            _userServiceDependencyInjection.ImplementationFactory = implementationFactory;
             return this;
         }
 
         #endregion Public Methods
+        private void ValidateImplementationFactory<TTarget>(Func<IServiceProvider, object> implementationFactory)
+        {
+            var factoryReturnType = implementationFactory.GetMethodInfo().ReturnType;
+            var targetType = typeof(TTarget);
+            if (!targetType.IsAssignableFrom(factoryReturnType))
+            {
+                throw new ArgumentException($"{nameof(implementationFactory)} does not return a type that inherits from {targetType.FullName}");
+            }
+        }
     }
 }
