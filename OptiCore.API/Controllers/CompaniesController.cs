@@ -1,15 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiCore.Application.Features.Companies.Commands.CreateCompany;
 using OptiCore.Application.Features.Companies.Commands.UpdateCompany;
 using OptiCore.Application.Features.Companies.Queries.GetAllCompanies;
 using OptiCore.Application.Features.Companies.Queries.GetCompany;
 using OptiCore.Application.Features.Companies.Queries.GetRelatedCompanies;
-using OptiCore.Application.Features.Users.Commands.CreateUser;
-using OptiCore.Application.Features.Users.Commands.UpdateUser;
-using OptiCore.Application.Features.Users.Queries.GetAllUsers;
-using OptiCore.Application.Features.Users.Queries.GetUser;
 using OptiCore.Application.Models.Companies;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OptiCore.API.Controllers
 {
@@ -17,58 +16,73 @@ namespace OptiCore.API.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
-        public IMediator _mediator { get; set; }
+        private readonly IMediator _mediator;
+
         public CompaniesController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        [HttpGet]
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<CompanyDetailDto>> GetAsync(int id)
         {
-            var response = await _mediator.Send(new GetCompanyQuery(id));
+            var query = new GetCompanyQuery(id);
+            var response = await _mediator.Send(query);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
             return response;
         }
 
         [HttpGet("All")]
         public async Task<ActionResult<List<CompanyDto>>> GetCompaniesAsync()
         {
-            var response = await _mediator.Send(new GetAllCompaniesQuery());
+            var query = new GetAllCompaniesQuery();
+            var response = await _mediator.Send(query);
+
             return response;
         }
 
         [HttpGet("related")]
         public async Task<ActionResult<List<CompanyDto>>> GetRelatedCompaniesAsync(int id)
         {
-            var response = await _mediator.Send(new GetRelatedCompaniesQuery(id));
+            var query = new GetRelatedCompaniesQuery(id);
+            var response = await _mediator.Send(query);
+
             return response;
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        public async Task<ActionResult> Post(CreateCompanyCommand company)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CompanyDetailDto>> Post(CreateCompanyCommand command)
         {
-            var response = await _mediator.Send(company);
-            return CreatedAtAction(nameof(GetAsync), new { id = response });
+            var response = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetAsync), new { id = response.Id }, response);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put(UpdateCompanyCommand company)
+        public async Task<IActionResult> Put(int id, UpdateCompanyCommand command)
         {
-            await _mediator.Send(company);
+            command.Id = id;
+            await _mediator.Send(command);
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(id);
+            //await _mediator.Send(new DeleteCompanyCommand(id));
+
             return NoContent();
         }
     }

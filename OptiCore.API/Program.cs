@@ -30,10 +30,11 @@ var corsOrigins = Environment.GetEnvironmentVariable(ConfigurationKeys.Environme
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(DefaultCorsPolicy, builder => builder
-    .AllowCredentials()
-    .WithOrigins(corsOrigins.Split(','))
-    .AllowAnyHeader()
-    .AllowAnyMethod());
+        .AllowCredentials()
+        .WithOrigins(corsOrigins.Split(','))
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("Content-Disposition")); // Add specific headers if needed
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Opticore.Persistance.Configurations;
 using Opticore.Persistence.Configurations;
 using OptiCore.Domain.Accounts;
 using OptiCore.Domain.Agents;
 using OptiCore.Domain.Commissions;
 using OptiCore.Domain.Companies;
+using OptiCore.Domain.Contact_Details;
 using OptiCore.Domain.Core;
 using OptiCore.Domain.CP;
 using OptiCore.Domain.Customers;
@@ -41,31 +43,38 @@ namespace Opticore.Persistence.DatabaseContext
         public DbSet<HeadOffice> HeadOffices { get; set; }
         public DbSet<Cp> Cp { get; set; }
         public DbSet<Commission> Commissions { get; set; }
-        public DbSet<CompanyHierarchy> CompanyHierarchy { get; set; }
         public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OptiCoreDbContext).Assembly);
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.Entity<Company>()
+            .HasMany(c => c.LinkedCompanies)
+            .WithMany()
+            .UsingEntity<Dictionary<string, object>>(
+                "LinkedCompany",
+                j => j.HasOne<Company>().WithMany().HasForeignKey("LinkedCompanyId"),
+                j => j.HasOne<Company>().WithMany().HasForeignKey("CompanyId"),
+                j =>
+                    {
+                        j.HasKey("CompanyId", "LinkedCompanyId");
+                        j.ToTable("LinkedCompanies");
+                     });
 
-            modelBuilder.Entity<CompanyHierarchy>()
-            .HasOne(uh => uh.ParentCompany)
-            .WithMany(u => u.ChildHierarchies)
-            .HasForeignKey(uh => uh.ParentUserId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<CompanyHierarchy>()
-            .HasOne(uh => uh.ChildCompany)
-            .WithOne(u => u.ParentHierarchy)
-            .HasForeignKey<CompanyHierarchy>(uh => uh.ChildUserId)
-            .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Commission>()
-            .HasOne(c => c.Company)
-            .WithMany(u => u.Commissions)
-            .HasForeignKey(c => c.CompanyId);
+            
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Company>()
+                .HasMany(c => c.ContactDetails)
+                .WithOne(cd => cd.Company)
+                .HasForeignKey(cd => cd.CompanyId);
+
+            modelBuilder.Entity<Company>()
+                .HasMany(c => c.Addresses)
+                .WithOne(a => a.Company)
+                .HasForeignKey(a => a.CompanyId);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

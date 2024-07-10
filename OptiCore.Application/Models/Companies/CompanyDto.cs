@@ -14,8 +14,11 @@ namespace OptiCore.Application.Models.Companies
     {
         public string Name { get; set; }
         public string RegistrationNumber { get; set; }
-        public List<ContactDetails> ContactDetails { get; set; }
+        //public List<ContactDetailDto> ContactDetails { get; set; }
         public CompanyType CompanyType { get; set; }
         public bool IsActive { get; set; }
+        public List<CompanyDetailDto> LinkedCompanies { get; set; } = new List<CompanyDetailDto>();
+        public List<ContactDetailDto> ContactDetails { get; set; }
+        public List<AddressDto> Addresses { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Opticore.Persistence.DatabaseContext;
 
@@ -11,9 +12,11 @@ using Opticore.Persistence.DatabaseContext;
 namespace Opticore.Persistance.Migrations
 {
     [DbContext(typeof(OptiCoreDbContext))]
-    partial class OptiCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407184846_updateCompany")]
+    partial class updateCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Opticore.Persistance.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LinkedCompany", b =>
-                {
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LinkedCompanyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CompanyId", "LinkedCompanyId");
-
-                    b.HasIndex("LinkedCompanyId");
-
-                    b.ToTable("LinkedCompanies", (string)null);
-                });
 
             modelBuilder.Entity("OptiCore.Domain.Agents.Agent", b =>
                 {
@@ -210,6 +198,121 @@ namespace Opticore.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Companies.CompanyHierarchy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChildCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChildUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ParentCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ParentUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChildCompanyId");
+
+                    b.HasIndex("ParentCompanyId");
+
+                    b.ToTable("CompanyHierarchy");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Contact_Details.ContactDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AlternatePhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HeadOfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeadOfficeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ContactDetails");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.HeadOffices.HeadOffice", b =>
@@ -536,21 +639,6 @@ namespace Opticore.Persistance.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LinkedCompany", b =>
-                {
-                    b.HasOne("OptiCore.Domain.Companies.Company", null)
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OptiCore.Domain.Companies.Company", null)
-                        .WithMany()
-                        .HasForeignKey("LinkedCompanyId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("OptiCore.Domain.Agents.Agent", b =>
                 {
                     b.HasOne("OptiCore.Domain.CP.Cp", null)
@@ -580,6 +668,36 @@ namespace Opticore.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Companies.CompanyHierarchy", b =>
+                {
+                    b.HasOne("OptiCore.Domain.Companies.Company", "ChildCompany")
+                        .WithMany()
+                        .HasForeignKey("ChildCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OptiCore.Domain.Companies.Company", "ParentCompany")
+                        .WithMany()
+                        .HasForeignKey("ParentCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChildCompany");
+
+                    b.Navigation("ParentCompany");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Contact_Details.ContactDetails", b =>
+                {
+                    b.HasOne("OptiCore.Domain.HeadOffices.HeadOffice", null)
+                        .WithMany("AddressList")
+                        .HasForeignKey("HeadOfficeId");
+
+                    b.HasOne("OptiCore.Domain.Users.User", null)
+                        .WithMany("ContactDetails")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OptiCore.Domain.Inventory.InventoryItem", b =>
@@ -645,6 +763,8 @@ namespace Opticore.Persistance.Migrations
 
             modelBuilder.Entity("OptiCore.Domain.HeadOffices.HeadOffice", b =>
                 {
+                    b.Navigation("AddressList");
+
                     b.Navigation("CPList");
                 });
 
@@ -661,6 +781,11 @@ namespace Opticore.Persistance.Migrations
             modelBuilder.Entity("OptiCore.Domain.Users.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("OptiCore.Domain.Users.User", b =>
+                {
+                    b.Navigation("ContactDetails");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,7 @@ namespace OptiCore.Application.Abstractions.Contracts.Persistance
 {
     public interface ICompanyRepository : IRepository<Company>
     {
-        Task<IEnumerable<Company>> GetRelatedCompaniesAsync(int userId);
+        Task AddLinkedCompany(int companyId, int linkedCompanyId);
+        Task <List<Company>> GetLinkedCompanies(int companyId);
     }
 }

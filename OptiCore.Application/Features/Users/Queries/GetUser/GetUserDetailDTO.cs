@@ -15,6 +15,6 @@ namespace OptiCore.Application.Features.Users.Queries.GetUser
 
         public virtual Company Company { get; set; }
 
-        public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
+        //public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
     }
 }

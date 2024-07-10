@@ -8,7 +8,7 @@ namespace OptiCore.Application.Features.HeadOffices.Queries.GetAllHeadOffices
         private int id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? RegistrationNumber { get; set; }
-        public List<ContactDetails>? AddressList { get; set; }
+        //public List<ContactDetails>? AddressList { get; set; }
 
         public virtual ICollection<Cp>? CPList { get; set; }
     }

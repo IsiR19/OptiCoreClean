@@ -1,0 +1,61 @@
+import React, { useState, useEffect } from 'react';
+import { Company } from '../../../app/models/companies'; // Import the interface
+import { Table, Message } from 'semantic-ui-react';
+
+const CompanyGrid: React.FC = () => {
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/companies')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => setCompanies(data))
+      .catch(error => {
+        console.error('Error fetching companies:', error);
+        setError('Failed to load company data.');
+      });
+  }, []);
+
+  if (error) {
+    return <Message error header="Error" content={error} />;
+  }
+
+  return (
+    <Table celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Name</Table.HeaderCell>
+          <Table.HeaderCell>Registration Number</Table.HeaderCell>
+          <Table.HeaderCell>Contact Details</Table.HeaderCell>
+          <Table.HeaderCell>Company Type</Table.HeaderCell>
+          <Table.HeaderCell>Is Active</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        {companies.map((company, index) => (
+          <Table.Row key={index}>
+            <Table.Cell>{company.name}</Table.Cell>
+            <Table.Cell>{company.registrationNumber}</Table.Cell>
+            <Table.Cell>
+              {company.contactDetails.map((contact, contactIndex) => (
+                <div key={contactIndex}>
+                  {contact.firstName} {contact.lastName} - {contact.email}
+                </div>
+              ))}
+            </Table.Cell>
+            <Table.Cell>{company.companyType}</Table.Cell>
+            <Table.Cell>{company.isActive ? 'Yes' : 'No'}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+export default CompanyGrid;

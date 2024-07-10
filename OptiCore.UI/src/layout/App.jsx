@@ -6,6 +6,8 @@ import Sidebar from '../features/Navigation/Sidebar';
 import Home from '../components/Home';
 import UserForm from '../components/UserForm';
 import LoginForm from '../components/LoginForm';
+import CompanyList from '../components/CompanyList';
+import CompanyDetails from '../components/CompanyDetail';
 import PrivateRouteOutlet from '../helpers/PrivateRouteOutlet';
 import { AuthProvider } from '../services/AuthContext';
 import '../layout/styles.scss';
@@ -30,8 +32,12 @@ function App() {
             />
             <div className="main-container">
               <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/login" element={<LoginForm />} />
+               <Route exact path="/" element={<Home />} />
+               <Route exact path="/companies" element={<CompanyList />} />
+               <Route exact path="/" element={<CompanyDetails /> } />
+                              <Route exact path="/login" element={<LoginForm />} />
+                              <Route path="/companies/add" element={<CompanyDetails />} />
+                              <Route path="/companies/:id" element={<CompanyDetails />} />
                 <Route exact path="/" element={<PrivateRouteOutlet />}>
                   {/* <Route path="" element={<Home />} /> */}
                   <Route

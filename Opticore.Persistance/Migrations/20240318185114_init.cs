@@ -127,39 +127,6 @@ namespace Opticore.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompanyHierarchy",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParentUserId = table.Column<int>(type: "int", nullable: false),
-                    ChildUserId = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TenantId = table.Column<int>(type: "int", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanyHierarchy", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CompanyHierarchy_Companies_ChildUserId",
-                        column: x => x.ChildUserId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CompanyHierarchy_Companies_ParentUserId",
-                        column: x => x.ParentUserId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cp",
                 columns: table => new
                 {
@@ -387,17 +354,6 @@ namespace Opticore.Persistance.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyHierarchy_ChildUserId",
-                table: "CompanyHierarchy",
-                column: "ChildUserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompanyHierarchy_ParentUserId",
-                table: "CompanyHierarchy",
-                column: "ParentUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ContactDetails_CompanyId",
                 table: "ContactDetails",
                 column: "CompanyId");
@@ -456,9 +412,6 @@ namespace Opticore.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "Commissions");
-
-            migrationBuilder.DropTable(
-                name: "CompanyHierarchy");
 
             migrationBuilder.DropTable(
                 name: "ContactDetails");

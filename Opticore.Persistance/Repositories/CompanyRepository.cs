@@ -1,53 +1,35 @@
-﻿using Opticore.Persistence.DatabaseContext;
-using Opticore.Persistence.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Opticore.Persistence.DatabaseContext;
 using OptiCore.Application.Abstractions.Contracts.Persistance;
 using OptiCore.Application.Exceptions;
 using OptiCore.Domain.Companies;
-using OptiCore.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Opticore.Persistance.Repositories
+namespace Opticore.Persistence.Repositories
 {
     public class CompanyRepository : GenericRepository<Company>, ICompanyRepository
     {
         public CompanyRepository(OptiCoreDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Company>> GetRelatedCompaniesAsync(int userId)
+        public async Task AddLinkedCompany(int companyId, int linkedCompanyId)
         {
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
+            var company = await GetByIdAsync(companyId);
+            var linkedCompany = await GetByIdAsync(linkedCompanyId);
+            if (company == null || linkedCompany == null)
             {
-                throw new NotFoundException(nameof(user), userId);
+                throw new NotFoundException("","");
             }
 
-            var company = await _context.Companies.FindAsync(user.CompanyId);
-            if (company == null)
-            {
-                throw new NotFoundException(nameof(company), user.CompanyId);
-            }
-
-            var relatedCompanies = new List<Company>();
-            await GetSubordinatesAsync(company, relatedCompanies);
-
-            return relatedCompanies;
+            company.AddLinkedCompany(linkedCompany);
+            await _context.SaveChangesAsync();
         }
 
-        private async Task GetSubordinatesAsync(Company company, List<Company> relatedUsers)
+        public async Task<List<Company>> GetLinkedCompanies(int companyId)
         {
-            // Include the user's subordinates in the related users list
-            var subordinates = _context.CompanyHierarchy
-                .Where(uh => uh.ParentUserId == company.Id)
-                .Select(uh => uh.ChildCompany);
+            var company = await _context.Companies
+                .Include(c => c.LinkedCompanies)
+                .FirstOrDefaultAsync(c => c.Id == companyId);
 
-            foreach (var subordinate in subordinates)
-            {
-                relatedUsers.Add(subordinate);
-                await GetSubordinatesAsync(subordinate, relatedUsers);
-            }
+            return company?.LinkedCompanies.ToList() ?? new List<Company>();
         }
     }
 }

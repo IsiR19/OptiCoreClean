@@ -13,6 +13,6 @@ namespace OptiCore.Application.Models.Users
         public string LastName { get; set; }
         public string Email { get; set; }
         public int CompanyId { get; set; }
-        public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
+        //public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
     }
 }

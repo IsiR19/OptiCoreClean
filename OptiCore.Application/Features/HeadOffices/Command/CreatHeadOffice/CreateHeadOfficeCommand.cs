@@ -8,7 +8,7 @@ namespace OptiCore.Application.Features.HeadOffices.Command.CreatHeadOffice
     {
         public string Name { get; set; } = string.Empty;
         public string? RegistrationNumber { get; set; }
-        public List<ContactDetails>? AddressList { get; set; }
+        //public List<ContactDetails>? AddressList { get; set; }
 
         public virtual ICollection<Cp>? CPList { get; set; }
     }

@@ -16,7 +16,6 @@ namespace OptiCore.Domain.Users
 
         public virtual Company Company { get; set; }
 
-        public List<ContactDetails> ContactDetails { get; set; } = new List<ContactDetails>();
         public string UUID { get; set; }
         public string Name { get => $"{FirstName} {LastName}"; set { } }
     }

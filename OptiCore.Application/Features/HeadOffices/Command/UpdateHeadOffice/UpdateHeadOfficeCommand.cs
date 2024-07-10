@@ -9,7 +9,7 @@ namespace OptiCore.Application.Features.HeadOffices.Command.UpdateHeadOffice
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? RegistrationNumber { get; set; }
-        public List<ContactDetails>? ContactDetails { get; set; }
+        //public List<ContactDetails>? ContactDetails { get; set; }
 
         public virtual ICollection<Cp>? CPList { get; set; }
     }

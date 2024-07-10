@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace OptiCore.Application.Features.Companies.Commands.UpdateCompany
 {
-    public class UpdateCompanyCommand : CompanyDto ,IRequest<UpdateCompanyCommand>
+    public class UpdateCompanyCommand : CompanyDetailDto ,IRequest<UpdateCompanyCommand>
     {
-        public int Id { get; set; }
+
     }
 }

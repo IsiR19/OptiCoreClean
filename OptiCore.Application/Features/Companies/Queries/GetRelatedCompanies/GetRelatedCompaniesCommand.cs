@@ -31,7 +31,7 @@ namespace OptiCore.Application.Features.Companies.Queries.GetRelatedCompanies
                 throw new NotFoundException(nameof(company),request.CompanyId);
             }
 
-            var data = await _companyRepository.GetRelatedCompaniesAsync(request.CompanyId);
+            var data = await _companyRepository.GetLinkedCompanies(request.CompanyId);
 
             var response = _mapper.Map<List<CompanyDto>>(data);
 

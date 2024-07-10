@@ -11,15 +11,15 @@ namespace OptiCore.Application.MappingProfiles
         public UserProfile()
         {
             CreateMap<User, GetUsersDTO>()
-                .ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
+                //.ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
                 .ReverseMap();
 
             CreateMap<User, GetUserDetailDTO>()
-                .ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
+                //.ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
                 .ReverseMap();
 
             CreateMap<User, CreateUserCommand>()
-                .ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
+                //.ForMember(dest => dest.ContactDetails, opt => opt.MapFrom(src => src.ContactDetails))
                 .ReverseMap();
         }
     }
